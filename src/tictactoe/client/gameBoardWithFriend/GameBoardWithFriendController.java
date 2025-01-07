@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.Delayed;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Interpolator;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -111,6 +113,8 @@ public class GameBoardWithFriendController implements Initializable {
            highlightWinnerButtons();
             
             isGameOver = true;
+            
+            goToResultVideoScreen();
             
             
         } else if (isBoardFull()) {
@@ -261,14 +265,14 @@ public class GameBoardWithFriendController implements Initializable {
                         
             } else{
                         
-                goBackToMainScreen();
+                backToMainScreen();
                 
             }   
                   
     }
 
 
-    private void goBackToMainScreen(){
+    private void backToMainScreen(){
         
         try {
              
@@ -286,6 +290,35 @@ public class GameBoardWithFriendController implements Initializable {
         }
         
     }
+    
+    private void goToResultVideoScreen() {
+        
+        System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        
+        pause.setOnFinished(event -> {
+            
+            try {
+                System.out.println("GO To Result Video Screen");
+
+                Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) logo.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+                
+            } catch (IOException ex) {
+                
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                
+            }
+            
+        });
+        
+        pause.play();
+}
+
 
      
 }
