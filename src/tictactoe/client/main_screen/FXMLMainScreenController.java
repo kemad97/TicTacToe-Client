@@ -1,15 +1,23 @@
 package tictactoe.client.main_screen;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import tictactoe.client.server_ip.ServerIP;
 
@@ -34,12 +42,6 @@ public class FXMLMainScreenController implements Initializable {
         transition.play();
 
         //initialize server ip
-        new Thread(() -> {
-            System.out.println(getClass().getResource("/media/server_ip/server_ip.txt"));
-            String ip = ServerIP.getIP(getClass().getResource("/media/server_ip/server_ip.txt").toString());
-            System.out.println("ip: " + ip);
-        }).start();
-
     }
 
     @FXML
@@ -54,7 +56,19 @@ public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private void startOfflineMatchVSPC(MouseEvent event) {
-        System.out.println("start offline match vs. PC");
+        try {
+            System.out.println("start offline match vs. PC");
+            
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+            Scene scene = new Scene(root);
+            
+            Stage stage = (Stage) logo.getScene().getWindow();
+            
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
