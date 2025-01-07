@@ -4,8 +4,9 @@
     -fx-background-size: 100%;
 }
 
+
 .button{
-    
+
     -fx-font: 24px "Abel";
     -fx-background-color: #BED5EE;
     -fx-background-radius: 20;
@@ -19,7 +20,7 @@
 }
 
 .anchor-pane{
-    
+
     -fx-background-color: rgba(255, 255, 255, 0.6);
     -fx-background-radius: 20;
     -fx-border-radius: 20;
@@ -27,4 +28,30 @@
 
 .label-with-shadow {
     -fx-effect: dropshadow(gaussian, gray, 5, 0.0, 3, 3);
+}
+
+.updateIP{
+    -fx-background-color: 
+        linear-gradient(#f2f2f2, #d6d6d6),
+        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),
+        linear-gradient(#dddddd 0%, #f6f6f6 50%);
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-padding: 3;
+    -fx-margen-left: 3;
+    -fx-font-size: 13;
+}
+
+.updateIP:pressed{
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+}
+
+
+.mainScreenBtn:hover{
+    -fx-opacity: 75%;
 }
