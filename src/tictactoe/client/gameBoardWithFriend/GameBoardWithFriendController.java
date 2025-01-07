@@ -191,9 +191,8 @@ public class GameBoardWithFriendController implements Initializable {
         }
         
     }
-
-
-   
+    
+    
     private boolean isBoardFull() {
         
         for (int i = 0; i < 3; i++) {
@@ -212,6 +211,24 @@ public class GameBoardWithFriendController implements Initializable {
         
         return true;
         
+    }
+    
+    
+     private void resetBoard() {
+        
+        for (int i = 0; i < 3; i++) {
+            
+            for (int j = 0; j < 3; j++) {
+                
+                board[i][j].setText("");
+                
+            }
+            
+        }
+        
+        isGameOver = false;
+        
+        isXTurn = true;
     }
 
     
