@@ -13,10 +13,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tictactoe.client.server_ip.ServerIP;
@@ -42,6 +42,10 @@ public class FXMLMainScreenController implements Initializable {
         transition.play();
 
         //initialize server ip
+        new Thread(() -> {
+            inputIP.setText(ServerIP.getIP());
+        }).start();
+
     }
 
     @FXML
@@ -72,12 +76,12 @@ public class FXMLMainScreenController implements Initializable {
     private void startOfflineMatchVSPC(MouseEvent event) {
         try {
             System.out.println("start offline match vs. PC");
-            
+
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
             Scene scene = new Scene(root);
-            
+
             Stage stage = (Stage) logo.getScene().getWindow();
-            
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
@@ -87,9 +91,22 @@ public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private void updateIP(ActionEvent event) {
-        System.out.println("update ip: " + inputIP.getText());
-        inputIP.setPromptText(inputIP.getText());
-        inputIP.setText("");
+        String ip = inputIP.getText().trim();
+
+        if (!ServerIP.getIP().equals(ip)) {
+            if (ServerIP.isValidIP(ip)) {
+
+                ServerIP.saveIP(ip);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("New IP updated");
+                alert.show();
+            } else if (!ServerIP.getIP().equals(ip)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Invalid ip format");
+                alert.show();
+            }
+        }
     }
 
 }
