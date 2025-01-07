@@ -234,7 +234,7 @@ public class GameBoardWithFriendController implements Initializable {
      
      
     
-private void showAlertAndReset() {
+    private void showAlertAndReset() {
         
         Alert aboutAlert = new Alert(Alert.AlertType.CONFIRMATION);
                    
@@ -247,11 +247,41 @@ private void showAlertAndReset() {
         aboutAlert.setContentText("Do you want to Play Another Mathch ?");
              
         Optional<ButtonType> result = aboutAlert.showAndWait();
+        
+                  
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+                  
+                System.out.println("Play another Match");
+                
+                resetBoard()  ;      
+                        
+            } else{
+                        
+                goBackToMainScreen();
+                
+            }   
                   
     }
 
-    
-    
 
-    
+    private void goBackToMainScreen(){
+        
+        try {
+             
+            System.out.println("Back To Main Screen");
+
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) logo.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+                    
+        } catch (IOException ex) {
+                    
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+     
 }
