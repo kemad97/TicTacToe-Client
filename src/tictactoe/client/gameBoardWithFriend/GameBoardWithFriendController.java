@@ -246,6 +246,10 @@ public class GameBoardWithFriendController implements Initializable {
                    
         aboutAlert.setContentText("Do you want to Play Another Mathch ?");
              
+        aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
+   
+        aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
+             
         Optional<ButtonType> result = aboutAlert.showAndWait();
         
                   
