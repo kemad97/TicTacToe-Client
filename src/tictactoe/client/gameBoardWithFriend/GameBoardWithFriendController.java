@@ -107,7 +107,7 @@ public class GameBoardWithFriendController implements Initializable {
         
         if (checkWin()) {
             
-           
+           highlightWinnerButtons();
             
             isGameOver = true;
             
@@ -182,7 +182,16 @@ public class GameBoardWithFriendController implements Initializable {
         
     }
 
-    
+    private void highlightWinnerButtons() {
+        
+        for (Button button : winningButtons) {
+            
+            button.setStyle("-fx-background-color: yellow; -fx-border-color: green; -fx-font-weight: bold;");
+            
+        }
+        
+    }
+
 
    
     private boolean isBoardFull() {
