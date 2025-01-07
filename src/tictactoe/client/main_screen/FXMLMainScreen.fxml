@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.main_screen.FXMLMainScreenController">
+    <stylesheets>
+        <URL value="@fxmlmainscreen.css" />
+    </stylesheets>
+   <children>
+      <ImageView fx:id="logo" fitHeight="69.0" fitWidth="94.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/logo.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="200.0" layoutY="38.0" prefHeight="298.0" prefWidth="200.0" spacing="3.0">
+         <children>
+            <Pane fx:id="onlineBtn" minHeight="80.0" onMouseClicked="#startOnlineMatch" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../media/images/onlineBtn.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="110.0" layoutY="32.0" text="Online" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="offlineFriendBtn" minHeight="80.0" onMouseClicked="#startOfflineMatchVSFriend" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../media/images/offlineFriend.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="5.0" layoutY="32.0" text="Offline vs. Friend" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="offlinePCBtn" minHeight="80.0" onMouseClicked="#startOfflineMatchVSPC" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../media/images/offlinePC.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="90.0" layoutY="32.0" text="Offline vs. PC" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <HBox prefHeight="28.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="inputIP" prefHeight="25.0" prefWidth="149.0" promptText="Server IP">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </TextField>
+                  <Button fx:id="updateIPBtn" defaultButton="true" mnemonicParsing="false" onAction="#updateIP" prefHeight="25.0" prefWidth="72.0" text="Update" />
+               </children>
+               <padding>
+                  <Insets top="50.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
