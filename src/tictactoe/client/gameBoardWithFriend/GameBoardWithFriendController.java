@@ -48,6 +48,7 @@ public class GameBoardWithFriendController implements Initializable {
         transition.setAutoReverse(true);
         transition.play();
         
+        
         // *********** Game With Friend Logic ***************
         board = new Button[][]{
             {Btn11, Btn12, Btn13},
@@ -114,7 +115,7 @@ public class GameBoardWithFriendController implements Initializable {
             
         } else if (isBoardFull()) {
             
-           
+           showAlertAndReset();
             
         }
     }
@@ -230,6 +231,27 @@ public class GameBoardWithFriendController implements Initializable {
         
         isXTurn = true;
     }
+     
+     
+    
+private void showAlertAndReset() {
+        
+        Alert aboutAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                   
+        aboutAlert.setTitle("No one won this match.");
+        
+        aboutAlert.setHeaderText(null);
+         
+        aboutAlert.setGraphic(null);
+                   
+        aboutAlert.setContentText("Do you want to Play Another Mathch ?");
+             
+        Optional<ButtonType> result = aboutAlert.showAndWait();
+                  
+    }
+
+    
+    
 
     
 }
