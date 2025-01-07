@@ -176,3 +176,8 @@ nb-configuration.xml
 
 # Icon must end with two \r
 Icon
+
+
+dist/TicTacToe-Client.html
+dist/TicTacToe-Client.jar
+dist/TicTacToe-Client.jnlp
