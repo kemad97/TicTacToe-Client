@@ -81,7 +81,7 @@ public class ResultVideoScreenController implements Initializable {
             }
 
             String videoPath = videoUrl.toExternalForm();
-            System.out.println("Video path: " + videoPath); 
+            
 
             Media media = new Media(videoPath);
             
@@ -167,18 +167,8 @@ public class ResultVideoScreenController implements Initializable {
 
     
     public void setWinner(String winner) {
-    
-        if (winnerLabel != null) {
-        
-            System.out.println("Setting winnerLabel with: " + winner);
-        
-            winnerLabel.setText("Winner is: " + winner);
-    
-        } else {
-        
-            System.err.println("winnerLabel is null");
-    
-        }
+
+        winnerLabel.setText("Winner is: " + winner);
 
     }
     
