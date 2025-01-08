@@ -11,6 +11,8 @@ import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -22,6 +24,11 @@ public class ResultVideoScreenController implements Initializable {
 
     @FXML
     private ImageView logo;
+    
+   @FXML
+    private Label winnerLabel;
+
+    //static String winner;
 
 
     @Override
@@ -38,8 +45,25 @@ public class ResultVideoScreenController implements Initializable {
         transition.play();
         
         
+       // winnerLabel.setText("Winner is: " + this.winner);
        
     }
+    
+    public void setWinner(String winner) {
+        
+        //this.winner = winner;
+        
+        if (winnerLabel != null) {
+            
+            winnerLabel.setText("Winner is: " + winner);
+    
+        } else {
+        
+            System.err.println("winnerLabel is null. Check FXML binding.");
+    
+        }
+    }
+    
     
 }
 

@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 
 public class GameBoardWithFriendController implements Initializable {
 
@@ -36,6 +37,8 @@ public class GameBoardWithFriendController implements Initializable {
     private boolean isGameOver;
     private Button[][] board;
     private Button[] winningButtons;
+    
+    private String winnerPlayer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,6 +64,7 @@ public class GameBoardWithFriendController implements Initializable {
         
         isGameOver = false;
         isXTurn = true;  // اللي هيلعب الأول دائما  X
+        winnerPlayer = "X";
     }
 
     @FXML
@@ -109,6 +113,8 @@ public class GameBoardWithFriendController implements Initializable {
     private void checkWhoIsTheWinner() {
         
         if (checkWin()) {
+            
+           winnerPlayer = isXTurn ? "O" : "X"; 
             
            highlightWinnerButtons();
             
@@ -302,18 +308,24 @@ public class GameBoardWithFriendController implements Initializable {
             try {
                 System.out.println("GO To Result Video Screen");
 
-                Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
+                Parent root = loader.load();
+
+                
+                ResultVideoScreenController controller = loader.getController();
+
+                
+                controller.setWinner(winnerPlayer);
+
+                
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) logo.getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
-                
+
             } catch (IOException ex) {
-                
                 Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                
             }
-            
         });
         
         pause.play();
