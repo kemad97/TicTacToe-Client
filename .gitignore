@@ -7,6 +7,8 @@
 *.war
 *.ear
 
+!dist/lib/json-20250107.jar
+
 
 ### JDeveloper template
 # default application storage directory used by the IDE Performance Cache feature
@@ -181,3 +183,5 @@ Icon
 dist/TicTacToe-Client.html
 dist/TicTacToe-Client.jar
 dist/TicTacToe-Client.jnlp
+
+!dist/lib/json-20250107.jar
