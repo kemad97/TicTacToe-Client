@@ -14,6 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
 /**
@@ -26,9 +29,13 @@ public class ResultVideoScreenController implements Initializable {
     private ImageView logo;
     
    @FXML
-    private Label winnerLabel;
+   private Label winnerLabel;
+   
+   @FXML
+   private MediaView mediaView;
 
-    //static String winner;
+   private MediaPlayer mediaPlayer;
+    //private String winner;
 
 
     @Override
@@ -44,26 +51,63 @@ public class ResultVideoScreenController implements Initializable {
         transition.setAutoReverse(true);
         transition.play();
         
-        
-       // winnerLabel.setText("Winner is: " + this.winner);
+        /*winner = "O";
+        winnerLabel.setText("Winner is: " + winner);
+        if (winner != null) {
        
-    }
-    
-    public void setWinner(String winner) {
+           winnerLabel.setText("Winner is: " + winner);
+        }*/
         
-        //this.winner = winner;
         
-        if (winnerLabel != null) {
+        try {
             
+            URL videoUrl = getClass().getResource("/media/video/winner-video.mp4");
+            if (videoUrl == null) {
+                System.err.println("Can't found  video");
+            }
+
+            String videoPath = videoUrl.toExternalForm();
+            System.out.println("Video path: " + videoPath); 
+
+            Media media = new Media(videoPath);
+            
+            mediaPlayer = new MediaPlayer(media);
+
+            mediaView.setMediaPlayer(mediaPlayer);
+        
+            mediaView.setPreserveRatio(true);
+                 
+            mediaPlayer.setAutoPlay(true);
+
+            
+
+
+           
+
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setWinner(String winner) {
+    
+        if (winnerLabel != null) {
+        
+            System.out.println("Setting winnerLabel with: " + winner);
+        
             winnerLabel.setText("Winner is: " + winner);
     
         } else {
         
-            System.err.println("winnerLabel is null. Check FXML binding.");
+            System.err.println("winnerLabel is null. Check FXML binding in ResultVideoScreen.fxml.");
     
         }
-    }
-    
-    
-}
 
+    }
+
+    
+
+}
