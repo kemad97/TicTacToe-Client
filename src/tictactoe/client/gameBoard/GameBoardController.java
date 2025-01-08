@@ -229,16 +229,21 @@ public class GameBoardController implements Initializable {
         return false;
     }
 
+    private String alertMessage;
     private void checkWhoIsTheWinner() {
         if (checkWin("X")) {
             highlightWinnerButtons();
+            alertMessage = "You Win!";
+            showAlertAndReset(alertMessage);
             isGameOver = true;
         } else if (checkWin("O")) {
             highlightWinnerButtons();
+            alertMessage = "You Lose!";
+            showAlertAndReset(alertMessage);
             isGameOver = true;
         } else if (isBoardFull()) {
-            System.out.println("Board is full, no winner. Showing alert.");
-            showAlertAndReset();
+            alertMessage = "Draw!";
+            showAlertAndReset(alertMessage);
             isGameOver = true;
         }
     }
@@ -255,20 +260,15 @@ public class GameBoardController implements Initializable {
     }
 
     
-    private void resetBoard() {
-        
-        for (int i = 0; i < 3; i++) {
-            
+    private void resetBoard() {      
+        for (int i = 0; i < 3; i++) {  
             for (int j = 0; j < 3; j++) {
-                
                 board[i][j].setText("");
-                
+                board[i][j].setStyle("-fx-background-color: #BED5EE;; -fx-border-color: transparent; -fx-font-weight: normal;");
             }
-            
         }
         
         isGameOver = false;
-        
         isXTurn = true;
     }
     
@@ -283,43 +283,27 @@ public class GameBoardController implements Initializable {
         return true;
     }
     
-    private void showAlertAndReset() {
+    private void showAlertAndReset(String message) {
         
         Platform.runLater(()->{
-             Alert aboutAlert = new Alert(Alert.AlertType.CONFIRMATION);
-                   
-            aboutAlert.setTitle("No one won this match.");
-
+            Alert aboutAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            aboutAlert.setTitle(message);
             aboutAlert.setHeaderText(null);
-
             aboutAlert.setGraphic(null);
-
             aboutAlert.setContentText("Do you want to Play Another Match ?");
-
             aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("/tictactoe/client/gameBoardWithFriend/alert-style.css").toExternalForm());
-
             aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
-
             Optional<ButtonType> result = aboutAlert.showAndWait();
-
-
+            
             if (result.isPresent() && result.get() == ButtonType.OK) {
-
                     System.out.println("Play another Match");
-
                     resetBoard();      
-
+                    
                 } else{
-
                     goBackToMainScreen();
-
                 }   
         });
-       
-                  
     }
-
-
     
     private void goBackToMainScreen(){
         
