@@ -226,7 +226,7 @@ public class GameBoardWithFriendController implements Initializable {
     }
     
     
-     private void resetBoard() {
+     public void resetBoard() {
         
         for (int i = 0; i < 3; i++) {
             

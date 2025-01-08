@@ -18,7 +18,7 @@
       </ImageView>
       <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
          <children>
-            <Label id="winnerLabel" layoutX="186.0" layoutY="13.0" prefHeight="33.0" prefWidth="138.0" text="Winner is: ">
+            <Label id="winnerLabel" layoutX="186.0" layoutY="13.0" prefHeight="33.0" prefWidth="138.0" text="  Winner is: ">
                <styleClass>
                   <String fx:value="text-feild" />
                   <String fx:value="label-with-shadow" />
@@ -30,10 +30,15 @@
              <MediaView fx:id="mediaView" fitHeight="240.0" fitWidth="439.0" layoutX="38.0" layoutY="61.0">
                
             </MediaView>
-            <Button id="button" layoutX="115.0" layoutY="315.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="281.0" text="Play another match" />
-            <ImageView fitHeight="33.0" fitWidth="36.0" layoutX="21.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+            <Button id="btnContinue" layoutX="115.0" layoutY="312.0" mnemonicParsing="false" onAction="#handleContinueButtonAction" prefHeight="51.0" prefWidth="281.0" text="Play another match">
+               <styleClass>
+                  <String fx:value="button" />
+                  <String fx:value="label-with-shadow" />
+               </styleClass>
+            </Button>
+            <ImageView id="btnBack" fx:id="btnBack" fitHeight="38.0" fitWidth="50.0" layoutX="21.0" layoutY="11.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../media/images/back-btn.png" />
+                  <Image url="@../../../media/images/undo.png" />
                </image>
             </ImageView>
          </children>
