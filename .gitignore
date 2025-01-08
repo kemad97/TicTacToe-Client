@@ -1,11 +1,17 @@
 
 ### Java template
+dist/TicTacToe-Client.html
+dist/TicTacToe-Client.jar
+dist/TicTacToe-Client.jnlp
+
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+!dist/lib/json-20250107.jar
 
 
 ### JDeveloper template
@@ -180,3 +186,5 @@ Icon
 dist/TicTacToe-Client.html
 dist/TicTacToe-Client.jar
 dist/TicTacToe-Client.jnlp
+
+!dist/lib/json-20250107.jar

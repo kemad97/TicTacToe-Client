@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.application.Platform;
+import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 
@@ -44,15 +45,7 @@ public class GameBoardWithFriendController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Animate logo
-        ScaleTransition transition = new ScaleTransition();
-        transition.setNode(logo);
-        transition.setDuration(Duration.millis(1000));
-        transition.setCycleCount(ScaleTransition.INDEFINITE);
-        transition.setInterpolator(Interpolator.LINEAR);
-        transition.setByX(0.5);
-        transition.setByY(0.5);
-        transition.setAutoReverse(true);
-        transition.play();
+        Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
         
         
         // *********** Game With Friend Logic ***************
@@ -65,7 +58,7 @@ public class GameBoardWithFriendController implements Initializable {
         
         isGameOver = false;
         isXTurn = true;  // اللي هيلعب الأول دائما  X
-        //winnerPlayer = "X";
+       
     }
 
     @FXML
