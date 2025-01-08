@@ -14,9 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tictactoe.client.server_ip.ServerIP;
@@ -27,6 +30,18 @@ public class FXMLMainScreenController implements Initializable {
     private ImageView logo;
     @FXML
     private TextField inputIP;
+    @FXML
+    private Button authentication;
+    @FXML
+    private Label username;
+    @FXML
+    private Pane onlineBtn;
+    @FXML
+    private Pane offlineFriendBtn;
+    @FXML
+    private Pane offlinePCBtn;
+    @FXML
+    private Button updateIPBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -45,6 +60,8 @@ public class FXMLMainScreenController implements Initializable {
         new Thread(() -> {
             inputIP.setText(ServerIP.getIP());
         }).start();
+
+        username.setText("");
 
     }
 
@@ -106,6 +123,17 @@ public class FXMLMainScreenController implements Initializable {
                 alert.setContentText("Invalid ip format");
                 alert.show();
             }
+        }
+    }
+
+    @FXML
+    private void authenticate(ActionEvent event) {
+        if (authentication.getText().equals("Login")) {
+            authentication.setText("Logout");
+            username.setText("username");
+        }else{
+            authentication.setText("Login");
+            username.setText("");
         }
     }
 
