@@ -315,7 +315,12 @@ public class GameBoardWithFriendController implements Initializable {
                 
                 ResultVideoScreenController controller = loader.getController();
                 
-                controller.setWinner(winnerPlayer);
+                Platform.runLater(() -> {
+    
+                    controller.setWinner(winnerPlayer);
+
+                });
+
             
                           
                 Scene scene = new Scene(root);

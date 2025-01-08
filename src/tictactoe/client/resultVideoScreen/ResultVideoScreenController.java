@@ -54,8 +54,9 @@ public class ResultVideoScreenController implements Initializable {
 
    private MediaPlayer mediaPlayer;
    
-    //private String winner;
-
+   
+   
+ 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,12 +71,6 @@ public class ResultVideoScreenController implements Initializable {
         transition.setAutoReverse(true);
         transition.play();
         
-        /*winner = "O";
-        winnerLabel.setText("Winner is: " + winner);
-        if (winner != null) {
-       
-           winnerLabel.setText("Winner is: " + winner);
-        }*/
         
         
         try {
@@ -97,6 +92,17 @@ public class ResultVideoScreenController implements Initializable {
             mediaView.setPreserveRatio(true);
                  
             mediaPlayer.setAutoPlay(true);
+            
+            // Animate Video
+            ScaleTransition transition2 = new ScaleTransition();
+            transition2.setNode(mediaView);
+            transition2.setDuration(Duration.millis(1000));
+            transition2.setCycleCount(2);
+            transition2.setInterpolator(Interpolator.LINEAR);
+            transition2.setByX(0.5);
+            transition2.setByY(0.5);
+            transition2.setAutoReverse(true);
+            transition2.play();
 
         } catch (Exception e) {
             
@@ -159,6 +165,7 @@ public class ResultVideoScreenController implements Initializable {
     }
      
 
+    
     public void setWinner(String winner) {
     
         if (winnerLabel != null) {
@@ -169,7 +176,7 @@ public class ResultVideoScreenController implements Initializable {
     
         } else {
         
-            System.err.println("winnerLabel is null. Check FXML binding in ResultVideoScreen.fxml.");
+            System.err.println("winnerLabel is null");
     
         }
 

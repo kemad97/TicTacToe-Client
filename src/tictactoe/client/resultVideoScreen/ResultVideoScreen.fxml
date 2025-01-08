@@ -18,7 +18,7 @@
       </ImageView>
       <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
          <children>
-            <Label id="winnerLabel" layoutX="186.0" layoutY="13.0" prefHeight="33.0" prefWidth="138.0" text="  Winner is: ">
+            <Label id="winnerLabel" fx:id="winnerLabel" layoutX="186.0" layoutY="13.0" prefHeight="33.0" prefWidth="138.0">
                <styleClass>
                   <String fx:value="text-feild" />
                   <String fx:value="label-with-shadow" />
