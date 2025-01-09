@@ -34,6 +34,10 @@ public class ServerIP {
 
         return ip;
     }
+    
+    public static int getPort(){
+        return 8080;
+    }
 
     public static void saveIP(String ip) {
         File ipFile = new File(filePath);
