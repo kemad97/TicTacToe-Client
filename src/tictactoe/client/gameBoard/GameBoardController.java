@@ -59,7 +59,7 @@ public class GameBoardController implements Initializable {
         isGameOver = false;
         isXTurn = true;
 
-        difficulty = "Medium"; // test
+       // difficulty = "Medium"; // test
     }
 
     @FXML

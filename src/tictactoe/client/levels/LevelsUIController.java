@@ -21,13 +21,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.gameBoard.GameBoardController;
-
+ 
 
 /**
  * FXML Controller class
  *
  * @author Kerolos
  */
+import javafx.scene.Node;
 public class LevelsUIController implements Initializable {
 
     @FXML
@@ -50,39 +51,90 @@ public class LevelsUIController implements Initializable {
   
     @FXML
     private void setHardDiffculty(ActionEvent event) {
-         selectedDifficulty="hard";
+         selectedDifficulty="Hard";
         System.out.println ("Selected diffculty :" + selectedDifficulty);
+       
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+        try {
+            Parent root = loader.load(); // Load the FXML file first
+
+            // Now you can safely get the controller
+            GameBoardController controller = loader.getController();
+            controller.setDifficulty(selectedDifficulty);
+
+            System.out.println("Start offline match vs. PC");
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } 
+        
+        catch (IOException ex) 
+        {
+            Logger.getLogger(LevelsUIController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void setMediumDiffculty(ActionEvent event) {
-           selectedDifficulty="medium";
+           selectedDifficulty="Medium";
            System.out.println ("Selected diffculty :" + selectedDifficulty);
-    }
+           
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+        try {
+            Parent root = loader.load(); // Load the FXML file first
 
-    @FXML
-    private void setEasyDiffculty(ActionEvent event) {
-         selectedDifficulty="easy";
-         System.out.println ("Selected diffculty :" + selectedDifficulty);
-         
-         
-         //go to gameboard after choosing easy
-             try {
-            System.out.println("start offline match vs. PC");
+            // Now you can safely get the controller
+            GameBoardController controller = loader.getController();
+            controller.setDifficulty(selectedDifficulty);
 
-            Parent root = FXMLLoader.load(getClass().getResource  ("/tictactoe/client/gameBoardWithFriend/GameBoardWithFriend.fxml"));        
+            System.out.println("Start offline match vs. PC");
+
             Scene scene = new Scene(root);
-
-            Stage stage = (Stage) logo.getScene().getWindow();
-            
-
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        } catch (IOException ex) {
+        } 
+        
+        catch (IOException ex) 
+        {
+            Logger.getLogger(LevelsUIController.class.getName()).log(Level.SEVERE, null, ex);
             Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    @FXML
+    private void setEasyDiffculty(ActionEvent event) 
+    {
+        selectedDifficulty = "Easy";
+        System.out.println("Selected difficulty: " + selectedDifficulty);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+        try {
+            Parent root = loader.load(); // Load the FXML file first
+
+            // Now you can safely get the controller
+            GameBoardController controller = loader.getController();
+            controller.setDifficulty(selectedDifficulty);
+
+            System.out.println("Start offline match vs. PC");
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } 
+        
+        catch (IOException ex) 
+        {
+            Logger.getLogger(LevelsUIController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
   
 
 
