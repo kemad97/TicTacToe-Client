@@ -27,21 +27,21 @@ import tictactoe.client.server_ip.ServerIP;
 public class FXMLMainScreenController implements Initializable {
 
     @FXML
-    private ImageView logo;
+    public ImageView logo;
     @FXML
-    private TextField inputIP;
+    public TextField inputIP;
     @FXML
-    private Button authentication;
+    public Button authentication;
     @FXML
-    private Label username;
+    public Label username;
     @FXML
-    private Pane onlineBtn;
+    public Pane onlineBtn;
     @FXML
-    private Pane offlineFriendBtn;
+    public Pane offlineFriendBtn;
     @FXML
-    private Pane offlinePCBtn;
+    public Pane offlinePCBtn;
     @FXML
-    private Button updateIPBtn;
+    public Button updateIPBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,7 +77,7 @@ public class FXMLMainScreenController implements Initializable {
              
             System.out.println("start offline match vs. Friend");
             
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoardWithFriend/GameBoardWithFriend.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource   ("/tictactoe/client/gameBoardWithFriend/GameBoardWithFriend.fxml")); //D:\iti_MAD45\Java\TIC TAC TOE project\Repo\TicTacToe-Client\src\tictactoe\client\levels\levelsUI.fxml
             Scene scene = new Scene(root);
             
             Stage stage = (Stage) logo.getScene().getWindow();
@@ -90,14 +90,15 @@ public class FXMLMainScreenController implements Initializable {
     }
 
     @FXML
-    private void startOfflineMatchVSPC(MouseEvent event) {
+    public void startOfflineMatchVSPC(MouseEvent event) {
         try {
             System.out.println("start offline match vs. PC");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource  ("/tictactoe/client/levels/levelsUI.fxml"));        
             Scene scene = new Scene(root);
 
             Stage stage = (Stage) logo.getScene().getWindow();
+            
 
             stage.setScene(scene);
             stage.show();

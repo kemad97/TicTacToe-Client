@@ -1,4 +1,4 @@
-package levels;
+package tictactoe.client.levels;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
