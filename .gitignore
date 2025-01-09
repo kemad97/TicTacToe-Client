@@ -181,3 +181,4 @@ Icon
 dist/TicTacToe-Client.html
 dist/TicTacToe-Client.jar
 dist/TicTacToe-Client.jnlp
+/src/tictactoe/client/levels/nbproject/private/
