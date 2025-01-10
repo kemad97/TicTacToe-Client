@@ -93,7 +93,7 @@ public class FXMLMainScreenController implements Initializable {
         try {
             System.out.println("start offline match vs. PC");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/levels/levelsUI.fxml"));
             Scene scene = new Scene(root);
 
             Stage stage = (Stage) logo.getScene().getWindow();
