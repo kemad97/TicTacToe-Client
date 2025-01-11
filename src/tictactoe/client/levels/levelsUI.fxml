@@ -20,7 +20,7 @@
             <Font size="32.0" />
          </font>
       </Text>
-      <Button fx:id="hardBtn" layoutX="221.0" layoutY="271.0" mnemonicParsing="false" onAction="#setHardDiffculty" onMouseClicked="#Levelstate" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: red;" text="Hard" textFill="WHITE" />
+      <Button fx:id="hardBtn" layoutX="221.0" layoutY="271.0" mnemonicParsing="false" onAction="#setHardDiffculty" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: red;" text="Hard" textFill="WHITE" />
       <Button fx:id="mediumBtn" layoutX="221.0" layoutY="220.0" mnemonicParsing="false" onAction="#setMediumDiffculty" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: blue;" text="Medium" textFill="WHITE" />
       <Button fx:id="easyBtn" alignment="CENTER" layoutX="221.0" layoutY="169.0" mnemonicParsing="false" onAction="#setEasyDiffculty" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: green;" text="Easy" textFill="WHITE" AnchorPane.rightAnchor="221.0" />
    </children>

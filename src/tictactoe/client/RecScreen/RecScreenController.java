@@ -16,12 +16,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
+import tictactoe.client.main_screen.FXMLMainScreenController;
 
 
 /**
@@ -36,9 +43,9 @@ public class RecScreenController implements Initializable {
     private final String logDirectory = "gamelogs/";
 
     @FXML
-    private ImageView logo;
-    @FXML
     private ListView<String> fileListView;
+    @FXML
+    private Button backBtn;
 
     /**
      * Initializes the controller class.
@@ -113,7 +120,8 @@ public class RecScreenController implements Initializable {
         }
     }
 
-    private void openFile(String filePath) {
+    private void openFile(String filePath) 
+    {
         try 
         {
             File file = new File(filePath);
@@ -133,6 +141,34 @@ public class RecScreenController implements Initializable {
         
         
     }
+
+    @FXML
+    private void goBackMainMenu(ActionEvent event) 
+    {
+        
+        try {
+
+            System.out.println("Back To Main Screen");
+
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) backBtn.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } 
+        
+        catch (IOException ex) {
+
+            Logger.getLogger(FXMLMainScreenController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+    
+    }
+    
+    
+    
 
     
 }
