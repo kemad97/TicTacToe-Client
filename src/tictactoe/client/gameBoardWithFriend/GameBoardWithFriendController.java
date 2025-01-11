@@ -46,6 +46,7 @@ public class GameBoardWithFriendController implements Initializable {
     
     private String winnerPlayer;
     public String logFileName;
+    
      private RecScreenController recScreenController = new RecScreenController();
 
     @Override

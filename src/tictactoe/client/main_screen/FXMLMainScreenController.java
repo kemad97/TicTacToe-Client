@@ -42,6 +42,8 @@ public class FXMLMainScreenController implements Initializable {
     private Pane offlinePCBtn;
     @FXML
     private Button updateIPBtn;
+    @FXML
+    private Button logsBtn;
 
     
     public void updateUsername(String username){
@@ -148,6 +150,30 @@ public class FXMLMainScreenController implements Initializable {
 
             //send to server to remove this user from login list
         }
+    }
+
+    @FXML
+    private void showGameLogs(ActionEvent event) 
+    {
+        
+        
+         Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
+                Scene scene = new Scene(root);
+
+                Stage stage = (Stage) logo.getScene().getWindow();
+
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        
+        
+        
     }
 
 }
