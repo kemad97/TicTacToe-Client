@@ -71,9 +71,8 @@ public class FXMLRegisterationScreenController implements Initializable {
         }
 
         try {
-            
-            
             Request.registration(username.getText().trim(), password.getText().trim().hashCode() + "");
+            System.out.println("register");
 
             handleResponse(Request.receve());
 
@@ -103,7 +102,7 @@ public class FXMLRegisterationScreenController implements Initializable {
 
         switch (receve.getString("header")) {
             case "success":
-                
+            
                 //update session data
                 SessionData.setUsername(receve.getString("message"));
                 SessionData.setAuthenticated(true);
@@ -111,6 +110,7 @@ public class FXMLRegisterationScreenController implements Initializable {
                 Alert success;
                 success = new Alert(Alert.AlertType.INFORMATION);
                 success.setContentText("Registration Successful: " + receve.getString("message"));
+
                 Optional<ButtonType> result = success.showAndWait();
 
                 if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -134,6 +134,12 @@ public class FXMLRegisterationScreenController implements Initializable {
 
             Parent root = loader.load();
 
+            FXMLMainScreenController mainScreen = loader.getController();
+
+            Platform.runLater(() -> {
+                mainScreen.updateUsername(username);
+            });
+          
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
