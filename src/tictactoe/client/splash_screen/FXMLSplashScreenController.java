@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import soundManager.SoundManager;
+import tictactoe.client.soundManager.SoundManager;
 import tictactoe.client.animation.Animation;
 
 public class FXMLSplashScreenController implements Initializable {
@@ -34,8 +34,7 @@ public class FXMLSplashScreenController implements Initializable {
                 stage.setScene(scene);
                 stage.show();
                 
-                SoundManager.playBackgroundMusic();
-                 
+               
             } catch (IOException ex) {
                 Logger.getLogger(FXMLSplashScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -30,6 +30,7 @@ import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 import tictactoe.client.RecScreen.RecScreenController;
+import tictactoe.client.soundManager.SoundManager;
 
 public class GameBoardWithFriendController implements Initializable {
 
@@ -314,6 +315,8 @@ public class GameBoardWithFriendController implements Initializable {
                 Stage stage = (Stage) logo.getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
+                
+                SoundManager.pauseBackgroundMusic();
 
                 System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: ");
 

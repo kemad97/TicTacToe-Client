@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
 import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.soundManager.SoundManager;
 
 /**
  *
@@ -103,6 +104,12 @@ public class ResultVideoScreenController implements Initializable {
             transition2.setByY(0.5);
             transition2.setAutoReverse(true);
             transition2.play();
+            
+            mediaPlayer.setOnEndOfMedia(() -> {
+                
+                SoundManager.resumeBackgroundMusic();
+            });
+             
 
         } catch (Exception e) {
             
@@ -134,6 +141,8 @@ public class ResultVideoScreenController implements Initializable {
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+            
+            SoundManager.resumeBackgroundMusic();
                     
         } catch (IOException ex) {
                     
@@ -156,6 +165,8 @@ public class ResultVideoScreenController implements Initializable {
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+            
+            SoundManager.resumeBackgroundMusic();
                     
         } catch (IOException ex) {
                     

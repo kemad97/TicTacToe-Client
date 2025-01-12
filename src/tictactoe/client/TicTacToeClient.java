@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tictactoe.client.server_ip.ServerIP;
+import tictactoe.client.soundManager.SoundManager;
 
 /**
  *
@@ -28,6 +29,15 @@ public class TicTacToeClient extends Application {
 
         stage.setScene(scene);
         stage.show();
+        
+        SoundManager.playBackgroundMusic();
+                 
+    }
+    
+    @Override
+    public void stop() {
+      
+        SoundManager.stopBackgroundMusic();
     }
 
     public static void main(String[] args) {

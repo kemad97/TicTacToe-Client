@@ -3,48 +3,51 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package soundManager;
+package tictactoe.client.soundManager;
 
 import java.net.URL;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 /**
  *
  * @author ayaah
  */
 public class SoundManager {
-    private static MediaPlayer mediaPlayer;
+    
+    private static MediaPlayer backgroundMusicPlayer;
 
     public static void playBackgroundMusic() {
-        if (mediaPlayer == null) {
+        if (backgroundMusicPlayer == null) {
             URL resource = SoundManager.class.getResource("/media/sound/backgroundMusic.mp3");
             if (resource == null) {
                 System.err.println("Sound file not found!");
                 return;
             }
             Media media = new Media(resource.toString());
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); 
+            backgroundMusicPlayer = new MediaPlayer(media);
+            backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); 
         }
-        mediaPlayer.play();
+        backgroundMusicPlayer.play();
     }
 
     public static void stopBackgroundMusic() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
+        if (backgroundMusicPlayer != null) {
+            backgroundMusicPlayer.stop();
         }
     }
 
     public static void pauseBackgroundMusic() {
-        if (mediaPlayer != null) {
-            mediaPlayer.pause();
+        if (backgroundMusicPlayer != null) {
+            backgroundMusicPlayer.pause();
         }
     }
 
     public static void resumeBackgroundMusic() {
-        if (mediaPlayer != null) {
-            mediaPlayer.play();
+        if (backgroundMusicPlayer != null) {
+            backgroundMusicPlayer.seek(Duration.ZERO); 
+            backgroundMusicPlayer.play();
         }
     }
 }
