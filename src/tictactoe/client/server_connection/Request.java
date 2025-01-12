@@ -18,13 +18,22 @@ public class Request {
 
     static {
         try {
-            socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
-            dis = new DataInputStream(socket.getInputStream());
-            dos = new DataOutputStream(socket.getOutputStream());
-
+            connectToServer();
         } catch (IOException ex) {
             System.out.println("Error: can't connect to server.");
         }
+    }
+
+    private static void connectToServer() throws IOException {
+        socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
+        dis = new DataInputStream(socket.getInputStream());
+        dos = new DataOutputStream(socket.getOutputStream());
+    }
+    
+    public static void disconnectToServer() throws IOException{
+        dos.close();
+        dis.close();
+        socket.close();
     }
 
     private static boolean isConnected() {
@@ -34,7 +43,8 @@ public class Request {
     public static void registration(String username, String hashedPassword) throws IOException {
 
         if (!isConnected()) {
-            throw new IOException();
+            //try to reconnect
+            connectToServer();
         }
 
         Map<String, String> map = new HashMap<>();
