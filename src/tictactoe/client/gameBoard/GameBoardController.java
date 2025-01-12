@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,8 +23,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
+import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
+import tictactoe.client.RecScreen.RecScreenController;
 
 public class GameBoardController implements Initializable {
 
@@ -37,6 +42,9 @@ public class GameBoardController implements Initializable {
     private Button[][] board;
     private Button[] winningButtons;
     private String difficulty;
+    private String winnerPlayer;
+     
+    GameBoardWithFriendController gameWithFriendController = new GameBoardWithFriendController();
 
     public void setDifficulty(String difficulty) {
 
@@ -59,7 +67,7 @@ public class GameBoardController implements Initializable {
         isGameOver = false;
         isXTurn = true;
 
-        difficulty = "Medium"; // test
+       // difficulty = "Medium"; // test
     }
 
     @FXML
@@ -238,7 +246,8 @@ public class GameBoardController implements Initializable {
         if (checkWin("X")) {
             highlightWinnerButtons();
             alertMessage = "You Win!";
-            showAlertAndReset(alertMessage);
+            winnerPlayer = "X";
+            goToResultVideoScreen();
             isGameOver = true;
         } else if (checkWin("O")) {
             highlightWinnerButtons();
@@ -325,6 +334,43 @@ public class GameBoardController implements Initializable {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    private void goToResultVideoScreen() {
+
+        System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+        pause.setOnFinished(event -> {
+
+            try {
+                System.out.println("GO To Result Video Screen");
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
+                Parent root = loader.load();
+
+                ResultVideoScreenController controller = loader.getController();
+
+                Platform.runLater(() -> {
+
+                    controller.setWinner(winnerPlayer);
+
+                });
+
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) logo.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+
+                System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: ");
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        pause.play();
     }
 
 }
