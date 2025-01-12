@@ -12,6 +12,7 @@ dist/TicTacToe-Client.jnlp
 *.ear
 
 !dist/lib/json-20250107.jar
+dist/web-files/dtjava.js
 
 
 ### JDeveloper template

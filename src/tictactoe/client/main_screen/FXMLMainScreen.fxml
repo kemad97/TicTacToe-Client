@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../splash_screen/fxmlsplashscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.main_screen.FXMLMainScreenController">
+<AnchorPane id="AnchorPane" prefHeight="430.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../splash_screen/fxmlsplashscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.main_screen.FXMLMainScreenController">
    <children>
       <Button fx:id="authentication" layoutX="522.0" layoutY="23.0" mnemonicParsing="false" onAction="#authenticate" styleClass="authenticationBtn" text="Login">
          <padding>
@@ -29,11 +29,11 @@
             <Image url="@../../../media/images/logo.png" />
          </image>
       </ImageView>
-      <VBox layoutX="200.0" layoutY="38.0" prefHeight="298.0" prefWidth="200.0" spacing="3.0">
+      <VBox layoutX="200.0" layoutY="38.0" spacing="3.0">
          <children>
             <Pane fx:id="onlineBtn" minHeight="80.0" onMouseClicked="#startOnlineMatch" prefWidth="200.0" styleClass="mainScreenBtn">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="191.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../media/images/onlineBtn.png" />
                      </image>
@@ -73,7 +73,7 @@
                   </Label>
                </children>
             </Pane>
-            <HBox prefHeight="28.0" prefWidth="200.0" spacing="5.0">
+            <HBox prefHeight="21.0" prefWidth="143.0" spacing="5.0">
                <children>
                   <TextField fx:id="inputIP" prefHeight="25.0" prefWidth="149.0" promptText="Server IP" styleClass="updateIP">
                      <padding>
@@ -91,5 +91,10 @@
             </HBox>
          </children>
       </VBox>
+      <Button fx:id="logsBtn" layoutX="492.0" layoutY="341.0" mnemonicParsing="false" onAction="#showGameLogs" styleClass="authenticationBtn" text="Game Logs">
+         <padding>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+         </padding>
+      </Button>
    </children>
 </AnchorPane>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@fxmlregisterationscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.register.FXMLRegisterationScreenController">
+   <children>
+      <ImageView fx:id="logo" fitHeight="70.0" fitWidth="91.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/logo.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="210.0" layoutY="86.0" prefHeight="328.0" prefWidth="281.0">
+         <children>
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="298.0" layoutX="15.0" layoutY="17.0" opacity="0.85" stroke="#d7d7d7" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="formBackground" width="251.0" />
+            <Label layoutX="107.0" layoutY="40.0" text="Register">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="username" layoutX="34.0" layoutY="102.0" prefHeight="30.0" prefWidth="213.0" promptText="Username">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="password" layoutX="32.0" layoutY="160.0" prefHeight="25.0" prefWidth="213.0" promptText="Password">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="regesterationBtn" defaultButton="true" layoutX="105.0" layoutY="217.0" mnemonicParsing="false" onAction="#registerUser" text="Register" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="login_label" alignment="CENTER" layoutX="114.0" layoutY="267.0" onMouseClicked="#goToLoginScreen" text="Login">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
