@@ -23,7 +23,9 @@ import javafx.stage.Stage;
 import session_data.SessionData;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.server_connection.Request;
+import tictactoe.client.animation.Animation;
 import tictactoe.client.server_ip.ServerIP;
+
 
 public class FXMLMainScreenController implements Initializable {
 
@@ -46,6 +48,13 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private Button logsBtn;
 
+    
+    public void updateUsername(String username){
+        this.username.setText(username);
+        this.authentication.setText("Logout");
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //animate logo
@@ -158,26 +167,27 @@ public class FXMLMainScreenController implements Initializable {
             //update session data
             SessionData.setAuthenticated(false);
             SessionData.setUsername(null);            
-            
         }
     }
 
     @FXML
-    private void showGameLogs(ActionEvent event) {
+    private void showGameLogs(ActionEvent event) 
+    {
+        
+        
+         Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
+                Scene scene = new Scene(root);
 
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
-            Scene scene = new Scene(root);
+                Stage stage = (Stage) logo.getScene().getWindow();
 
-            Stage stage = (Stage) logo.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
 
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }       
 
     }
 
