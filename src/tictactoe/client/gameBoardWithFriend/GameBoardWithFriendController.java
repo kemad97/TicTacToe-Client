@@ -1,12 +1,17 @@
 package tictactoe.client.gameBoardWithFriend;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.Delayed;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Interpolator;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,8 +25,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.application.Platform;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
+import tictactoe.client.RecScreen.RecScreenController;
 
 public class GameBoardWithFriendController implements Initializable {
 
@@ -35,6 +43,11 @@ public class GameBoardWithFriendController implements Initializable {
     private boolean isGameOver;
     private Button[][] board;
     private Button[] winningButtons;
+    
+    private String winnerPlayer;
+    public String logFileName;
+    
+     private RecScreenController recScreenController = new RecScreenController();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,6 +65,9 @@ public class GameBoardWithFriendController implements Initializable {
         
         isGameOver = false;
         isXTurn = true;  // اللي هيلعب الأول دائما  X
+       
+       recScreenController.initializeLogFile();
+       
     }
 
     @FXML
@@ -92,6 +108,7 @@ public class GameBoardWithFriendController implements Initializable {
             isXTurn = true;
         
         }
+        recScreenController.logButtonClick(clickedButton.getId(),clickedButton.getText());
 
         checkWhoIsTheWinner();
         
@@ -101,9 +118,13 @@ public class GameBoardWithFriendController implements Initializable {
         
         if (checkWin()) {
             
+           winnerPlayer = isXTurn ? "O" : "X"; 
+            
            highlightWinnerButtons();
             
             isGameOver = true;
+            
+            goToResultVideoScreen();
             
             
         } else if (isBoardFull()) {
@@ -208,7 +229,7 @@ public class GameBoardWithFriendController implements Initializable {
     }
     
     
-     private void resetBoard() {
+     public void resetBoard() {
         
         for (int i = 0; i < 3; i++) {
             
@@ -254,14 +275,14 @@ public class GameBoardWithFriendController implements Initializable {
                         
             } else{
                         
-                goBackToMainScreen();
+                backToMainScreen();
                 
             }   
                   
     }
 
 
-    private void goBackToMainScreen(){
+    private void backToMainScreen(){
         
         try {
              
@@ -279,6 +300,52 @@ public class GameBoardWithFriendController implements Initializable {
         }
         
     }
+    
+        private void goToResultVideoScreen() 
+        {
+        
+            System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
 
-     
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+            pause.setOnFinished(event -> {
+
+                try {
+                    System.out.println("GO To Result Video Screen");
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
+                    Parent root = loader.load();
+
+
+                    ResultVideoScreenController controller = loader.getController();
+
+                    Platform.runLater(() -> {
+
+                        controller.setWinner(winnerPlayer);
+
+                    });
+
+
+
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) logo.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.show();
+
+                    System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: " );
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
+            pause.play();
+        }
+
+        
+        
+      
 }
+
+
+

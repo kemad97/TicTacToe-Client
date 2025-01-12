@@ -1,6 +1,9 @@
 
 ### Java template
-nbproject/project.properties
+dist/TicTacToe-Client.html
+dist/TicTacToe-Client.jar
+dist/TicTacToe-Client.jnlp
+
 *.class
 
 # Package Files #
@@ -33,26 +36,6 @@ cwallet.sso.lck
 
 ## Directory-based project format:
 .idea/
-# if you remove the above rule, at least ignore the following:
-
-# User-specific stuff:
-# .idea/workspace.xml
-# .idea/tasks.xml
-# .idea/dictionaries
-
-# Sensitive or high-churn files:
-# .idea/dataSources.ids
-# .idea/dataSources.xml
-# .idea/sqlDataSources.xml
-# .idea/dynamic.xml
-# .idea/uiDesigner.xml
-
-# Gradle:
-# .idea/gradle.xml
-# .idea/libraries
-
-# Mongo Explorer plugin:
-# .idea/mongoSettings.xml
 
 ## File-based project format:
 *.ipr
@@ -86,27 +69,9 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 
-### Eclipse template
-*.pydevproject
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-
-# Eclipse Core
-.project
-
 # External tool builders
 .externalToolBuilders/
 
-# Locally stored "Eclipse launch configurations"
-*.launch
 
 # CDT-specific
 .cproject
@@ -123,66 +88,6 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
-
-### Vim template
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
-*.un~
-Session.vim
-.netrwhist
-*~
-
-
-### SublimeText template
-# cache files for sublime text
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-
-# workspace files are user-specific
-*.sublime-workspace
-
-# project files should be checked into the repository, unless a significant
-# proportion of contributors will probably not be using SublimeText
-# *.sublime-project
-
 # sftp configuration file
 sftp-config.json
 
-
-### Maven template
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-
-
-### NetBeans template
-nbproject/private/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
-.nb-gradle/
-
-
-### OSX template
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must end with two \r
-Icon
-
-
-dist/TicTacToe-Client.html
-dist/TicTacToe-Client.jar
-dist/TicTacToe-Client.jnlp
-
-!dist/lib/json-20250107.jar
