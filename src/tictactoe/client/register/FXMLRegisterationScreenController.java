@@ -73,9 +73,9 @@ public class FXMLRegisterationScreenController implements Initializable {
         try {
             
             
-            Request.registration(username.getText().trim(), password.getText().trim().hashCode() + "");
+            Request.getInstance().registration(username.getText().trim(), password.getText().trim().hashCode() + "");
 
-            handleResponse(Request.receve());
+            handleResponse(Request.getInstance().receve());
 
         } catch (IOException ex) {
             System.out.println("Error: can't connect to server.");
@@ -101,7 +101,7 @@ public class FXMLRegisterationScreenController implements Initializable {
 
     private void handleResponse(JSONObject receve) {
 
-        switch (receve.getString("header")) {
+         switch (receve.getString("header")) {
             case "success":
                 
                 //update session data

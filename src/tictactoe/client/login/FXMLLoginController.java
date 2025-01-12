@@ -7,25 +7,33 @@ package tictactoe.client.login;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.json.JSONObject;
+import session_data.SessionData;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.register.FXMLRegisterationScreenController;
+import tictactoe.client.server_connection.Request;
 
 /**
  * FXML Controller class
@@ -56,6 +64,61 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void login(ActionEvent event) {
+        if (username.getText().trim().isEmpty() || password.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("You must fill username and password!");
+            alert.show();
+            return;
+        }
+
+        //disable ui to avvoid resend request
+        disableUI();
+
+        new Thread(() -> {
+            try {
+                Request.getInstance().login(username.getText().trim(),
+                        password.getText().trim().hashCode() + "");
+
+                handleLoginResponse(Request.getInstance().receve());
+            } catch (IOException ex) {
+                System.out.println("Error: can't connect to server.");
+            }
+        }).start();
+
+    }
+
+    private void handleLoginResponse(JSONObject receve) {
+        //reenable screen ui
+        Platform.runLater(() -> enableUI());
+
+        switch (receve.getString("header")) {
+            case "success":
+
+                //update session data
+                SessionData.setUsername(receve.getString("message"));
+                SessionData.setAuthenticated(true);
+
+                Platform.runLater(() -> {
+                    Alert success;
+                    success = new Alert(Alert.AlertType.INFORMATION);
+                    success.setContentText("Login Successful: " + receve.getString("message"));
+                    Optional<ButtonType> result = success.showAndWait();
+
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        gotoMainScreen(username.getText().trim());
+                    }
+                });
+
+                break;
+            case "login_error":
+            case "error":
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(receve.getString("message"));
+                    alert.show();
+                });
+                break;
+        }
     }
 
     @FXML
@@ -73,6 +136,36 @@ public class FXMLLoginController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void gotoMainScreen(String username) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) logo.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLRegisterationScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void disableUI() {
+        username.disableProperty().set(true);
+        password.disableProperty().set(true);
+        LoginBtn.disableProperty().set(true);
+        Register_label.disableProperty().set(true);
+    }
+
+    private void enableUI() {
+        username.disableProperty().set(false);
+        password.disableProperty().set(false);
+        LoginBtn.disableProperty().set(false);
+        Register_label.disableProperty().set(false);
     }
 
 }

@@ -149,7 +149,7 @@ public class FXMLMainScreenController implements Initializable {
 
             try {
                 //cloase connection with server
-                Request.disconnectToServer();
+                Request.getInstance().disconnectToServer();
                 System.out.println("logged out.");
             } catch (IOException ex) {
                 System.out.println("can't disconnect with server");
