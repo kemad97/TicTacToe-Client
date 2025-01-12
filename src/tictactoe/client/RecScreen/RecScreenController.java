@@ -61,16 +61,17 @@ public class RecScreenController implements Initializable {
         public void initializeLogFile() 
         {
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmms").format(new Date());
-            logFileName = "game_log_" + timestamp + ".txt";
+            logFileName = "game_log_" + timestamp ;
             System.out.println("New match log file: " + logFileName);
         }
         
         public void logButtonClick(String buttonId, String symbol) 
         {
             
-            String logEntry = "Button " + buttonId + " clicked with symbol " + symbol + "\n";
-            try (FileWriter writer = new FileWriter("gamelogs/"+logFileName, true)) 
-            { // Append mode
+            String logEntry =  buttonId + "," + symbol + "\n";
+            try (FileWriter writer = new FileWriter("gamelogs/"+logFileName +".txt", true)) 
+            { 
+                // Append mode
                 writer.write(logEntry);
                 System.out.println("Log file saved at: " + new java.io.File(logFileName).getAbsolutePath());
 
@@ -90,7 +91,7 @@ public class RecScreenController implements Initializable {
                 System.out.println("new dir created");
              }
              
-            File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
+            File[] files = directory.listFiles();//(dir, name) -> name.endsWith(".txt"));
             ObservableList<String> fileNames = FXCollections.observableArrayList();
 
             if (files != null) {

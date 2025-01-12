@@ -1,7 +1,0 @@
-Button Btn33 clicked with symbol X
-Button Btn32 clicked with symbol O
-Button Btn31 clicked with symbol X
-Button Btn21 clicked with symbol O
-Button Btn22 clicked with symbol X
-Button Btn23 clicked with symbol O
-Button Btn13 clicked with symbol X
