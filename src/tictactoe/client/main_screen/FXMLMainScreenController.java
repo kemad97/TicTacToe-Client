@@ -20,6 +20,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import session_data.SessionData;
+import tictactoe.client.animation.Animation;
+import tictactoe.client.server_connection.Request;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.server_ip.ServerIP;
 
@@ -62,8 +65,13 @@ public class FXMLMainScreenController implements Initializable {
             inputIP.setText(ServerIP.getIP());
         }).start();
 
-        username.setText("");
+        if (SessionData.isAuthenticated()) {
+            authentication.setText("Logout");
+            username.setText(SessionData.getUsername());
 
+        } else {
+            username.setText("");
+        }
     }
 
     @FXML
@@ -148,7 +156,17 @@ public class FXMLMainScreenController implements Initializable {
             authentication.setText("Login");
             username.setText("");
 
-            //send to server to remove this user from login list
+            try {
+                //cloase connection with server
+                Request.disconnectToServer();
+                System.out.println("logged out.");
+            } catch (IOException ex) {
+                System.out.println("can't disconnect with server");
+            }
+            
+            //update session data
+            SessionData.setAuthenticated(false);
+            SessionData.setUsername(null);            
         }
     }
 
@@ -169,11 +187,8 @@ public class FXMLMainScreenController implements Initializable {
 
             } catch (IOException ex) {
                 Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-        
-        
-        
+            }       
+
     }
 
 }

@@ -28,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.JSONObject;
+import session_data.SessionData;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.server_connection.Request;
@@ -70,7 +71,6 @@ public class FXMLRegisterationScreenController implements Initializable {
         }
 
         try {
-
             Request.registration(username.getText().trim(), password.getText().trim().hashCode() + "");
             System.out.println("register");
 
@@ -102,9 +102,15 @@ public class FXMLRegisterationScreenController implements Initializable {
 
         switch (receve.getString("header")) {
             case "success":
+            
+                //update session data
+                SessionData.setUsername(receve.getString("message"));
+                SessionData.setAuthenticated(true);
+                
                 Alert success;
                 success = new Alert(Alert.AlertType.INFORMATION);
-                success.setContentText("Registration Successful" + receve.getString("message"));
+                success.setContentText("Registration Successful: " + receve.getString("message"));
+
                 Optional<ButtonType> result = success.showAndWait();
 
                 if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -133,7 +139,7 @@ public class FXMLRegisterationScreenController implements Initializable {
             Platform.runLater(() -> {
                 mainScreen.updateUsername(username);
             });
-
+          
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
