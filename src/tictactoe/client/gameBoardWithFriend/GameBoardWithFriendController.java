@@ -1,7 +1,10 @@
 package tictactoe.client.gameBoardWithFriend;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.Delayed;
@@ -23,8 +26,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.application.Platform;
+import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
+import tictactoe.client.RecScreen.RecScreenController;
 
 public class GameBoardWithFriendController implements Initializable {
 
@@ -40,19 +45,14 @@ public class GameBoardWithFriendController implements Initializable {
     private Button[] winningButtons;
     
     private String winnerPlayer;
+    public String logFileName;
+    
+     private RecScreenController recScreenController = new RecScreenController();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Animate logo
-        ScaleTransition transition = new ScaleTransition();
-        transition.setNode(logo);
-        transition.setDuration(Duration.millis(1000));
-        transition.setCycleCount(ScaleTransition.INDEFINITE);
-        transition.setInterpolator(Interpolator.LINEAR);
-        transition.setByX(0.5);
-        transition.setByY(0.5);
-        transition.setAutoReverse(true);
-        transition.play();
+        Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
         
         
         // *********** Game With Friend Logic ***************
@@ -65,7 +65,9 @@ public class GameBoardWithFriendController implements Initializable {
         
         isGameOver = false;
         isXTurn = true;  // اللي هيلعب الأول دائما  X
-        //winnerPlayer = "X";
+       
+       recScreenController.initializeLogFile();
+       
     }
 
     @FXML
@@ -106,6 +108,7 @@ public class GameBoardWithFriendController implements Initializable {
             isXTurn = true;
         
         }
+        recScreenController.logButtonClick(clickedButton.getId(),clickedButton.getText());
 
         checkWhoIsTheWinner();
         
@@ -298,48 +301,50 @@ public class GameBoardWithFriendController implements Initializable {
         
     }
     
-    private void goToResultVideoScreen() {
+        private void goToResultVideoScreen() 
+        {
         
-        System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
+            System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+            pause.setOnFinished(event -> {
+
+                try {
+                    System.out.println("GO To Result Video Screen");
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
+                    Parent root = loader.load();
+
+
+                    ResultVideoScreenController controller = loader.getController();
+
+                    Platform.runLater(() -> {
+
+                        controller.setWinner(winnerPlayer);
+
+                    });
+
+
+
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) logo.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.show();
+
+                    System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: " );
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
+            pause.play();
+        }
+
         
-        pause.setOnFinished(event -> {
-            
-            try {
-                System.out.println("GO To Result Video Screen");
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
-                Parent root = loader.load();
-
-                
-                ResultVideoScreenController controller = loader.getController();
-                
-                Platform.runLater(() -> {
-    
-                    controller.setWinner(winnerPlayer);
-
-                });
-
-            
-                          
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) logo.getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
-                
-                System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: " );
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
         
-        pause.play();
-}
-
-
-     
+      
 }
 
 

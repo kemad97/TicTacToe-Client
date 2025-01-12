@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,8 +20,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import tictactoe.client.animation.Animation;
 import tictactoe.client.server_ip.ServerIP;
+
 
 public class FXMLMainScreenController implements Initializable {
 
@@ -42,19 +42,20 @@ public class FXMLMainScreenController implements Initializable {
     private Pane offlinePCBtn;
     @FXML
     private Button updateIPBtn;
+    @FXML
+    private Button logsBtn;
 
+    
+    public void updateUsername(String username){
+        this.username.setText(username);
+        this.authentication.setText("Logout");
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //animate logo
-        ScaleTransition transition = new ScaleTransition();
-        transition.setNode(logo);
-        transition.setDuration(Duration.millis(1000));
-        transition.setCycleCount(ScaleTransition.INDEFINITE);
-        transition.setInterpolator(Interpolator.LINEAR);
-        transition.setByX(0.5);
-        transition.setByY(0.5);
-        transition.setAutoReverse(true);
-        transition.play();
+        Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
 
         //initialize server ip
         new Thread(() -> {
@@ -72,16 +73,16 @@ public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private void startOfflineMatchVSFriend(MouseEvent event) {
-        
-         try {
-             
+
+        try {
+
             System.out.println("start offline match vs. Friend");
-            
+
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoardWithFriend/GameBoardWithFriend.fxml"));
             Scene scene = new Scene(root);
-            
+
             Stage stage = (Stage) logo.getScene().getWindow();
-            
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
@@ -94,7 +95,7 @@ public class FXMLMainScreenController implements Initializable {
         try {
             System.out.println("start offline match vs. PC");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/levels/levelsUI.fxml"));
             Scene scene = new Scene(root);
 
             Stage stage = (Stage) logo.getScene().getWindow();
@@ -129,12 +130,50 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private void authenticate(ActionEvent event) {
         if (authentication.getText().equals("Login")) {
-            authentication.setText("Logout");
-            username.setText("username");
-        }else{
+
+            Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/login/FXMLLogin.fxml"));
+                Scene scene = new Scene(root);
+
+                Stage stage = (Stage) logo.getScene().getWindow();
+
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             authentication.setText("Login");
             username.setText("");
+
+            //send to server to remove this user from login list
         }
+    }
+
+    @FXML
+    private void showGameLogs(ActionEvent event) 
+    {
+        
+        
+         Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
+                Scene scene = new Scene(root);
+
+                Stage stage = (Stage) logo.getScene().getWindow();
+
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        
+        
+        
     }
 
 }

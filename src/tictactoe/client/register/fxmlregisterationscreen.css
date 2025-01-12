@@ -1,0 +1,23 @@
+
+.mainFxmlClass {
+    -fx-background-color:red;
+    -fx-background-image: url("../../../media/images/mainBackground.png");
+    -fx-background-size: 100%;
+}
+
+
+.button{
+    -fx-font-size: 14px;
+    -fx-background-color: #5fa0e6;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+
+.button:pressed{
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #004997 0%, #003165 100%),
+        #002751,
+        #002144,
+        radial-gradient(center 50% 50%, radius 100%, #004997, #003165);
+    -fx-font-color: #ffffff;
+}
