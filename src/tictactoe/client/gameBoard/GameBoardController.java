@@ -31,6 +31,8 @@ import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 import tictactoe.client.RecScreen.RecScreenController;
+import tictactoe.client.resultVideoScreenwithPC.ResultVideoScreenWithPCController;
+import tictactoe.client.soundManager.SoundManager;
 
 public class GameBoardController implements Initializable {
 
@@ -278,7 +280,7 @@ public class GameBoardController implements Initializable {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 board[i][j].setText("");
-                board[i][j].setStyle("-fx-background-color: #BED5EE;; -fx-border-color: transparent; -fx-font-weight: normal;");
+                board[i][j].setStyle("-fx-background-color: #BED5EE;; -fx-border-color: transparent; -fx-font-weight: bold;");
             }
         }
 
@@ -350,10 +352,10 @@ public class GameBoardController implements Initializable {
             try {
                 System.out.println("GO To Result Video Screen");
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreenwithPC/ResultVideoScreenWithPC.fxml"));
                 Parent root = loader.load();
 
-                ResultVideoScreenController controller = loader.getController();
+                ResultVideoScreenWithPCController controller = loader.getController();
 
                 Platform.runLater(() -> {
 
@@ -366,7 +368,9 @@ public class GameBoardController implements Initializable {
                 stage.setScene(scene);
                 stage.show();
 
-                System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: ");
+                SoundManager.pauseBackgroundMusic();
+                
+                System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreenWithPC: ");
 
             } catch (IOException ex) {
                 Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
