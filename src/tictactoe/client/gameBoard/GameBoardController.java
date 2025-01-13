@@ -24,6 +24,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import tictactoe.client.animation.Animation;
+import tictactoe.client.main_screen.FXMLMainScreenController;
 import javafx.util.Duration;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
@@ -49,6 +51,7 @@ public class GameBoardController implements Initializable {
     private RecScreenController recScreenController;
      
     GameBoardWithFriendController gameWithFriendController = new GameBoardWithFriendController();
+
 
     public void setDifficulty(String difficulty) {
 
@@ -262,9 +265,9 @@ public class GameBoardController implements Initializable {
     private void checkWhoIsTheWinner() {
         if (checkWin("X")) {
             highlightWinnerButtons();
-            alertMessage = "You Win!";
+            alertMessage = "You Win!";          
             winnerPlayer = "X";
-            goToResultVideoScreen();
+            goToResultVideoScreen();          
             isGameOver = true;
         } else if (checkWin("O")) {
             highlightWinnerButtons();
@@ -352,7 +355,7 @@ public class GameBoardController implements Initializable {
         }
 
     }
-    
+  
     private void goToResultVideoScreen() {
 
         System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
@@ -391,7 +394,6 @@ public class GameBoardController implements Initializable {
     }
 
     @FXML
-    
     public void handleCheckBox() {
         if (checkBoxRecord.isSelected()) {
             if (recScreenController == null) {

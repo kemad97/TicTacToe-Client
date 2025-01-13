@@ -28,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.JSONObject;
+import session_data.SessionData;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.server_connection.Request;
@@ -69,16 +70,18 @@ public class FXMLRegisterationScreenController implements Initializable {
             return;
         }
 
-        try {
+        disableUI();
+        new Thread(() -> {
+            try {
+                Request.getInstance().registration(username.getText().trim(),
+                        password.getText().trim().hashCode() + "");
 
-            Request.registration(username.getText().trim(), password.getText().trim().hashCode() + "");
-            System.out.println("register");
+                handleResponse(Request.getInstance().receve());
+            } catch (IOException ex) {
+                System.out.println("Error: can't connect to server.");
+            }
+        }).start();
 
-            handleResponse(Request.receve());
-
-        } catch (IOException ex) {
-            System.out.println("Error: can't connect to server.");
-        }
     }
 
     @FXML
@@ -99,24 +102,37 @@ public class FXMLRegisterationScreenController implements Initializable {
     }
 
     private void handleResponse(JSONObject receve) {
+        //reenable screen ui
+        Platform.runLater(() -> enableUI());
 
         switch (receve.getString("header")) {
             case "success":
-                Alert success;
-                success = new Alert(Alert.AlertType.INFORMATION);
-                success.setContentText("Registration Successful" + receve.getString("message"));
-                Optional<ButtonType> result = success.showAndWait();
 
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    gotoMainScreen(username.getText().trim());
-                }
+                //update session data
+                SessionData.setUsername(receve.getString("message"));
+                SessionData.setAuthenticated(true);
+
+                Platform.runLater(() -> {
+                    Alert success;
+                    success = new Alert(Alert.AlertType.INFORMATION);
+                    success.setContentText("Registration Successful: " + receve.getString("message"));
+
+                    Optional<ButtonType> result = success.showAndWait();
+
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        gotoMainScreen(username.getText().trim());
+                    }
+                });
 
                 break;
             case "register_error":
             case "error":
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText(receve.getString("message"));
-                alert.show();
+
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(receve.getString("message"));
+                    alert.show();
+                });
                 break;
         }
     }
@@ -141,6 +157,20 @@ public class FXMLRegisterationScreenController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLRegisterationScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void disableUI() {
+        username.disableProperty().set(true);
+        password.disableProperty().set(true);
+        regesterationBtn.disableProperty().set(true);
+        login_label.disableProperty().set(true);
+    }
+
+    private void enableUI() {
+        username.disableProperty().set(false);
+        password.disableProperty().set(false);
+        regesterationBtn.disableProperty().set(false);
+        login_label.disableProperty().set(false);
     }
 
 }
