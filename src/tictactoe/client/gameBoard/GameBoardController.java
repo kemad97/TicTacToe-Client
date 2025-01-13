@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import tictactoe.client.animation.Animation;
@@ -38,6 +39,8 @@ public class GameBoardController implements Initializable {
     private ImageView logo;
     @FXML
     private Button Btn11, Btn12, Btn13, Btn21, Btn22, Btn23, Btn31, Btn32, Btn33;
+    @FXML
+    private CheckBox checkBoxRecord;
 
     private boolean isXTurn;
     private boolean isGameOver;
@@ -45,6 +48,7 @@ public class GameBoardController implements Initializable {
     private Button[] winningButtons;
     private String difficulty;
     private String winnerPlayer;
+    private RecScreenController recScreenController;
      
     GameBoardWithFriendController gameWithFriendController = new GameBoardWithFriendController();
 
@@ -71,10 +75,13 @@ public class GameBoardController implements Initializable {
         isXTurn = true;
 
        // difficulty = "Medium"; // test
+       handleCheckBox();
     }
+    
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
+        
         if (isGameOver) {
             return;
         }
@@ -88,13 +95,20 @@ public class GameBoardController implements Initializable {
             clickedButton.setText("X");
             clickedButton.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
             isXTurn = false;
-
+            
+            if(recScreenController != null){
+                recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());
+            }
+            
             checkWhoIsTheWinner();
 
             if (!isGameOver) {
                 computerMove();
             }
         }
+        
+        // disable checkbox
+        checkBoxRecord.setDisable(true);
     }
 
     private void computerMove() {
@@ -119,6 +133,9 @@ public class GameBoardController implements Initializable {
             board[row][col].setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
             isXTurn = true;
 
+            if(recScreenController != null){
+                recScreenController.logButtonClick(board[row][col].getId(), board[row][col].getText());
+            }
             checkWhoIsTheWinner();
         }
     }
@@ -375,4 +392,18 @@ public class GameBoardController implements Initializable {
 
         pause.play();
     }
+
+    @FXML
+    public void handleCheckBox() {
+        if (checkBoxRecord.isSelected()) {
+            if (recScreenController == null) {
+                recScreenController = new RecScreenController();
+                recScreenController.initializeLogFile();
+            }
+            System.out.println("Recording is enabled");
+        } else {
+            recScreenController = null; 
+            System.out.println("Recording is diabled");
+        }
+    } 
 }
