@@ -4,12 +4,17 @@ dist/TicTacToe-Client.html
 dist/TicTacToe-Client.jar
 dist/TicTacToe-Client.jnlp
 
+
+
 *.class
+*.txt
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+/nbproject/private/*
 
 !dist/lib/json-20250107.jar
 dist/web-files/dtjava.js
