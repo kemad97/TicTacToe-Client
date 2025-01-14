@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.client.resultVideoScreen;
+package tictactoe.client.resultVideoScreenwithPC;
 
+import tictactoe.client.resultVideoScreen.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,7 +37,7 @@ import tictactoe.client.soundManager.SoundManager;
  *
  * @author ayaah
  */
-public class ResultVideoScreenController implements Initializable {
+public class ResultVideoScreenWithPCController implements Initializable {
 
    @FXML
    private ImageView logo;
@@ -134,9 +135,9 @@ public class ResultVideoScreenController implements Initializable {
         
         try {
              
-            System.out.println("Back To Game Board With Friend Screen");
+            System.out.println("Back To Game Board With PC Screen");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoardWithFriend/GameBoardWithFriend.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
