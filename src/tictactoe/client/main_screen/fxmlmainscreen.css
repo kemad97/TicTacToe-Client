@@ -11,16 +11,15 @@
     -fx-border-radius: 20;
 }
 
-.authenticationBtn{
+.basicBtn{
     -fx-background-color: white;
     -fx-background-radius: 8,7,6;
-    -fx-background-insets: 0,1,2;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-margen-left: 3;
     -fx-font-size: 13;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
-.updateIP:pressed{
+.basicBtn:pressed{
     -fx-background-color: 
         linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
         #9d4024,

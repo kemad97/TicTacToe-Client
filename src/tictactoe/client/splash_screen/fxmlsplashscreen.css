@@ -30,7 +30,7 @@
     -fx-effect: dropshadow(gaussian, gray, 5, 0.0, 3, 3);
 }
 
-.updateIP{
+.basicBtn{
     -fx-background-color: 
         linear-gradient(#f2f2f2, #d6d6d6),
         linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),
@@ -43,7 +43,7 @@
     -fx-font-size: 13;
 }
 
-.updateIP:pressed{
+.basicBtn:pressed{
     -fx-background-color: 
         linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
         #9d4024,

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@fxmlmainscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.main_screen.FXMLMainScreenController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@fxmlmainscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.main_screen.FXMLMainScreenController">
    <children>
       <Button fx:id="authentication" layoutX="589.0" layoutY="31.0" mnemonicParsing="false" onAction="#authenticate" text="Login">
          <padding>
@@ -51,7 +51,7 @@
                         <Image url="@../../../media/images/offlineFriend.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="14.0" layoutY="67.0" text="Offline vs. Friend" textFill="WHITE">
+                  <Label layoutX="5.0" layoutY="67.0" text="Offline vs. Friend" textFill="WHITE">
                      <font>
                         <Font name="Tahoma Bold" size="13.0" />
                      </font>
@@ -75,13 +75,19 @@
             <Pane />
          </children>
       </VBox>
-      <Button fx:id="logsBtn" layoutX="589.0" layoutY="447.0" mnemonicParsing="false" onAction="#showGameLogs" styleClass="authenticationBtn" text="Game Logs">
+      <Button fx:id="logsBtn" layoutX="589.0" layoutY="447.0" mnemonicParsing="false" onAction="#showGameLogs" styleClass="basicBtn" text="Game Logs">
          <padding>
             <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
          </padding>
       </Button>
-      <Button fx:id="updateIPBtn" defaultButton="true" layoutX="362.0" layoutY="427.0" mnemonicParsing="false" onAction="#updateIP" prefHeight="41.0" prefWidth="118.0" text="Update" />
-      <TextField fx:id="inputIP" layoutX="238.0" layoutY="435.0" prefHeight="25.0" prefWidth="104.0" promptText="Server IP" styleClass="authenticationBtn">
+      <Button fx:id="updateIPBtn" defaultButton="true" layoutX="377.0" layoutY="433.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#updateIP" styleClass="basicBtn" text="Update">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+         </padding></Button>
+      <TextField fx:id="inputIP" alignment="CENTER" layoutX="256.0" layoutY="435.0" prefHeight="25.0" prefWidth="104.0" promptText="Server IP" styleClass="authenticationBtn">
          <padding>
             <Insets right="5.0" />
          </padding>
