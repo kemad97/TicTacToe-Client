@@ -8,15 +8,15 @@
 .button{
     
     -fx-font: 24px "Abel";
-    -fx-background-color: #BED5EE;
+    -fx-background-color: #ffd02d;
     -fx-background-radius: 20;
     -fx-border-radius: 20;
 }
 
-.grid-pane {
-    -fx-background-color: #3C94F2;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
+.pane {
+    -fx-background-color: #d6d6d6;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
 }
 
 .anchor-pane{
@@ -30,12 +30,10 @@
     -fx-effect: dropshadow(gaussian, gray, 5, 0.0, 3, 3);
 }
 
-.checkBox {
-    -fx-font: 14px "Abel";
-    -fx-background-color: aquamarine;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-start-margin: 15;
+.text-feild{
     
+    -fx-font: 15px "Abel";
+    -fx-background-color: #ffd02d;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
 }
-

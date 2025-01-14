@@ -45,11 +45,11 @@ public class FXMLRegisterationScreenController implements Initializable {
     @FXML
     private Button regesterationBtn;
     @FXML
-    private Label login_label;
-    @FXML
     private TextField username;
     @FXML
     private TextField password;
+    @FXML
+    private Label registeration_label;
 
     /**
      * Initializes the controller class.
@@ -163,14 +163,14 @@ public class FXMLRegisterationScreenController implements Initializable {
         username.disableProperty().set(true);
         password.disableProperty().set(true);
         regesterationBtn.disableProperty().set(true);
-        login_label.disableProperty().set(true);
+        registeration_label.disableProperty().set(true);
     }
 
     private void enableUI() {
         username.disableProperty().set(false);
         password.disableProperty().set(false);
         regesterationBtn.disableProperty().set(false);
-        login_label.disableProperty().set(false);
+        registeration_label.disableProperty().set(false);
     }
 
 }

@@ -4,7 +4,10 @@ dist/TicTacToe-Client.html
 dist/TicTacToe-Client.jar
 dist/TicTacToe-Client.jnlp
 
+
+
 *.class
+*.txt
 
 # Package Files #
 *.jar
