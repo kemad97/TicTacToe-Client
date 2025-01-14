@@ -27,7 +27,7 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
-             <MediaView fx:id="mediaView" fitHeight="240.0" fitWidth="439.0" layoutX="38.0" layoutY="61.0">
+             <MediaView fx:id="mediaView" fitHeight="240.0" fitWidth="439.0" layoutX="38.0" layoutY="61.0" styleClass="label-with-shadow">
                
             </MediaView>
             <Button id="btnContinue" layoutX="115.0" layoutY="312.0" mnemonicParsing="false" onAction="#handleContinueButtonAction" prefHeight="51.0" prefWidth="281.0" text="Play another match">

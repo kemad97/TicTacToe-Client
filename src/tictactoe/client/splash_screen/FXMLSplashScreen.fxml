@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tictactoe.client.splash_screen.FXMLSplashScreenController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.splash_screen.FXMLSplashScreenController">
     <stylesheets>
         <URL value="@fxmlsplashscreen.css" />
     </stylesheets>
    <children>
-      <ImageView fx:id="logo" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logo" fitHeight="150.0" fitWidth="200.0" layoutX="264.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../media/images/logo.png" />
          </image>
       </ImageView>
    </children>
+   <styleClass>
+      <String fx:value="mainFxmlClass" />
+      <String fx:value="anchor-pane" />
+   </styleClass>
 </AnchorPane>

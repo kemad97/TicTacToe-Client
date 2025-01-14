@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.application.Platform;
+import javafx.scene.control.CheckBox;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
@@ -39,6 +40,9 @@ public class GameBoardWithFriendController implements Initializable {
 
     @FXML
     private Button Btn11, Btn12, Btn13, Btn21, Btn22, Btn23, Btn31, Btn32, Btn33;
+    
+    @FXML
+    private CheckBox checkBoxRecord;
 
     private boolean isXTurn;
     private boolean isGameOver;
@@ -66,6 +70,8 @@ public class GameBoardWithFriendController implements Initializable {
         isXTurn = true;  // اللي هيلعب الأول دائما  X
       
         recScreenController.initializeLogFile();
+        
+        handleCheckBox();
       
     }
 
@@ -110,6 +116,9 @@ public class GameBoardWithFriendController implements Initializable {
         recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());      
 
         checkWhoIsTheWinner();
+        
+        // disable checkbox
+        checkBoxRecord.setDisable(true);
 
     }
 
@@ -327,4 +336,18 @@ public class GameBoardWithFriendController implements Initializable {
 
         pause.play();
     }
+    
+      @FXML
+    public void handleCheckBox() {
+        if (checkBoxRecord.isSelected()) {
+            if (recScreenController == null) {
+                recScreenController = new RecScreenController();
+                recScreenController.initializeLogFile();
+            }
+            System.out.println("Recording is enabled");
+        } else {
+            recScreenController = null; 
+            System.out.println("Recording is diabled");
+        }
+    } 
 }

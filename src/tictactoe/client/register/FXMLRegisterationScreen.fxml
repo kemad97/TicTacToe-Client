@@ -13,7 +13,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@fxmlregisterationscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.register.FXMLRegisterationScreenController">
    <children>
       <ImageView fx:id="logo" fitHeight="70.0" fitWidth="91.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -21,36 +20,39 @@
             <Image url="@../../../media/images/logo.png" />
          </image>
       </ImageView>
-      <Pane layoutX="210.0" layoutY="86.0" prefHeight="328.0" prefWidth="281.0">
+      <Pane layoutX="165.0" layoutY="58.0" prefHeight="403.0" prefWidth="386.0">
          <children>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="298.0" layoutX="15.0" layoutY="17.0" opacity="0.85" stroke="#d7d7d7" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="formBackground" width="251.0" />
-            <Label layoutX="107.0" layoutY="40.0" text="Register">
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="389.0" opacity="0.85" stroke="#d7d7d7" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="formBackground" width="373.0" />
+            <Label layoutX="141.0" layoutY="57.0" text="Register">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="username" layoutX="34.0" layoutY="102.0" prefHeight="30.0" prefWidth="213.0" promptText="Username">
+            <TextField fx:id="username" alignment="CENTER" layoutX="83.0" layoutY="118.0" prefHeight="30.0" prefWidth="213.0" promptText="Username">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="password" layoutX="32.0" layoutY="160.0" prefHeight="25.0" prefWidth="213.0" promptText="Password">
+            <PasswordField fx:id="password" alignment="CENTER" layoutX="81.0" layoutY="176.0" prefHeight="25.0" prefWidth="213.0" promptText="Password">
                <font>
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Button fx:id="regesterationBtn" defaultButton="true" layoutX="105.0" layoutY="217.0" mnemonicParsing="false" onAction="#registerUser" text="Register" textFill="WHITE">
+            <Button fx:id="regesterationBtn" alignment="CENTER" defaultButton="true" layoutX="149.0" layoutY="242.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="39.0" prefWidth="90.0" text="Register">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label fx:id="login_label" alignment="CENTER" layoutX="114.0" layoutY="267.0" onMouseClicked="#goToLoginScreen" text="Login">
+            <Label fx:id="registeration_label" alignment="CENTER" layoutX="159.0" layoutY="296.0" onMouseClicked="#goToLoginScreen" text="Login">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
             </Label>
          </children>
       </Pane>

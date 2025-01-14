@@ -7,19 +7,18 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="430.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../splash_screen/fxmlsplashscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.main_screen.FXMLMainScreenController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@fxmlmainscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.main_screen.FXMLMainScreenController">
    <children>
-      <Button fx:id="authentication" layoutX="522.0" layoutY="23.0" mnemonicParsing="false" onAction="#authenticate" styleClass="authenticationBtn" text="Login">
+      <Button fx:id="authentication" layoutX="589.0" layoutY="31.0" mnemonicParsing="false" onAction="#authenticate" text="Login">
          <padding>
             <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
          </padding>
       </Button>
-      <Label fx:id="username" alignment="CENTER" layoutX="419.0" layoutY="27.0" prefHeight="17.0" prefWidth="94.0" text="username" textFill="WHITE">
+      <Label fx:id="username" alignment="CENTER" layoutX="480.0" layoutY="40.0" prefHeight="17.0" prefWidth="94.0" styleClass="label-with-shadow" text="username" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
@@ -29,16 +28,16 @@
             <Image url="@../../../media/images/logo.png" />
          </image>
       </ImageView>
-      <VBox layoutX="200.0" layoutY="38.0" spacing="3.0">
+      <VBox layoutX="250.0" layoutY="64.0" spacing="3.0">
          <children>
             <Pane fx:id="onlineBtn" minHeight="80.0" onMouseClicked="#startOnlineMatch" prefWidth="200.0" styleClass="mainScreenBtn">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="191.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="191.0" layoutX="5.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" styleClass="label-with-shadow">
                      <image>
                         <Image url="@../../../media/images/onlineBtn.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="110.0" layoutY="32.0" text="Online" textFill="WHITE">
+                  <Label layoutX="101.0" layoutY="41.0" text="Online" textFill="WHITE">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>
@@ -47,12 +46,12 @@
             </Pane>
             <Pane fx:id="offlineFriendBtn" minHeight="80.0" onMouseClicked="#startOfflineMatchVSFriend" prefWidth="200.0" styleClass="mainScreenBtn">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" styleClass="label-with-shadow">
                      <image>
                         <Image url="@../../../media/images/offlineFriend.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="5.0" layoutY="32.0" text="Offline vs. Friend" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="67.0" text="Offline vs. Friend" textFill="WHITE">
                      <font>
                         <Font name="Tahoma Bold" size="13.0" />
                      </font>
@@ -61,40 +60,31 @@
             </Pane>
             <Pane fx:id="offlinePCBtn" minHeight="80.0" onMouseClicked="#startOfflineMatchVSPC" prefWidth="200.0" styleClass="mainScreenBtn">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" styleClass="label-with-shadow">
                      <image>
                         <Image url="@../../../media/images/offlinePC.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="90.0" layoutY="32.0" text="Offline vs. PC" textFill="WHITE">
+                  <Label layoutX="92.0" layoutY="59.0" text="Offline vs. PC" textFill="WHITE">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <HBox prefHeight="21.0" prefWidth="143.0" spacing="5.0">
-               <children>
-                  <TextField fx:id="inputIP" prefHeight="25.0" prefWidth="149.0" promptText="Server IP" styleClass="updateIP">
-                     <padding>
-                        <Insets right="5.0" />
-                     </padding>
-                  </TextField>
-                  <Button fx:id="updateIPBtn" defaultButton="true" mnemonicParsing="false" onAction="#updateIP" prefHeight="25.0" prefWidth="72.0" styleClass="updateIP" text="Update">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin></Button>
-               </children>
-               <padding>
-                  <Insets top="50.0" />
-               </padding>
-            </HBox>
+            <Pane />
          </children>
       </VBox>
-      <Button fx:id="logsBtn" layoutX="492.0" layoutY="341.0" mnemonicParsing="false" onAction="#showGameLogs" styleClass="authenticationBtn" text="Game Logs">
+      <Button fx:id="logsBtn" layoutX="589.0" layoutY="447.0" mnemonicParsing="false" onAction="#showGameLogs" styleClass="authenticationBtn" text="Game Logs">
          <padding>
             <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
          </padding>
       </Button>
+      <Button fx:id="updateIPBtn" defaultButton="true" layoutX="362.0" layoutY="427.0" mnemonicParsing="false" onAction="#updateIP" prefHeight="41.0" prefWidth="118.0" text="Update" />
+      <TextField fx:id="inputIP" layoutX="238.0" layoutY="435.0" prefHeight="25.0" prefWidth="104.0" promptText="Server IP" styleClass="authenticationBtn">
+         <padding>
+            <Insets right="5.0" />
+         </padding>
+      </TextField>
    </children>
 </AnchorPane>
