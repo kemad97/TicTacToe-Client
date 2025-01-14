@@ -30,6 +30,7 @@ import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 import tictactoe.client.RecScreen.RecScreenController;
+import tictactoe.client.soundManager.SoundManager;
 
 public class GameBoardWithFriendController implements Initializable {
 
@@ -53,7 +54,7 @@ public class GameBoardWithFriendController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Animate logo
         Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
-
+      
         // *********** Game With Friend Logic ***************
         board = new Button[][]{
             {Btn11, Btn12, Btn13},
@@ -63,9 +64,9 @@ public class GameBoardWithFriendController implements Initializable {
 
         isGameOver = false;
         isXTurn = true;  // اللي هيلعب الأول دائما  X
-
+      
         recScreenController.initializeLogFile();
-
+      
     }
 
     @FXML
@@ -105,8 +106,8 @@ public class GameBoardWithFriendController implements Initializable {
 
             isXTurn = true;
 
-        }
-        recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());
+        }      
+        recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());      
 
         checkWhoIsTheWinner();
 
@@ -287,7 +288,7 @@ public class GameBoardWithFriendController implements Initializable {
         }
 
     }
-
+  
     private void goToResultVideoScreen() {
 
         System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
@@ -314,6 +315,8 @@ public class GameBoardWithFriendController implements Initializable {
                 Stage stage = (Stage) logo.getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
+                
+                SoundManager.pauseBackgroundMusic();
 
                 System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: ");
 
@@ -324,5 +327,4 @@ public class GameBoardWithFriendController implements Initializable {
 
         pause.play();
     }
-
 }

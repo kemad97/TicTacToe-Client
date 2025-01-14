@@ -4,7 +4,10 @@ dist/TicTacToe-Client.html
 dist/TicTacToe-Client.jar
 dist/TicTacToe-Client.jnlp
 
+
+
 *.class
+*.txt
 
 # Package Files #
 *.jar
@@ -26,6 +29,7 @@ temp/
 classes/
 deploy/
 javadoc/
+gamelogs/
 
 # lock file, a part of Oracle Credential Store Framework
 cwallet.sso.lck
