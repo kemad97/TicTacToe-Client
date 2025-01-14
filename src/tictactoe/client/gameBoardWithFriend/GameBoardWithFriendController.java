@@ -69,6 +69,7 @@ public class GameBoardWithFriendController implements Initializable {
         isGameOver = false;
         isXTurn = true;  // اللي هيلعب الأول دائما  X
       
+        recScreenController = new RecScreenController();
         recScreenController.initializeLogFile();
         
         handleCheckBox();
@@ -113,8 +114,12 @@ public class GameBoardWithFriendController implements Initializable {
             isXTurn = true;
 
         }      
-        recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());      
-
+        // Log button click only if recording is enabled
+        if (recScreenController != null) {
+            recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());
+        } else {
+            System.out.println("Recording is disabled. Button click not logged.");
+        }
         checkWhoIsTheWinner();
         
         // disable checkbox
@@ -337,7 +342,7 @@ public class GameBoardWithFriendController implements Initializable {
         pause.play();
     }
     
-      @FXML
+    @FXML
     public void handleCheckBox() {
         if (checkBoxRecord.isSelected()) {
             if (recScreenController == null) {
@@ -346,8 +351,9 @@ public class GameBoardWithFriendController implements Initializable {
             }
             System.out.println("Recording is enabled");
         } else {
-            recScreenController = null; 
-            System.out.println("Recording is diabled");
+            System.out.println("Recording is disabled");
+            recScreenController = null;
         }
-    } 
+    }
+
 }
