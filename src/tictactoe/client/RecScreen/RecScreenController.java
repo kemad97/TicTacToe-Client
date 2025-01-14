@@ -20,15 +20,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
 import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.replay.ReplayController;
 
 
 /**
@@ -46,6 +46,8 @@ public class RecScreenController implements Initializable {
     private ListView<String> fileListView;
     @FXML
     private Button backBtn;
+    
+    private ReplayController replayController;
 
     /**
      * Initializes the controller class.
@@ -116,31 +118,37 @@ public class RecScreenController implements Initializable {
             String selectedFile = fileListView.getSelectionModel().getSelectedItem(); // Get the selected file name
             if (selectedFile != null) 
             {
-                openFile(logDirectory + selectedFile); 
+                openFile(logDirectory + selectedFile, event); 
             }
         }
     }
 
-    private void openFile(String filePath) 
+    private void openFile(String filePath, MouseEvent event) 
     {
-        try 
-        {
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/replay/Replay.fxml"));
+            Parent root = loader.load();
+            replayController = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+            
+            System.out.println("Replay match");
             File file = new File(filePath);
-            if (file.exists()) 
-            {
-                java.awt.Desktop.getDesktop().open(file); // Open the file using the default application
-            } 
+            if (file.exists()){
+                replayController.replay(filePath);
+            }
             else 
             {
                 System.err.println("File does not exist: " + filePath);
             }
-        } 
-        catch (IOException ex)
-        {
+            
+            } catch (IOException ex) {
             Logger.getLogger(RecScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
-        
+        }
+       
     }
 
     @FXML
@@ -166,10 +174,5 @@ public class RecScreenController implements Initializable {
         }
 
     
-    }
-    
-    
-    
-
-    
+    }   
 }
