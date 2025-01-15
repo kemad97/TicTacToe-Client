@@ -1,5 +1,100 @@
-/dist/*
-/build/*
+
+### Java template
+dist/TicTacToe-Client.html
+dist/TicTacToe-Client.jar
+dist/TicTacToe-Client.jnlp
+
+
+
+*.class
+*.txt
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
 /nbproject/private/*
-/build.xml
-/manifest.mf
+
+!dist/lib/json-20250107.jar
+dist/web-files/dtjava.js
+
+
+### JDeveloper template
+# default application storage directory used by the IDE Performance Cache feature
+.data/
+
+# used for ADF styles caching
+temp/
+
+# default output directories
+classes/
+deploy/
+javadoc/
+gamelogs/
+
+# lock file, a part of Oracle Credential Store Framework
+cwallet.sso.lck
+
+### JetBrains template
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+
+*.iml
+
+## Directory-based project format:
+.idea/
+
+## File-based project format:
+*.ipr
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+
+
+### Gradle template
+.gradle
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+
+# External tool builders
+.externalToolBuilders/
+
+
+# CDT-specific
+.cproject
+
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+# PDT-specific
+.buildpath
+
+# sbteclipse plugin
+.target
+
+# TeXlipse plugin
+.texlipse
+
+# sftp configuration file
+sftp-config.json
+

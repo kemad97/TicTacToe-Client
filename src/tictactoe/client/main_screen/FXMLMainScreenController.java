@@ -25,7 +25,6 @@ import tictactoe.client.animation.Animation;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.server_ip.ServerIP;
-import tictactoe.client.soundManager.SoundManager;
 
 
 public class FXMLMainScreenController implements Initializable {
@@ -77,9 +76,6 @@ public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private void startOnlineMatch(MouseEvent event) {
-         
-        SoundManager.playSoundEffect("click.wav");
-
         System.out.println("start online match");
     }
 
@@ -87,11 +83,9 @@ public class FXMLMainScreenController implements Initializable {
     private void startOfflineMatchVSFriend(MouseEvent event) {
 
         try {
-                        
-            SoundManager.playSoundEffect("click.wav");
 
             System.out.println("start offline match vs. Friend");
-           
+
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoardWithFriend/GameBoardWithFriend.fxml"));
             Scene scene = new Scene(root);
 
@@ -107,9 +101,6 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private void startOfflineMatchVSPC(MouseEvent event) {
         try {
-             
-            SoundManager.playSoundEffect("click.wav");
-
             System.out.println("start offline match vs. PC");
 
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/levels/levelsUI.fxml"));
@@ -126,9 +117,6 @@ public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private void updateIP(ActionEvent event) {
-         
-        SoundManager.playSoundEffect("click.wav");
-
         String ip = inputIP.getText().trim();
 
         if (!ServerIP.getIP().equals(ip)) {
@@ -149,9 +137,6 @@ public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private void authenticate(ActionEvent event) {
-         
-        SoundManager.playSoundEffect("click.wav");
-
         if (authentication.getText().equals("Login")) {
 
             Parent root;
@@ -192,10 +177,7 @@ public class FXMLMainScreenController implements Initializable {
         
          Parent root;
             try {
-                 
-                SoundManager.playSoundEffect("click.wav");
-
-                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/OnlineOfflineUI.fxml"));
                 Scene scene = new Scene(root);
 
                 Stage stage = (Stage) logo.getScene().getWindow();
@@ -208,6 +190,5 @@ public class FXMLMainScreenController implements Initializable {
             }       
 
     }
-
 
 }

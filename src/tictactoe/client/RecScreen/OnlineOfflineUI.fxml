@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.RecScreen.OnlineOfflineUIController">
+    <stylesheets>
+        <URL value="@onlineofflineui.css" />
+    </stylesheets>
+    <children>
+        <!-- Title -->
+        <Label layoutX="220.0" layoutY="30.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Game Records" textAlignment="CENTER" textFill="#1b1b1a" />
+
+        <!-- Online Records Button -->
+        <Button fx:id="onlineRecordsBtn" layoutX="230.0" layoutY="120.0" onAction="#showOnlineRecords" prefHeight="40.0" prefWidth="140.0" style="-fx-font-size: 16px;" text="Online Records" />
+
+        <!-- Offline Records Button -->
+        <Button fx:id="offlineRecordsBtn" layoutX="230.0" layoutY="200.0" onAction="#showOfflineRecords" prefHeight="40.0" prefWidth="140.0" style="-fx-font-size: 16px;" text="Offline Records" />
+      <ImageView id="btnBack" fx:id="backBtn" fitHeight="38.0" fitWidth="50.0" layoutX="65.0" layoutY="101.0" onMouseClicked="#goBackMainMenu" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/undo.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

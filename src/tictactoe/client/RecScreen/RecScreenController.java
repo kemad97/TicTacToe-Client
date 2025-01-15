@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,8 +30,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.replay.ReplayController;
-import tictactoe.client.soundManager.SoundManager;
-
+import tictactoe.client.register.FXMLRegisterationScreenController;
+import session_data.SessionData;
 
 /**
  * FXML Controller class
@@ -40,10 +39,13 @@ import tictactoe.client.soundManager.SoundManager;
  * @author Kerolos
  */
 public class RecScreenController implements Initializable {
+    
+    private static final Logger LOGGER = Logger.getLogger(RecScreenController.class.getName());
+
 
     public String logFileName;
     
-    private final String logDirectory = "gamelogs/";
+    private  String logDirectory ;
 
     @FXML
     private ListView<String> fileListView;
@@ -51,6 +53,10 @@ public class RecScreenController implements Initializable {
     private ImageView backBtn;
     
     private ReplayController replayController;
+    
+   // FXMLRegisterationScreenController regObj = new FXMLRegisterationScreenController();
+    
+    
 
     /**
      * Initializes the controller class.
@@ -58,7 +64,7 @@ public class RecScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        loadRecordedFiles ();
+       // loadRecordedFiles ();
         
     }    
     
@@ -69,27 +75,48 @@ public class RecScreenController implements Initializable {
             logFileName = "game_log_" + timestamp ;
             System.out.println("New match log file: " + logFileName);
         }
+     
         
-        public void logButtonClick(String buttonId, String symbol) 
-        {
+        public void logButtonClick(String buttonId, String symbol) {
+            String logEntry = buttonId + "," + symbol + "\n";
+            File userFolder;
             
-            String logEntry =  buttonId + "," + symbol + "\n";
-            try (FileWriter writer = new FileWriter("gamelogs/"+logFileName +".txt", true)) 
-            { 
-                // Append mode
-                writer.write(logEntry);
-                System.out.println("Log file saved at: " + new java.io.File(logFileName).getAbsolutePath());
-
-            } 
-            catch (IOException e) 
+            // Create user folder 
+            if(SessionData.isAuthenticated())
             {
+                String username = SessionData.getUsername();
+                 userFolder = new File( "gamelogs/offline/" + username);
+
+                 if (!userFolder.exists()) {
+                    userFolder.mkdirs(); // Create the directory if it doesn't exist
+                    System.out.println("New directory created for user: " + username);
+                }
+             
+            }          
+            else
+            {
+                
+                 userFolder = new File( "gamelogs/offline/" );
+            
+            }
+           
+
+            // Create log file within user's folder
+            File logFile = new File(userFolder, logFileName + ".txt");
+            try (FileWriter writer = new FileWriter(logFile, true)) { // Append mode
+                writer.write(logEntry);
+                System.out.println("Log entry saved in: " + logFile.getAbsolutePath());
+            } catch (IOException e) {
                 System.err.println("Error writing to log file: " + e.getMessage());
             }
         }
         
-        public void loadRecordedFiles ()
+        
+
+        
+        public void loadRecordedFiles (String directoryPath)
         {
-            File directory= new File (logDirectory);
+            File directory= new File (directoryPath);
              if (!directory.exists()) 
              {
                 directory.mkdirs(); // Create the directory if it doesn't exist
@@ -121,6 +148,16 @@ public class RecScreenController implements Initializable {
             String selectedFile = fileListView.getSelectionModel().getSelectedItem(); // Get the selected file name
             if (selectedFile != null) 
             {
+                if(OnlineOfflineUIController.atOnlineFolder)
+                {
+                    
+                    logDirectory= "gamelogs/online/";
+                }
+                else
+                {
+                     logDirectory= "gamelogs/offline/";
+                }
+                
                 openFile(logDirectory + selectedFile, event); 
             }
         }
@@ -130,9 +167,6 @@ public class RecScreenController implements Initializable {
     {
         
         try {
-             
-            SoundManager.playSoundEffect("click.wav");
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/replay/Replay.fxml"));
             Parent root = loader.load();
             replayController = loader.getController();
@@ -157,13 +191,13 @@ public class RecScreenController implements Initializable {
        
     }
 
+    
+
     @FXML
-    private void goBackMainMenu() 
+    private void goBackMainMenu(MouseEvent event) 
     {
         
-        try {
-             
-            SoundManager.playSoundEffect("click.wav");
+           try {
 
             System.out.println("Back To Main Screen");
 
@@ -180,7 +214,5 @@ public class RecScreenController implements Initializable {
             Logger.getLogger(FXMLMainScreenController.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-
-    
-    }   
+    }
 }
