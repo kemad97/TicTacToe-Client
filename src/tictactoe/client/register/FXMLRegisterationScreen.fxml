@@ -54,6 +54,11 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <ImageView fx:id="btnBack" fitHeight="30.0" fitWidth="33.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#backToMainScreen" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/back%20(1).png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </children>

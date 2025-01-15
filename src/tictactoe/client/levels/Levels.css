@@ -1,0 +1,43 @@
+
+
+.mainFxmlClass {
+    -fx-background-image: url("../../../media/images/mainBackground.png");
+    -fx-background-size: 100%;
+}
+
+
+.anchor-pane{
+    
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+
+.label-with-shadow {
+    -fx-effect: dropshadow(gaussian, gray, 5, 0.0, 3, 3);
+}
+
+.text_style{
+    -fx-font: 32px "Abel";
+    -fx-text-color: #5FA0E5;
+}
+
+.btnEasy {
+    -fx-background-color: green;
+}
+
+.btnMedium{
+    -fx-background-color:blue;
+}
+
+.btnHard{
+    
+    -fx-background-color:red;
+    
+}
+.btn {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 5;  
+    -fx-font-weight: bold;
+}

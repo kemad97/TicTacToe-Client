@@ -30,15 +30,15 @@
              <MediaView fx:id="mediaView" fitHeight="240.0" fitWidth="439.0" layoutX="38.0" layoutY="61.0" styleClass="label-with-shadow">
                
             </MediaView>
-            <Button id="btnContinue" layoutX="115.0" layoutY="312.0" mnemonicParsing="false" onAction="#handleContinueButtonAction" prefHeight="51.0" prefWidth="281.0" text="Play another match">
+            <Button id="btnContinue" fx:id="btnContinue" layoutX="115.0" layoutY="312.0" mnemonicParsing="false" onAction="#handleContinueButtonAction" prefHeight="51.0" prefWidth="281.0" text="Play another match">
                <styleClass>
                   <String fx:value="button" />
                   <String fx:value="label-with-shadow" />
                </styleClass>
             </Button>
-            <ImageView id="btnBack" fx:id="btnBack" fitHeight="38.0" fitWidth="50.0" layoutX="21.0" layoutY="11.0" onMouseClicked="#backToMainScreen" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnBack" fx:id="btnBack" fitHeight="30.0" fitWidth="33.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#backToMainScreen" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../media/images/undo.png" />
+                  <Image url="@../../../media/images/back%20(1).png" />
                </image>
             </ImageView>
          </children>

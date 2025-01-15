@@ -5,52 +5,38 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@../gameBoardWithFriend/GameBoardWithFriend.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.levels.LevelsUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@Levels.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.levels.LevelsUIController">
    <children>
-      <AnchorPane>
-         <children>
-            <ImageView fitHeight="500.0" fitWidth="700.0">
-               <image>
-                  <Image url="@../../../media/images/mainBackground.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="83.0" fitWidth="95.0" layoutX="14.0" layoutY="21.0">
-               <image>
-                  <Image url="@../../../media/images/logo.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
+      <ImageView id="logo" fx:id="logo" fitHeight="83.0" fitWidth="95.0" layoutX="14.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/logo.png" />
+         </image>
+      </ImageView>
       <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
          <children>
-            <Text fill="#fffc2e" layoutX="116.0" layoutY="54.0" stroke="#fffc2e" strokeLineCap="ROUND" strokeMiterLimit="5.0" strokeType="OUTSIDE" strokeWidth="0.5" styleClass="label-with-shadow" text="Choose Difficulty :" textAlignment="CENTER" wrappingWidth="283.671875">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Text>
-            <Button fx:id="hardBtn" layoutX="179.0" layoutY="231.0" mnemonicParsing="false" onAction="#setHardDiffculty" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: red;" text="Hard" textFill="WHITE">
-               <styleClass>
-                  <String fx:value="button" />
-                  <String fx:value="label-with-shadow" />
-               </styleClass></Button>
-            <Button fx:id="mediumBtn" layoutX="179.0" layoutY="160.0" mnemonicParsing="false" onAction="#setMediumDiffculty" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: blue;" text="Medium" textFill="WHITE">
-               <styleClass>
-                  <String fx:value="button" />
-                  <String fx:value="label-with-shadow" />
-               </styleClass></Button>
-            <Button fx:id="easyBtn" alignment="CENTER" layoutX="179.0" layoutY="89.0" mnemonicParsing="false" onAction="#setEasyDiffculty" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: green;" text="Easy" textFill="WHITE">
-               <styleClass>
-                  <String fx:value="label-with-shadow" />
-                  <String fx:value="button" />
-               </styleClass></Button>
-            <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="21.0" layoutY="11.0">
+            <ImageView fx:id="btnBack" fitHeight="30.0" fitWidth="33.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#backToMainScreen" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../media/images/undo.png" />
+                  <Image url="@../../../media/images/back%20(1).png" />
                </image>
             </ImageView>
+            <Text fill="#fffc2e" layoutX="130.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_style" text="Choose Difficulty :" />
+            <Button id="easyBtn" fx:id="easyBtn" layoutX="210.0" layoutY="94.0" mnemonicParsing="false" onAction="#setEasyDiffculty" prefHeight="43.0" prefWidth="95.0" text="Easy">
+               <styleClass>
+                  <String fx:value="btnEasy" />
+                  <String fx:value="btn" />
+               </styleClass></Button>
+            <Button fx:id="mediumBtn" layoutX="210.0" layoutY="171.0" mnemonicParsing="false" onAction="#setMediumDiffculty" prefHeight="43.0" prefWidth="95.0" text="Medium">
+               <styleClass>
+                  <String fx:value="btnMedium" />
+                  <String fx:value="btn" />
+               </styleClass></Button>
+            <Button fx:id="hardBtn" layoutX="210.0" layoutY="246.0" mnemonicParsing="false" onAction="#setHardDiffculty" prefHeight="43.0" prefWidth="95.0" text="Hard">
+               <styleClass>
+                  <String fx:value="btnHard" />
+                  <String fx:value="btn" />
+               </styleClass></Button>
          </children>
       </AnchorPane>
    </children>

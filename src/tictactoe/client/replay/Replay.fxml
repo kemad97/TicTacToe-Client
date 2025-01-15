@@ -26,9 +26,9 @@
                </image>
             </ImageView>
          </children></AnchorPane>
-      <ImageView fx:id="backImgView" fitHeight="52.0" fitWidth="45.0" layoutX="29.0" layoutY="26.0" onMouseClicked="#backToGameLogs" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backImgView" fitHeight="30.0" fitWidth="33.0" layoutX="51.0" layoutY="34.0" onMouseClicked="#backToGameLogs" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../media/images/undo.png" />
+            <Image url="@../../../media/images/back.png" />
          </image>
       </ImageView>
       <GridPane layoutX="175.0" layoutY="150.0" prefHeight="220.0" prefWidth="245.0" styleClass="grid-pane">
