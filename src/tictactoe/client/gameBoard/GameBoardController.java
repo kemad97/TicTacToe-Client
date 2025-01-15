@@ -136,7 +136,7 @@ public class GameBoardController implements Initializable {
             isXTurn = true;
 
             if(recScreenController != null){
-                recScreenController.logButtonClick(board[row][col].getId(), board[row][col].getText());
+                recScreenController.logButtonClick( board[row][col].getId(), board[row][col].getText() );
             }
             checkWhoIsTheWinner();
         }

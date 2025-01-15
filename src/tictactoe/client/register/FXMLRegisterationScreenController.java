@@ -173,4 +173,16 @@ public class FXMLRegisterationScreenController implements Initializable {
         login_label.disableProperty().set(false);
     }
 
+    public String getUsername() 
+    {
+        return username.getText();
+    }
+
+    public String getPassword() 
+    {
+        return password.getText();
+    }
+
+    
+    
 }

@@ -177,7 +177,7 @@ public class FXMLMainScreenController implements Initializable {
         
          Parent root;
             try {
-                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/OnlineOfflineUI.fxml"));
                 Scene scene = new Scene(root);
 
                 Stage stage = (Stage) logo.getScene().getWindow();
