@@ -106,8 +106,7 @@ public class ResultVideoScreenController implements Initializable {
             transition2.setByY(0.5);
             transition2.setAutoReverse(true);
             transition2.play();
-            
-            
+
             mediaPlayer.setOnReady(() -> {
                 
                 Duration videoDuration = mediaPlayer.getMedia().getDuration();
@@ -121,8 +120,6 @@ public class ResultVideoScreenController implements Initializable {
 
                 pause.play();
             });
-
-             
 
         } catch (Exception e) {
             
@@ -195,7 +192,8 @@ public class ResultVideoScreenController implements Initializable {
 
     
     public void setWinner(String winner) {
-
+        
+        winnerLabel.setStyle("-fx-font-weight: bold;");
         winnerLabel.setText("Winner is: " + winner);
 
     }

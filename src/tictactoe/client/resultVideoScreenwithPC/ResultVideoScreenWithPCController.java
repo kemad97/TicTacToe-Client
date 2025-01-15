@@ -108,6 +108,7 @@ public class ResultVideoScreenWithPCController implements Initializable {
             transition2.setAutoReverse(true);
             transition2.play();
             
+            
             mediaPlayer.setOnReady(() -> {
                 
                 Duration videoDuration = mediaPlayer.getMedia().getDuration();
@@ -120,9 +121,7 @@ public class ResultVideoScreenWithPCController implements Initializable {
                 });
 
                 pause.play();
-            });
-
-             
+            });            
 
         } catch (Exception e) {
             
@@ -151,7 +150,7 @@ public class ResultVideoScreenWithPCController implements Initializable {
              
             System.out.println("Back To Game Board With PC Screen");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/levels/levelsUI.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
@@ -195,7 +194,8 @@ public class ResultVideoScreenWithPCController implements Initializable {
 
     
     public void setWinner(String winner) {
-
+        
+        winnerLabel.setStyle("-fx-font-weight: bold;");
         winnerLabel.setText("Winner is: " + winner);
 
     }

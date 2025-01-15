@@ -29,15 +29,21 @@ import tictactoe.client.gameBoard.GameBoardController;
  * @author Kerolos
  */
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import tictactoe.client.soundManager.SoundManager;
 public class LevelsUIController implements Initializable {
 
+    @FXML
+    private ImageView logo;
     @FXML
     private Button hardBtn;
     @FXML
     private Button mediumBtn;
     @FXML
     private Button easyBtn;
+    
+    @FXML
+    private ImageView btnBack;
 
     
     public  String selectedDifficulty;
@@ -123,6 +129,26 @@ public class LevelsUIController implements Initializable {
             Logger.getLogger(LevelsUIController.class.getName()).log(Level.SEVERE, null, ex);
             Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @FXML
+    private void backToMainScreen() {
+
+        try {
+
+            System.out.println("Back To Main Screen");
+
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) logo.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
    

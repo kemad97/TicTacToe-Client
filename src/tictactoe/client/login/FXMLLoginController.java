@@ -177,5 +177,26 @@ public class FXMLLoginController implements Initializable {
         LoginBtn.disableProperty().set(false);
         Register_label.disableProperty().set(false);
     }
+    
+    @FXML
+    private void backToMainScreen() {
+
+        try {
+
+            System.out.println("Back To Main Screen");
+
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) logo.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 
 }
