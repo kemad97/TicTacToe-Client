@@ -17,17 +17,13 @@ public class Request {
     private DataOutputStream dos;
     public DataInputStream dis;
 
-    private Request() {
-        try {
+    private Request() throws IOException {
             socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
             dis = new DataInputStream(socket.getInputStream());
             dos = new DataOutputStream(socket.getOutputStream());
-        } catch (IOException ex) {
-            System.out.println("Error: can't connect to server.");
-        }
     }
 
-    public static Request getInstance() {
+    public static Request getInstance() throws IOException {
         if (instance == null) {
             instance = new Request();
         }

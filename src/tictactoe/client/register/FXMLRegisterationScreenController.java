@@ -63,8 +63,7 @@ public class FXMLRegisterationScreenController implements Initializable {
 
     @FXML
     private void registerUser(ActionEvent event) {
-        
-         
+
         SoundManager.playSoundEffect("click.wav");
 
         if (username.getText().trim().isEmpty() || password.getText().trim().isEmpty()) {
@@ -82,7 +81,12 @@ public class FXMLRegisterationScreenController implements Initializable {
 
                 handleResponse(Request.getInstance().receve());
             } catch (IOException ex) {
-                System.out.println("Error: can't connect to server.");
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("can't connect to server.");
+                    alert.show();
+                    enableUI();
+                });
             }
         }).start();
 
@@ -92,7 +96,7 @@ public class FXMLRegisterationScreenController implements Initializable {
     private void goToLoginScreen(MouseEvent event) {
         Parent root;
         try {
-             
+
             SoundManager.playSoundEffect("click.wav");
 
             root = FXMLLoader.load(getClass().getResource("/tictactoe/client/login/FXMLLogin.fxml"));
@@ -146,9 +150,8 @@ public class FXMLRegisterationScreenController implements Initializable {
 
     private void gotoMainScreen(String username) {
         try {
-             
-            SoundManager.playSoundEffect("click.wav");
 
+            SoundManager.playSoundEffect("click.wav");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
 
@@ -182,7 +185,7 @@ public class FXMLRegisterationScreenController implements Initializable {
         regesterationBtn.disableProperty().set(false);
         registeration_label.disableProperty().set(false);
     }
-    
+
     @FXML
     private void backToMainScreen() {
 
@@ -202,6 +205,5 @@ public class FXMLRegisterationScreenController implements Initializable {
         }
 
     }
-
 
 }

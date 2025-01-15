@@ -65,9 +65,9 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void login(ActionEvent event) {
-         
+
         SoundManager.playSoundEffect("click.wav");
-        
+
         if (username.getText().trim().isEmpty() || password.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("You must fill username and password!");
@@ -85,7 +85,12 @@ public class FXMLLoginController implements Initializable {
 
                 handleLoginResponse(Request.getInstance().receve());
             } catch (IOException ex) {
-                System.out.println("Error: can't connect to server.");
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("can't connect to server.");
+                    alert.show();
+                    enableUI();
+                });
             }
         }).start();
 
@@ -129,7 +134,7 @@ public class FXMLLoginController implements Initializable {
     private void gotoRegisterationPage(MouseEvent event) {
         Parent root;
         try {
-             
+
             SoundManager.playSoundEffect("click.wav");
 
             root = FXMLLoader.load(getClass().getResource("/tictactoe/client/register/FXMLRegisterationScreen.fxml"));
@@ -147,7 +152,7 @@ public class FXMLLoginController implements Initializable {
 
     private void gotoMainScreen(String username) {
         try {
-            
+
              
             SoundManager.playSoundEffect("click.wav");
 
@@ -177,7 +182,7 @@ public class FXMLLoginController implements Initializable {
         LoginBtn.disableProperty().set(false);
         Register_label.disableProperty().set(false);
     }
-    
+
     @FXML
     private void backToMainScreen() {
 
@@ -197,6 +202,5 @@ public class FXMLLoginController implements Initializable {
         }
 
     }
-
 
 }
