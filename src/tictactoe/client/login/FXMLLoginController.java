@@ -34,6 +34,7 @@ import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.register.FXMLRegisterationScreenController;
 import tictactoe.client.server_connection.Request;
+import tictactoe.client.soundManager.SoundManager;
 
 /**
  * FXML Controller class
@@ -64,6 +65,9 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void login(ActionEvent event) {
+         
+        SoundManager.playSoundEffect("click.wav");
+        
         if (username.getText().trim().isEmpty() || password.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("You must fill username and password!");
@@ -125,6 +129,9 @@ public class FXMLLoginController implements Initializable {
     private void gotoRegisterationPage(MouseEvent event) {
         Parent root;
         try {
+             
+            SoundManager.playSoundEffect("click.wav");
+
             root = FXMLLoader.load(getClass().getResource("/tictactoe/client/register/FXMLRegisterationScreen.fxml"));
             Scene scene = new Scene(root);
 
@@ -140,6 +147,9 @@ public class FXMLLoginController implements Initializable {
 
     private void gotoMainScreen(String username) {
         try {
+            
+             
+            SoundManager.playSoundEffect("click.wav");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
 

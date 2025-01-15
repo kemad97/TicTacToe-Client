@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.soundManager.SoundManager;
 
 /**
  * FXML Controller class
@@ -69,6 +70,9 @@ public class ReplayController implements Initializable {
                             for (Button[] row : board) {
                                 for (Button button : row) {
                                     if (button.getId().equals(buttonId)) {
+                                         
+                                        SoundManager.playSoundEffect("click.wav");
+
                                         button.setText(symbol);
                                         button.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
                                     }
@@ -85,16 +89,92 @@ public class ReplayController implements Initializable {
                         }
                     }
                 }
+                Platform.runLater(this::highlightWinner);
+
             } catch (IOException e) {
-                Logger.getLogger(ReplayController.class.getName()).log(Level.SEVERE, null, e);
+                  Logger.getLogger(ReplayController.class.getName()).log(Level.SEVERE, null, e);
             }
         }).start();
+    }
+
+    private void highlightWinner() {
+        String winner = getWinner();
+        if (winner != null) {
+            for (int i = 0; i < 3; i++) {
+               
+                if (board[i][0].getText().equals(winner) &&
+                    board[i][1].getText().equals(winner) &&
+                    board[i][2].getText().equals(winner)) {
+                    highlightButtons(board[i][0], board[i][1], board[i][2]);
+                    return;
+                }
+
+              
+                if (board[0][i].getText().equals(winner) &&
+                    board[1][i].getText().equals(winner) &&
+                    board[2][i].getText().equals(winner)) {
+                    highlightButtons(board[0][i], board[1][i], board[2][i]);
+                    return;
+                }
+            }
+
+           
+            if (board[0][0].getText().equals(winner) &&
+                board[1][1].getText().equals(winner) &&
+                board[2][2].getText().equals(winner)) {
+                highlightButtons(board[0][0], board[1][1], board[2][2]);
+            } else if (board[0][2].getText().equals(winner) &&
+                       board[1][1].getText().equals(winner) &&
+                       board[2][0].getText().equals(winner)) {
+                highlightButtons(board[0][2], board[1][1], board[2][0]);
+            }
+        }
+    }
+
+    private String getWinner() {
+        for (int i = 0; i < 3; i++) {
+           
+            if (!board[i][0].getText().isEmpty() &&
+                board[i][0].getText().equals(board[i][1].getText()) &&
+                board[i][1].getText().equals(board[i][2].getText())) {
+                return board[i][0].getText();
+            }
+
+        
+            if (!board[0][i].getText().isEmpty() &&
+                board[0][i].getText().equals(board[1][i].getText()) &&
+                board[1][i].getText().equals(board[2][i].getText())) {
+                return board[0][i].getText();
+            }
+        }
+
+       
+        if (!board[0][0].getText().isEmpty() &&
+            board[0][0].getText().equals(board[1][1].getText()) &&
+            board[1][1].getText().equals(board[2][2].getText())) {
+            return board[0][0].getText();
+        }
+        if (!board[0][2].getText().isEmpty() &&
+            board[0][2].getText().equals(board[1][1].getText()) &&
+            board[1][1].getText().equals(board[2][0].getText())) {
+            return board[0][2].getText();
+        }
+
+        return null;
+    }
+
+    private void highlightButtons(Button... buttons) {
+        for (Button button : buttons) {
+            button.setStyle("-fx-background-color: yellow; -fx-text-fill: black; -fx-font-weight: bold;");
+        }
     }
     
     @FXML
     private void backToGameLogs(){
         
         try {
+                    
+            SoundManager.playSoundEffect("click.wav");
              
             System.out.println("Back to game logs");
             

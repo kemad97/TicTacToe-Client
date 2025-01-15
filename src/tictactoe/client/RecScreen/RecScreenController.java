@@ -31,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.replay.ReplayController;
+import tictactoe.client.soundManager.SoundManager;
 
 
 /**
@@ -129,6 +130,9 @@ public class RecScreenController implements Initializable {
     {
         
         try {
+             
+            SoundManager.playSoundEffect("click.wav");
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/replay/Replay.fxml"));
             Parent root = loader.load();
             replayController = loader.getController();
@@ -158,6 +162,8 @@ public class RecScreenController implements Initializable {
     {
         
         try {
+             
+            SoundManager.playSoundEffect("click.wav");
 
             System.out.println("Back To Main Screen");
 

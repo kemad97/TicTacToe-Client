@@ -17,7 +17,7 @@
                   <Image url="@../../../media/images/mainBackground.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="83.0" fitWidth="95.0" layoutX="14.0" layoutY="21.0">
+            <ImageView id="logo" fitHeight="83.0" fitWidth="95.0" layoutX="14.0" layoutY="21.0">
                <image>
                   <Image url="@../../../media/images/logo.png" />
                </image>

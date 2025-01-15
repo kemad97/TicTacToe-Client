@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Interpolator;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -73,7 +74,8 @@ public class ResultVideoScreenWithPCController implements Initializable {
         transition.setAutoReverse(true);
         transition.play();
         
-        
+        btnContinue.setVisible(false);
+        btnBack.setVisible(false);
         
         try {
             
@@ -106,10 +108,20 @@ public class ResultVideoScreenWithPCController implements Initializable {
             transition2.setAutoReverse(true);
             transition2.play();
             
-            mediaPlayer.setOnEndOfMedia(() -> {
+            mediaPlayer.setOnReady(() -> {
                 
-                SoundManager.resumeBackgroundMusic();
+                Duration videoDuration = mediaPlayer.getMedia().getDuration();
+              
+                PauseTransition pause = new PauseTransition(videoDuration);
+                pause.setOnFinished(event -> {
+                    SoundManager.resumeBackgroundMusic();
+                    btnContinue.setVisible(true);
+                    btnBack.setVisible(true);
+                });
+
+                pause.play();
             });
+
              
 
         } catch (Exception e) {
@@ -122,6 +134,8 @@ public class ResultVideoScreenWithPCController implements Initializable {
     
     @FXML
     private void handleContinueButtonAction(ActionEvent event) {
+        
+        SoundManager.playSoundEffect("click.wav");
         
         System.out.println("Play another Match");
 
@@ -156,6 +170,8 @@ public class ResultVideoScreenWithPCController implements Initializable {
     private void backToMainScreen(){
         
         try {
+            
+            SoundManager.playSoundEffect("click.wav");
              
             System.out.println("Back To Main Screen");
             

@@ -20,7 +20,9 @@ public class SoundManager {
 
     public static void playBackgroundMusic() {
         if (backgroundMusicPlayer == null) {
-            URL resource = SoundManager.class.getResource("/media/sound/backgroundMusic.mp3");
+            //URL resource = SoundManager.class.getResource("/media/sound/backgroundMusic.mp3");
+            URL resource = SoundManager.class.getResource("/media/sound/backgroundMusic1.mpeg");
+        
             if (resource == null) {
                 System.err.println("Sound file not found!");
                 return;
@@ -46,8 +48,19 @@ public class SoundManager {
 
     public static void resumeBackgroundMusic() {
         if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.seek(Duration.ZERO); 
+            //backgroundMusicPlayer.seek(Duration.ZERO); 
             backgroundMusicPlayer.play();
         }
+    }
+    
+    public static void playSoundEffect(String soundFileName) {
+        URL resource = SoundManager.class.getResource("/media/sound/" + soundFileName);
+        if (resource == null) {
+            System.err.println("Sound file not found: " + soundFileName);
+            return;
+        }
+        Media sound = new Media(resource.toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
     }
 }

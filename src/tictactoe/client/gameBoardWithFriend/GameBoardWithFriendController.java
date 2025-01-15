@@ -27,6 +27,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.application.Platform;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
@@ -43,6 +45,10 @@ public class GameBoardWithFriendController implements Initializable {
     
     @FXML
     private CheckBox checkBoxRecord;
+    
+    @FXML
+    private Label XScore , OScore;
+    
 
     private boolean isXTurn;
     private boolean isGameOver;
@@ -52,6 +58,8 @@ public class GameBoardWithFriendController implements Initializable {
     private String winnerPlayer;
     public String logFileName;
 
+    private static int xScore = 0 , oScore = 0 ;
+    
     private RecScreenController recScreenController = new RecScreenController();
 
     @Override
@@ -72,12 +80,18 @@ public class GameBoardWithFriendController implements Initializable {
         recScreenController = new RecScreenController();
         recScreenController.initializeLogFile();
         
+
+        updateScoreLabels();
+        
         handleCheckBox();
       
     }
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
+         
+        SoundManager.playSoundEffect("click.wav");
+ 
 
         if (isGameOver) {
 
@@ -121,7 +135,7 @@ public class GameBoardWithFriendController implements Initializable {
             System.out.println("Recording is disabled. Button click not logged.");
         }
         checkWhoIsTheWinner();
-        
+      
         // disable checkbox
         checkBoxRecord.setDisable(true);
 
@@ -132,6 +146,18 @@ public class GameBoardWithFriendController implements Initializable {
         if (checkWin()) {
 
             winnerPlayer = isXTurn ? "O" : "X";
+            
+            if (winnerPlayer.equals("X")) {
+                
+                xScore++;
+                
+            } else {
+                
+                oScore++;
+                
+            }
+   
+            updateScoreLabels();
 
             highlightWinnerButtons();
 
@@ -271,12 +297,18 @@ public class GameBoardWithFriendController implements Initializable {
         Optional<ButtonType> result = aboutAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            
+             
+            SoundManager.playSoundEffect("click.wav");
 
             System.out.println("Play another Match");
 
             resetBoard();
 
         } else {
+            
+             
+            SoundManager.playSoundEffect("click.wav");
 
             backToMainScreen();
 
@@ -355,5 +387,18 @@ public class GameBoardWithFriendController implements Initializable {
             recScreenController = null;
         }
     }
+    
+    
+   
+
+   
+
+    private void updateScoreLabels() {
+        
+        XScore.setText(String.valueOf(xScore));
+        OScore.setText(String.valueOf(oScore));
+
+    }
+
 
 }

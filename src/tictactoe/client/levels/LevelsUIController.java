@@ -29,6 +29,7 @@ import tictactoe.client.gameBoard.GameBoardController;
  * @author Kerolos
  */
 import javafx.scene.Node;
+import tictactoe.client.soundManager.SoundManager;
 public class LevelsUIController implements Initializable {
 
     @FXML
@@ -52,7 +53,10 @@ public class LevelsUIController implements Initializable {
     @FXML
     private void setHardDiffculty(ActionEvent event) 
     {
-         selectedDifficulty="Hard";
+         
+        SoundManager.playSoundEffect("click.wav");
+
+        selectedDifficulty="Hard";
         System.out.println ("Selected diffculty :" + selectedDifficulty);
        
 
@@ -63,6 +67,9 @@ public class LevelsUIController implements Initializable {
 
     @FXML
     private void setMediumDiffculty(ActionEvent event) {
+         
+           SoundManager.playSoundEffect("click.wav");
+
            selectedDifficulty="Medium";
            System.out.println ("Selected diffculty :" + selectedDifficulty);
            
@@ -74,6 +81,9 @@ public class LevelsUIController implements Initializable {
     @FXML
     private void setEasyDiffculty(ActionEvent event) 
     {
+         
+        SoundManager.playSoundEffect("click.wav");
+
         selectedDifficulty = "Easy";
         System.out.println("Selected difficulty: " + selectedDifficulty);
 
