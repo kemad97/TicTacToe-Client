@@ -206,16 +206,4 @@ public class FXMLRegisterationScreenController implements Initializable {
 
     }
 
-    public String getUsername() 
-    {
-        return username.getText();
-    }
-
-    public String getPassword() 
-    {
-        return password.getText();
-    }
-
-    
-    
 }
