@@ -82,10 +82,10 @@ public class RecScreenController implements Initializable {
             File userFolder;
             
             // Create user folder 
-            if(SessionData.isAuthenticated())
+            if(SessionData.isAuthenticated()) 
             {
                 String username = SessionData.getUsername();
-                 userFolder = new File( "gamelogs/offline/" + username);
+                 userFolder = new File( "gamelogs/online/" + username);
 
                  if (!userFolder.exists()) {
                     userFolder.mkdirs(); // Create the directory if it doesn't exist
@@ -123,7 +123,7 @@ public class RecScreenController implements Initializable {
                 System.out.println("new dir created");
              }
              
-            File[] files = directory.listFiles();//(dir, name) -> name.endsWith(".txt"));
+            File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
             ObservableList<String> fileNames = FXCollections.observableArrayList();
 
             if (files != null) {
