@@ -1,4 +1,4 @@
-package session_data;
+package tictactoe.client.session_data;
 
 public class SessionData {
 

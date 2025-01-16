@@ -1,4 +1,4 @@
-package scene_navigation;
+package tictactoe.client.scene_navigation;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;

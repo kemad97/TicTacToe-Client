@@ -15,8 +15,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import scene_navigation.SceneNavigation;
-import session_data.SessionData;
+import tictactoe.client.scene_navigation.SceneNavigation;
+import tictactoe.client.session_data.SessionData;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.soundManager.SoundManager;
 
