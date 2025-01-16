@@ -30,15 +30,11 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private ImageView logo;
     @FXML
-    private TextField inputIP;
-    @FXML
     private Pane onlineBtn;
     @FXML
     private Pane offlineFriendBtn;
     @FXML
     private Pane offlinePCBtn;
-    @FXML
-    private Button updateIPBtn;
     @FXML
     private Button logsBtn;
 
@@ -46,11 +42,6 @@ public class FXMLMainScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //animate logo
         Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
-
-        //initialize server ip
-        new Thread(() -> {
-            inputIP.setText(ServerIP.getIP());
-        }).start();
     }
 
     @FXML
@@ -110,29 +101,6 @@ public class FXMLMainScreenController implements Initializable {
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @FXML
-    private void updateIP(ActionEvent event) {
-
-        SoundManager.playSoundEffect("click.wav");
-
-        String ip = inputIP.getText().trim();
-
-        if (!ServerIP.getIP().equals(ip)) {
-            if (ServerIP.isValidIP(ip)) {
-
-                ServerIP.saveIP(ip);
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("New IP updated");
-                alert.show();
-            } else if (!ServerIP.getIP().equals(ip)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid ip format");
-                alert.show();
-            }
         }
     }
     

@@ -25,6 +25,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -35,6 +36,7 @@ import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.register.FXMLRegisterationScreenController;
 import tictactoe.client.server_connection.Request;
+import tictactoe.client.server_ip.ServerIP;
 import tictactoe.client.soundManager.SoundManager;
 
 /**
@@ -183,6 +185,27 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void showIpEdit(MouseEvent event) {
+        SoundManager.playSoundEffect("click.wav");
+
+        TextInputDialog dialog = new TextInputDialog(ServerIP.getIP());
+        dialog.setTitle("Update server IP");
+        dialog.showAndWait().ifPresent(string -> updateIP(string.trim()));
+    }
+
+    private void updateIP(String ip) {
+        if (!ServerIP.getIP().equals(ip)) {
+            if (ServerIP.isValidIP(ip)) {
+                ServerIP.saveIP(ip);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("New IP updated");
+                alert.show();
+            } else if (!ServerIP.getIP().equals(ip)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Invalid ip format");
+                alert.show();
+            }
+        }
     }
 
 }
