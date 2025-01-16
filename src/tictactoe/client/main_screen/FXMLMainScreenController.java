@@ -12,9 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -22,14 +19,13 @@ import javafx.stage.Stage;
 import scene_navigation.SceneNavigation;
 import session_data.SessionData;
 import tictactoe.client.animation.Animation;
-import tictactoe.client.server_ip.ServerIP;
 import tictactoe.client.soundManager.SoundManager;
 
 public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private ImageView logo;
-  
+
     @FXML
     private Pane onlineBtn;
     @FXML
@@ -39,7 +35,6 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private ImageView logsBtn;
 
-  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //animate logo
@@ -60,7 +55,7 @@ public class FXMLMainScreenController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
+        } else {
             //if user logged in goto available palayers
         }
     }
@@ -105,9 +100,9 @@ public class FXMLMainScreenController implements Initializable {
             Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-  
+
     @FXML
-    private void showGameLogs(ActionEvent event) {        
+    private void showGameLogs(MouseEvent event) {
         Parent root;
         try {
             SoundManager.playSoundEffect("click.wav");
