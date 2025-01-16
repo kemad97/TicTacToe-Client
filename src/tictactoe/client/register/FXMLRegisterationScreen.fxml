@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@fxmlregisterationscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.register.FXMLRegisterationScreenController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.register.FXMLRegisterationScreenController">
    <children>
       <ImageView fx:id="logo" fitHeight="70.0" fitWidth="91.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -61,5 +62,14 @@
             </ImageView>
          </children>
       </Pane>
+      <ImageView fitHeight="30.0" fitWidth="56.0" layoutX="644.0" layoutY="39.0" onMouseClicked="#showIpEdit" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/settings.png" />
+         </image>
+      </ImageView>
    </children>
+   <stylesheets>
+      <URL value="@fxmlregisterationscreen.css" />
+      <URL value="@../main_screen/fxmlmainscreen.css" />
+   </stylesheets>
 </AnchorPane>

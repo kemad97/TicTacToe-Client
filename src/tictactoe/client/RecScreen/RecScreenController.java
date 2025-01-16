@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.replay.ReplayController;
 import tictactoe.client.soundManager.SoundManager;
-import session_data.SessionData;
+import tictactoe.client.session_data.SessionData;
 
 
 /**

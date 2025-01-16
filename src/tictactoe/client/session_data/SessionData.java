@@ -1,9 +1,10 @@
-package session_data;
+package tictactoe.client.session_data;
 
 public class SessionData {
 
     private static boolean authenticated;
     private static String username;
+    private static int score;
     
     static{
         authenticated = false;
@@ -24,6 +25,14 @@ public class SessionData {
 
     public static void setUsername(String username) {
         SessionData.username = username;
+    }
+
+    public static int getScore() {
+        return score;
+    }
+    
+    public static void setScore(int score){
+        SessionData.score = score;
     }
 
 }
