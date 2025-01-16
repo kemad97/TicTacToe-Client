@@ -21,6 +21,11 @@
             <Image url="@../../../media/images/logo.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="56.0" layoutX="634.0" layoutY="29.0" onMouseClicked="#showIpEdit" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/settings.png" />
+         </image>
+      </ImageView>
       <Pane layoutX="159.0" layoutY="59.0" prefHeight="383.0" prefWidth="382.0">
          <children>
             <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="389.0" layoutX="5.0" layoutY="-3.0" opacity="0.85" stroke="#d7d7d7" strokeType="OUTSIDE" strokeWidth="3.0" width="373.0">
