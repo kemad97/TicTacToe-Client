@@ -160,14 +160,16 @@ public class FXMLRegisterationScreenController implements Initializable {
             FXMLMainScreenController mainScreen = loader.getController();
 
             Platform.runLater(() -> {
-                mainScreen.updateUsername(username);
+               // mainScreen.updateUsername(username);
             });
 
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        } catch (IOException ex) {
+        } 
+        
+        catch (IOException ex) {
             Logger.getLogger(FXMLRegisterationScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
