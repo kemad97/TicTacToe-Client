@@ -169,6 +169,9 @@ public class ResultVideoScreenController implements Initializable {
         try {
             
             SoundManager.playSoundEffect("click.wav");
+            
+            GameBoardWithFriendController.setxScore(0);
+            GameBoardWithFriendController.setoScore(0);
              
             System.out.println("Back To Main Screen");
             
