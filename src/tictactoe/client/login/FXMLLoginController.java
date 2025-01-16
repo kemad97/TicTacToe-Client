@@ -54,6 +54,8 @@ public class FXMLLoginController implements Initializable {
     private Button LoginBtn;
     @FXML
     private Label Register_label;
+    @FXML
+    private ImageView btnBack;
 
     /**
      * Initializes the controller class.
@@ -105,19 +107,20 @@ public class FXMLLoginController implements Initializable {
             case "success":
 
                 //update session data
-                SessionData.setUsername(receve.getString("message"));
                 SessionData.setAuthenticated(true);
+                SessionData.setUsername(receve.getString("username"));
+                SessionData.setScore(receve.getInt("score"));
 
                 Platform.runLater(() -> {
                     Alert success;
                     success = new Alert(Alert.AlertType.INFORMATION);
-                    success.setContentText("Login Successful: " + receve.getString("message"));
+                    success.setContentText("Login Successful: " + receve.getString("username"));
                     Optional<ButtonType> result = success.showAndWait();
 
                     if (result.isPresent() && result.get() == ButtonType.OK) {
 
                         try {
-                            String availablePlayersPath = "/tictactoe/client/available_playesr/FXMLAvailablePlayesr.fxml";
+                            String availablePlayersPath = "/tictactoe/client/available_players/FXMLAvailablePlayesr.fxml";
                             SceneNavigation.getInstance().nextScene(availablePlayersPath, logo);
                         } catch (IOException ex) {
                             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,6 +187,10 @@ public class FXMLLoginController implements Initializable {
             Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    @FXML
+    private void showIpEdit(MouseEvent event) {
     }
 
 }

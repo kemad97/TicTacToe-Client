@@ -61,5 +61,10 @@
             </ImageView>
          </children>
       </Pane>
+      <ImageView fitHeight="30.0" fitWidth="56.0" layoutX="644.0" layoutY="39.0" onMouseClicked="#showIpEdit" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/settings.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

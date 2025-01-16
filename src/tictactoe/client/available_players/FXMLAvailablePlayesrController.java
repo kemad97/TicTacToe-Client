@@ -1,4 +1,4 @@
-package tictactoe.client.available_playesr;
+package tictactoe.client.available_players;
 
 import java.io.IOException;
 import java.net.URL;
@@ -7,7 +7,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -32,19 +34,18 @@ public class FXMLAvailablePlayesrController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        username.setText(SessionData.getUsername());
+        score.setText(SessionData.getScore() + "");
     }
 
     @FXML
     private void logout(MouseEvent event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Do you want to logout!");
-        
+
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-
-            String mainScreenPath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
 
             try {
                 //cloase connection with server
@@ -57,7 +58,9 @@ public class FXMLAvailablePlayesrController implements Initializable {
             SessionData.setAuthenticated(false);
             SessionData.setUsername(null);
 
+            String mainScreenPath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
             //goto main screen
+            Parent root;
             try {
                 SceneNavigation.getInstance().nextScene(mainScreenPath, score);
             } catch (IOException ex) {
@@ -65,5 +68,4 @@ public class FXMLAvailablePlayesrController implements Initializable {
             }
         }
     }
-
 }
