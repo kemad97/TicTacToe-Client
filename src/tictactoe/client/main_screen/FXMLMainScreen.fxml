@@ -64,10 +64,10 @@
             <Pane />
          </children>
       </VBox>
-      <Button fx:id="logsBtn" layoutX="589.0" layoutY="447.0" mnemonicParsing="false" onAction="#showGameLogs" styleClass="basicBtn" text="Game Logs">
-         <padding>
-            <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
-         </padding>
-      </Button>
+      <ImageView fx:id="logsBtn" fitHeight="69.0" fitWidth="65.0" layoutX="608.0" layoutY="10.0" onMouseClicked="#showGameLogs">
+         <image>
+            <Image url="@../../../media/images/folderblackgames_92891.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

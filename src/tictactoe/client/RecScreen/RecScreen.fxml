@@ -21,7 +21,7 @@
                   <Image url="@../../../media/images/back%20(1).png" />
                </image>
             </ImageView>
-            <TitledPane alignment="CENTER" animated="false" layoutX="37.0" layoutY="53.0" prefHeight="299.0" prefWidth="441.0" text="Recent Games">
+            <TitledPane alignment="CENTER" animated="false" collapsible="false" layoutX="37.0" layoutY="53.0" prefHeight="299.0" prefWidth="441.0" text="Recent Games">
                <content>
                   <ListView fx:id="fileListView" onMouseClicked="#openGameLogFile" prefHeight="0.0" prefWidth="441.0" />
                </content>

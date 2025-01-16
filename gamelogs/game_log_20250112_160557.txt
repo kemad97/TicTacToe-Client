@@ -1,7 +1,0 @@
-Btn12,X
-Btn21,O
-Btn22,X
-Btn32,O
-Btn13,X
-Btn23,O
-Btn11,X

@@ -29,6 +29,7 @@ public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private ImageView logo;
+  
     @FXML
     private Pane onlineBtn;
     @FXML
@@ -36,8 +37,9 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private Pane offlinePCBtn;
     @FXML
-    private Button logsBtn;
+    private ImageView logsBtn;
 
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //animate logo
@@ -103,7 +105,7 @@ public class FXMLMainScreenController implements Initializable {
             Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+  
     @FXML
     private void showGameLogs(ActionEvent event) {        
         Parent root;
@@ -121,7 +123,6 @@ public class FXMLMainScreenController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
 }

@@ -5,39 +5,42 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@Levels.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.levels.LevelsUIController">
    <children>
-      <ImageView id="logo" fx:id="logo" fitHeight="83.0" fitWidth="95.0" layoutX="14.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../media/images/logo.png" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
+      <AnchorPane layoutX="30.0" layoutY="41.0" prefHeight="435.0" prefWidth="666.0" styleClass="anchor-pane">
          <children>
-            <ImageView fx:id="btnBack" fitHeight="30.0" fitWidth="33.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#backToMainScreen" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="272.0" fitWidth="279.0" layoutX="186.0" layoutY="98.0">
                <image>
-                  <Image url="@../../../media/images/back%20(1).png" />
+                  <Image url="@../../../media/images/Rectangle%209.png" />
                </image>
             </ImageView>
-            <Text fill="#fffc2e" layoutX="130.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_style" text="Choose Difficulty :" />
-            <Button id="easyBtn" fx:id="easyBtn" layoutX="210.0" layoutY="94.0" mnemonicParsing="false" onAction="#setEasyDiffculty" prefHeight="43.0" prefWidth="95.0" text="Easy">
+            <Button id="easyBtn" fx:id="easyBtn" layoutX="279.0" layoutY="144.0" mnemonicParsing="false" onAction="#setEasyDiffculty" prefHeight="43.0" prefWidth="95.0" text="Easy" textFill="#f1f1f1">
                <styleClass>
                   <String fx:value="btnEasy" />
                   <String fx:value="btn" />
                </styleClass></Button>
-            <Button fx:id="mediumBtn" layoutX="210.0" layoutY="171.0" mnemonicParsing="false" onAction="#setMediumDiffculty" prefHeight="43.0" prefWidth="95.0" text="Medium">
+            <Button fx:id="mediumBtn" layoutX="279.0" layoutY="221.0" mnemonicParsing="false" onAction="#setMediumDiffculty" prefHeight="43.0" prefWidth="95.0" text="Medium" textFill="#f1f1f1">
                <styleClass>
                   <String fx:value="btnMedium" />
                   <String fx:value="btn" />
                </styleClass></Button>
-            <Button fx:id="hardBtn" layoutX="210.0" layoutY="246.0" mnemonicParsing="false" onAction="#setHardDiffculty" prefHeight="43.0" prefWidth="95.0" text="Hard">
+            <Button fx:id="hardBtn" layoutX="279.0" layoutY="296.0" mnemonicParsing="false" onAction="#setHardDiffculty" prefHeight="43.0" prefWidth="95.0" text="Hard" textFill="#f1f1f1">
                <styleClass>
                   <String fx:value="btnHard" />
                   <String fx:value="btn" />
                </styleClass></Button>
+            <ImageView fitHeight="116.0" fitWidth="293.0" layoutX="173.0" layoutY="40.0">
+               <image>
+                  <Image url="@../../../media/images/second%20selection.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
+      <ImageView fx:id="btnBack" fitHeight="36.0" fitWidth="30.0" layoutX="59.0" layoutY="39.0" onMouseClicked="#backToMainScreen">
+         <image>
+            <Image url="@../../../media/images/back.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

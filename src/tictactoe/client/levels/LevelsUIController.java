@@ -33,8 +33,9 @@ import javafx.scene.image.ImageView;
 import tictactoe.client.soundManager.SoundManager;
 public class LevelsUIController implements Initializable {
 
+    
     @FXML
-    private ImageView logo;
+    private ImageView btnBack;
     @FXML
     private Button hardBtn;
     @FXML
@@ -42,8 +43,7 @@ public class LevelsUIController implements Initializable {
     @FXML
     private Button easyBtn;
     
-    @FXML
-    private ImageView btnBack;
+   
 
     
     public  String selectedDifficulty;
@@ -140,7 +140,7 @@ public class LevelsUIController implements Initializable {
 
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
             Scene scene = new Scene(root);
-            Stage stage = (Stage) logo.getScene().getWindow();
+            Stage stage = (Stage) btnBack.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
 
@@ -150,6 +150,8 @@ public class LevelsUIController implements Initializable {
         }
 
     }
+
+   
 
    
 }
