@@ -37,7 +37,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <ImageView fx:id="btnBack" fitHeight="43.0" fitWidth="36.0" layoutX="59.0" layoutY="39.0" onMouseClicked="#backToMainScreen">
+      <ImageView fx:id="btnBack" fitHeight="36.0" fitWidth="30.0" layoutX="59.0" layoutY="39.0" onMouseClicked="#backToMainScreen">
          <image>
             <Image url="@../../../media/images/back.png" />
          </image>
