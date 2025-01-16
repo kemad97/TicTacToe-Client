@@ -178,7 +178,7 @@ public class ReplayController implements Initializable {
              
             System.out.println("Back to game logs");
             
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/OnlineOfflineUI.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) Btn12.getScene().getWindow();
             stage.setScene(scene);
