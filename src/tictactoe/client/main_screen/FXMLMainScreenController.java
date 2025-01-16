@@ -14,19 +14,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import scene_navigation.SceneNavigation;
 import session_data.SessionData;
-import tictactoe.client.animation.Animation;
-import tictactoe.client.server_connection.Request;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.server_ip.ServerIP;
 import tictactoe.client.soundManager.SoundManager;
-
 
 public class FXMLMainScreenController implements Initializable {
 
@@ -34,10 +31,6 @@ public class FXMLMainScreenController implements Initializable {
     private ImageView logo;
     @FXML
     private TextField inputIP;
-    @FXML
-    private Button authentication;
-    @FXML
-    private Label username;
     @FXML
     private Pane onlineBtn;
     @FXML
@@ -49,13 +42,6 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private Button logsBtn;
 
-    
-    public void updateUsername(String username){
-        this.username.setText(username);
-        this.authentication.setText("Logout");
-    }
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //animate logo
@@ -65,33 +51,36 @@ public class FXMLMainScreenController implements Initializable {
         new Thread(() -> {
             inputIP.setText(ServerIP.getIP());
         }).start();
-
-        if (SessionData.isAuthenticated()) {
-            authentication.setText("Logout");
-            username.setText(SessionData.getUsername());
-
-        } else {
-            username.setText("");
-        }
     }
 
     @FXML
     private void startOnlineMatch(MouseEvent event) {
-         
+
         SoundManager.playSoundEffect("click.wav");
 
         System.out.println("start online match");
+
+        if (!SessionData.isAuthenticated()) {
+            String loginFXMLPath = "/tictactoe/client/login/FXMLLogin.fxml";
+            try {
+                SceneNavigation.getInstance().nextScene(loginFXMLPath, logo);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            //if user logged in goto available palayers
+        }
     }
 
     @FXML
     private void startOfflineMatchVSFriend(MouseEvent event) {
 
         try {
-                        
+
             SoundManager.playSoundEffect("click.wav");
 
             System.out.println("start offline match vs. Friend");
-           
+
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoardWithFriend/GameBoardWithFriend.fxml"));
             Scene scene = new Scene(root);
 
@@ -107,7 +96,7 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private void startOfflineMatchVSPC(MouseEvent event) {
         try {
-             
+
             SoundManager.playSoundEffect("click.wav");
 
             System.out.println("start offline match vs. PC");
@@ -126,7 +115,7 @@ public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private void updateIP(ActionEvent event) {
-         
+
         SoundManager.playSoundEffect("click.wav");
 
         String ip = inputIP.getText().trim();
@@ -146,68 +135,25 @@ public class FXMLMainScreenController implements Initializable {
             }
         }
     }
-
+    
     @FXML
-    private void authenticate(ActionEvent event) {
-         
-        SoundManager.playSoundEffect("click.wav");
+    private void showGameLogs(ActionEvent event) {        
+        Parent root;
+        try {
+            SoundManager.playSoundEffect("click.wav");
 
-        if (authentication.getText().equals("Login")) {
+            root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
+            Scene scene = new Scene(root);
 
-            Parent root;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/login/FXMLLogin.fxml"));
-                Scene scene = new Scene(root);
+            Stage stage = (Stage) logo.getScene().getWindow();
 
-                Stage stage = (Stage) logo.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
 
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            authentication.setText("Login");
-            username.setText("");
-
-            try {
-                //cloase connection with server
-                Request.getInstance().disconnectToServer();
-                System.out.println("logged out.");
-            } catch (IOException ex) {
-                System.out.println("can't disconnect with server");
-            }
-            
-            //update session data
-            SessionData.setAuthenticated(false);
-            SessionData.setUsername(null);            
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @FXML
-    private void showGameLogs(ActionEvent event) 
-    {
-        
-        
-         Parent root;
-            try {
-                 
-                SoundManager.playSoundEffect("click.wav");
-
-                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
-                Scene scene = new Scene(root);
-
-                Stage stage = (Stage) logo.getScene().getWindow();
-
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }       
 
     }
-
 
 }

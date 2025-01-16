@@ -29,6 +29,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.JSONObject;
+import scene_navigation.SceneNavigation;
 import session_data.SessionData;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
@@ -114,7 +115,13 @@ public class FXMLLoginController implements Initializable {
                     Optional<ButtonType> result = success.showAndWait();
 
                     if (result.isPresent() && result.get() == ButtonType.OK) {
-                        gotoMainScreen(username.getText().trim());
+
+                        try {
+                            String availablePlayersPath = "/tictactoe/client/available_playesr/FXMLAvailablePlayesr.fxml";
+                            SceneNavigation.getInstance().nextScene(availablePlayersPath, logo);
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
 
@@ -133,40 +140,16 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private void gotoRegisterationPage(MouseEvent event) {
         Parent root;
+        String registerScrene = "/tictactoe/client/register/FXMLRegisterationScreen.fxml";
+
+        SoundManager.playSoundEffect("click.wav");
+
         try {
-
-            SoundManager.playSoundEffect("click.wav");
-
-            root = FXMLLoader.load(getClass().getResource("/tictactoe/client/register/FXMLRegisterationScreen.fxml"));
-            Scene scene = new Scene(root);
-
-            Stage stage = (Stage) logo.getScene().getWindow();
-
-            stage.setScene(scene);
-            stage.show();
-
+            SceneNavigation.getInstance().nextScene(registerScrene, logo);
         } catch (IOException ex) {
-            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
 
-    private void gotoMainScreen(String username) {
-        try {
-
-             
-            SoundManager.playSoundEffect("click.wav");
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
-
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) logo.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLRegisterationScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void disableUI() {
