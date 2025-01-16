@@ -6,8 +6,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -15,10 +15,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import tictactoe.client.animation.Animation;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.server_connection.Request;
-import tictactoe.client.soundManager.SoundManager;
 
 public class FXMLAvailablePlayesrController implements Initializable {
 
@@ -33,7 +33,10 @@ public class FXMLAvailablePlayesrController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {        
+        //animate logo
+        Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
+        
         username.setText(SessionData.getUsername());
         score.setText(SessionData.getScore() + "");
     }
