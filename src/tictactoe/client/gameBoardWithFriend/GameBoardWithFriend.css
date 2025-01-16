@@ -29,3 +29,13 @@
 .label-with-shadow {
     -fx-effect: dropshadow(gaussian, gray, 5, 0.0, 3, 3);
 }
+
+.checkBox {
+    -fx-font: 14px "Abel";
+    -fx-background-color: #5FA0E5;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-start-margin: 15;
+    
+}
+

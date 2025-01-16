@@ -84,6 +84,10 @@ public class GameBoardController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         
+         
+        SoundManager.playSoundEffect("click.wav");
+
+        
         if (isGameOver) {
             return;
         }
@@ -329,10 +333,16 @@ public class GameBoardController implements Initializable {
             Optional<ButtonType> result = aboutAlert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                 
+                SoundManager.playSoundEffect("click.wav");
+
                 System.out.println("Play another Match");
                 resetBoard();
 
             } else {
+                 
+                SoundManager.playSoundEffect("click.wav");
+
                 goBackToMainScreen();
             }
         });
