@@ -60,6 +60,7 @@ public class GameBoardWithFriendController implements Initializable {
 
     private static int xScore = 0 , oScore = 0 ;
     
+    
     private RecScreenController recScreenController = new RecScreenController();
 
     @Override
@@ -80,6 +81,7 @@ public class GameBoardWithFriendController implements Initializable {
         recScreenController = new RecScreenController();
         recScreenController.initializeLogFile();
         
+      
 
         updateScoreLabels();
         
@@ -319,10 +321,14 @@ public class GameBoardWithFriendController implements Initializable {
     private void backToMainScreen() {
 
         try {
+            
+            GameBoardWithFriendController.setxScore(0);
+            GameBoardWithFriendController.setoScore(0);
 
             System.out.println("Back To Main Screen");
 
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
@@ -388,10 +394,6 @@ public class GameBoardWithFriendController implements Initializable {
         }
     }
     
-    
-   
-
-   
 
     private void updateScoreLabels() {
         
@@ -400,5 +402,22 @@ public class GameBoardWithFriendController implements Initializable {
 
     }
 
+    public static int getxScore() {
+        return xScore;
+    }
+
+    public static void setxScore(int xScore) {
+        GameBoardWithFriendController.xScore = xScore;
+    }
+
+    public static int getoScore() {
+        return oScore;
+    }
+
+    public static void setoScore(int oScore) {
+        GameBoardWithFriendController.oScore = oScore;
+    }
+    
+    
 
 }
