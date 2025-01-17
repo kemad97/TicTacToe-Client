@@ -18,16 +18,21 @@ public class Request {
     public DataInputStream dis;
 
     private Request() throws IOException {
-            socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
-            dis = new DataInputStream(socket.getInputStream());
-            dos = new DataOutputStream(socket.getOutputStream());
+        socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
+        dis = new DataInputStream(socket.getInputStream());
+        dos = new DataOutputStream(socket.getOutputStream());
     }
 
     public static Request getInstance() throws IOException {
         if (instance == null) {
             instance = new Request();
         }
+
         return instance;
+    }
+    
+    public static void deleteInstance(){
+        instance = null;
     }
 
     public void disconnectToServer() throws IOException {

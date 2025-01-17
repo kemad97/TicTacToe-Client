@@ -91,6 +91,7 @@ public class FXMLLoginController implements Initializable {
                     alert.setContentText("can't connect to server.");
                     alert.show();
                     enableUI();
+                    Request.deleteInstance();
                 });
             }
         }).start();
