@@ -72,5 +72,11 @@ public class Request {
     public JSONObject receve() throws IOException {
         return new JSONObject(dis.readUTF());
     }
+    
+    public String sendRequest(String request) throws IOException {
+        dos.writeUTF(request);
+        return dis.readUTF();
+    }
+
 
 }
