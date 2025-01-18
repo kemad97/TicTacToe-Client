@@ -216,7 +216,7 @@ public class FXMLAvailablePlayersController implements Initializable {
             checkForMatchRequest();  // Check for incoming match requests
         }));
         pollingTimeline.setCycleCount(Timeline.INDEFINITE);
-        pollingTimeline.play(); // Start polling every 5 seconds
+        pollingTimeline.play(); 
     }
 
       // Stop polling when the scene is closed or the player logs out

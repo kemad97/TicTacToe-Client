@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONObject;
 import tictactoe.client.server_ip.ServerIP;
 
@@ -23,24 +25,29 @@ public class Request {
             dos = new DataOutputStream(socket.getOutputStream());
     }
 
-    public static Request getInstance() throws IOException {
-        if (instance == null) {
-            instance = new Request();
-        }
-
-        return instance;
+    public static synchronized Request getInstance() throws IOException {
+    if (instance == null) {
+        instance = new Request();
     }
+    return instance;
+}
+
     
     public static void deleteInstance(){
         instance = null;
     }
 
-    public void disconnectToServer() throws IOException {
+   public void disconnectToServer() throws IOException {
+    try {
         dos.close();
         dis.close();
         socket.close();
-        instance = null;
+    } catch (IOException ex) {
+        Logger.getLogger(Request.class.getName()).log(Level.SEVERE, "Error while closing connection", ex);
+    } finally {
+        instance = null;  // Ensure singleton instance is reset after disconnection.
     }
+}
 
     public void registration(String username, String hashedPassword) throws IOException {
 
