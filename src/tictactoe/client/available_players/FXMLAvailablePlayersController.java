@@ -29,7 +29,7 @@ import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.server_connection.Request;
 
-public class FXMLAvailablePlayesrController implements Initializable {
+public class FXMLAvailablePlayersController implements Initializable {
 
     @FXML
     private Label username;
@@ -85,7 +85,7 @@ public class FXMLAvailablePlayesrController implements Initializable {
             try {
                 SceneNavigation.getInstance().nextScene(mainScreenPath, score);
             } catch (IOException ex) {
-                Logger.getLogger(FXMLAvailablePlayesrController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -136,7 +136,7 @@ public class FXMLAvailablePlayesrController implements Initializable {
             
         } catch (IOException ex) {
             
-            Logger.getLogger(FXMLAvailablePlayesrController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         
         }
         
@@ -165,7 +165,7 @@ public class FXMLAvailablePlayesrController implements Initializable {
         try {
             SceneNavigation.getInstance().nextScene("/tictactoe/client/main_screen/FXMLMainScreen.fxml", logo);
         } catch (IOException ex) {
-            Logger.getLogger(FXMLAvailablePlayesrController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
