@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,9 +19,9 @@
                   <Image url="@../../../media/images/usename_and_score.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="156.0" layoutY="11.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="163.0" layoutY="14.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../media/images/logout_icon.png" />
+                  <Image url="@../../../media/images/logout.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -41,5 +43,23 @@
             <Image url="@../../../media/images/logo.png" />
          </image>
       </ImageView>
+      <AnchorPane layoutX="48.0" layoutY="103.0" prefHeight="384.0" prefWidth="604.0" styleClass="anchor-pane">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="27.0" layoutY="11.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/back%20(1).png" />
+               </image>
+            </ImageView>
+            <ListView fx:id="availablePlayersList" layoutX="27.0" layoutY="54.0" prefHeight="323.0" prefWidth="551.0" style="-fx-background-radius: 10; -fx-background-color: #FFA800; -fx-opacity: 65%;" />
+            <Label layoutX="226.0" layoutY="9.0" prefHeight="29.0" prefWidth="152.0" style="-fx-background-color: #FFA800; -fx-background-radius: 8;" text="Available Players">
+               <font>
+                  <Font name="Agency FB" size="24.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="8.0" right="8.0" top="5.0" />
+               </padding>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

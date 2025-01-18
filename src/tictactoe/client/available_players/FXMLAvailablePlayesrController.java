@@ -2,19 +2,28 @@ package tictactoe.client.available_players;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.session_data.SessionData;
@@ -28,6 +37,11 @@ public class FXMLAvailablePlayesrController implements Initializable {
     private Label score;
     @FXML
     private ImageView logo;
+    
+    @FXML
+    private ListView<String> availablePlayersList;
+
+    
 
     /**
      * Initializes the controller class.
@@ -39,7 +53,11 @@ public class FXMLAvailablePlayesrController implements Initializable {
         
         username.setText(SessionData.getUsername());
         score.setText(SessionData.getScore() + "");
+        
+        showAvailablePlayers();
     }
+    
+    
 
     @FXML
     private void logout(MouseEvent event) {
@@ -71,4 +89,85 @@ public class FXMLAvailablePlayesrController implements Initializable {
             }
         }
     }
+    
+    private List<Map<String, String>> receiveAvailablePlayers() {
+        
+        List<Map<String, String>> players = new ArrayList<>();
+        
+        try {
+            
+            JSONObject request = new JSONObject();
+            
+            request.put("header", "get_available_players");
+
+
+            String response = Request.getInstance().sendRequest(request.toString());
+
+            JSONObject jsonResponse = new JSONObject(response);
+            
+            if ("available_players".equals(jsonResponse.getString("header"))) {
+            
+                JSONArray jsonArray = jsonResponse.getJSONArray("players");
+
+                
+                String currentUser = SessionData.getUsername();
+
+               
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    
+                    JSONObject player = jsonArray.getJSONObject(i);
+                    
+                    String username = player.getString("username");
+
+                    
+                    if (!username.equals(currentUser)) {
+                        
+                        Map<String, String> playerMap = new HashMap<>();
+                        
+                        playerMap.put("username", username);
+                        
+                        playerMap.put("score", player.getString("score"));
+                        
+                        players.add(playerMap);
+                        
+                    }
+                }
+            }
+            
+        } catch (IOException ex) {
+            
+            Logger.getLogger(FXMLAvailablePlayesrController.class.getName()).log(Level.SEVERE, null, ex);
+        
+        }
+        
+        return players;
+    }
+    
+    private void showAvailablePlayers() {
+        
+        List<Map<String, String>> players = receiveAvailablePlayers();
+
+        Platform.runLater(() -> {
+            
+            availablePlayersList.getItems().clear();
+            
+            for (Map<String, String> player : players) {
+                
+                String display = " " + player.get("username") + " - Score: " + player.get("score");
+                
+                availablePlayersList.getItems().add(display);
+            }
+        });
+    }
+    
+    @FXML
+    private void handleButton(){
+        try {
+            SceneNavigation.getInstance().nextScene("/tictactoe/client/main_screen/FXMLMainScreen.fxml", logo);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayesrController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
 }
