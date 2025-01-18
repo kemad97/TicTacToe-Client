@@ -69,7 +69,7 @@ public class Request {
         dos.writeUTF(jsonObject.toString());
     }
 
-    public JSONObject receve() throws IOException {
+    public JSONObject recieve() throws IOException {
         return new JSONObject(dis.readUTF());
     }
     
@@ -77,6 +77,36 @@ public class Request {
         dos.writeUTF(request);
         return dis.readUTF();
     }
+    
+    // New methods for game and match functionalities
+    public void sendMatchRequest(String opponentUsername) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("header", "match_request");
+        map.put("opponent", opponentUsername);
 
+        JSONObject jsonObject = new JSONObject(map);
+        dos.writeUTF(jsonObject.toString());
+    }
+    
+    
+    public void sendMatchResponse(String opponentUsername, boolean isAccepted) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("header", "match_response");
+        map.put("opponent", opponentUsername);
+        map.put("response", isAccepted ? "accepted" : "declined");
+
+        JSONObject jsonObject = new JSONObject(map);
+        dos.writeUTF(jsonObject.toString());
+    }
+
+      public void sendMove(String opponentUsername, String move) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("header", "move");
+        map.put("opponent", opponentUsername);
+        map.put("move", move);
+
+        JSONObject jsonObject = new JSONObject(map);
+        dos.writeUTF(jsonObject.toString());
+    }
 
 }
