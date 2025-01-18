@@ -56,7 +56,12 @@ public class FXMLMainScreenController implements Initializable {
                 Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //if user logged in goto available palayers
+            try {
+                //if user logged in goto available palayers
+                SceneNavigation.getInstance().nextScene("/tictactoe/client/main_screen/FXMLAvailablePlayers.fxml", logo);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
