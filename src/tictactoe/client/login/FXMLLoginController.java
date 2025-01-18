@@ -145,13 +145,11 @@ public class FXMLLoginController implements Initializable {
         String registerScrene = "/tictactoe/client/register/FXMLRegisterationScreen.fxml";
 
         SoundManager.playSoundEffect("click.wav");
-
         try {
             SceneNavigation.getInstance().nextScene(registerScrene, logo);
         } catch (IOException ex) {
             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private void disableUI() {
@@ -179,30 +177,4 @@ public class FXMLLoginController implements Initializable {
         }
 
     }
-
-    @FXML
-    private void showIpEdit(MouseEvent event) {
-        SoundManager.playSoundEffect("click.wav");
-
-        TextInputDialog dialog = new TextInputDialog(ServerIP.getIP());
-        dialog.setTitle("Update server IP");
-        dialog.showAndWait().ifPresent(string -> updateIP(string.trim()));
-    }
-
-    private void updateIP(String ip) {
-        if (!ServerIP.getIP().equals(ip)) {
-            if (ServerIP.isValidIP(ip)) {
-                ServerIP.saveIP(ip);
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("New IP updated");
-                alert.show();
-            } else if (!ServerIP.getIP().equals(ip)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid ip format");
-                alert.show();
-            }
-        }
-    }
-
 }
