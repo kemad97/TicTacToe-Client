@@ -12,14 +12,14 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../splash_screen/fxmlsplashscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.available_players.FXMLAvailablePlayersController">
    <children>
-      <Pane layoutX="496.0" layoutY="24.0" prefHeight="70.0" prefWidth="207.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0">
+      <Pane layoutX="496.0" layoutY="24.0" prefHeight="70.0" prefWidth="223.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0">
          <children>
-            <ImageView fitHeight="100.0" fitWidth="171.0" layoutX="-15.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="100.0" fitWidth="171.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../media/images/usename_and_score.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="163.0" layoutY="14.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="179.0" layoutY="14.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../media/images/logout.png" />
                </image>
@@ -27,11 +27,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="-12.0" layoutY="22.0" prefHeight="27.0" prefWidth="98.0" text="username">
+            <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="22.0" prefHeight="27.0" prefWidth="98.0" text="username">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Label>
-            <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" layoutX="90.0" layoutY="21.0" prefWidth="59.0" text="score">
+            <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="21.0" prefWidth="59.0" text="score">
                <font>
                   <Font size="18.0" />
                </font>
