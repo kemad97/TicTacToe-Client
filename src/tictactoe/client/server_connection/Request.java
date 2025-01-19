@@ -73,10 +73,10 @@ public class Request {
         return new JSONObject(dis.readUTF());
     }
     
-    public String sendRequest(String request) throws IOException {
+    public void sendRequest(String request) throws IOException {
         dos.writeUTF(request);
-        return dis.readUTF();
     }
+    
 
 
 }
