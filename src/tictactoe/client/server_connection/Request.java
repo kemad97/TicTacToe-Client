@@ -76,6 +76,7 @@ public class Request {
     public void sendRequest(String request) throws IOException {
         dos.writeUTF(request);
     }
+    
 
 
 }

@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.scene_navigation.SceneNavigation;
@@ -63,6 +64,7 @@ public class FXMLAvailablePlayersController implements Initializable {
 
     @FXML
     private void logout(MouseEvent event) {
+        
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Do you want to logout!");
 
@@ -71,6 +73,7 @@ public class FXMLAvailablePlayersController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
             try {
+
                 //cloase connection with server
                 Request.getInstance().disconnectToServer();
             } catch (IOException ex) {
@@ -91,7 +94,7 @@ public class FXMLAvailablePlayersController implements Initializable {
             }
         }
     }
-
+    
     private List<Map<String, String>> receiveAvailablePlayers() {
 
         List<Map<String, String>> players = new ArrayList<>();
@@ -108,6 +111,47 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         }
 
+        return players;   
+    }
+
+
+    private List<Map<String, String>> handleResponse(String response) {
+        
+        List<Map<String, String>> players = new ArrayList<>();
+        
+        try {
+            
+            JSONObject jsonResponse = new JSONObject(response);
+
+            if ("available_players".equals(jsonResponse.getString("header"))) {
+                
+                JSONArray jsonArray = jsonResponse.getJSONArray("players");
+
+                String currentUser = SessionData.getUsername();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    
+                    JSONObject player = jsonArray.getJSONObject(i);
+                    
+                    String username = player.getString("username");
+
+                    if (!username.equals(currentUser)) {
+                        
+                        Map<String, String> playerMap = new HashMap<>();
+                        
+                        playerMap.put("username", username);
+                        
+                        playerMap.put("score", player.getString("score"));
+                        
+                        players.add(playerMap);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            
+            e.printStackTrace();
+            
+        }
         return players;
     }
 

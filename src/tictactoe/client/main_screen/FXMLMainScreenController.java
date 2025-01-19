@@ -16,9 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.animation.Animation;
+import tictactoe.client.server_connection.Request;
 import tictactoe.client.soundManager.SoundManager;
 
 public class FXMLMainScreenController implements Initializable {
@@ -49,9 +51,13 @@ public class FXMLMainScreenController implements Initializable {
         System.out.println("start online match");
 
         if (!SessionData.isAuthenticated()) {
+            
             String loginFXMLPath = "/tictactoe/client/login/FXMLLogin.fxml";
+            
             try {
+                
                 SceneNavigation.getInstance().nextScene(loginFXMLPath, logo);
+                
             } catch (IOException ex) {
                 Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
