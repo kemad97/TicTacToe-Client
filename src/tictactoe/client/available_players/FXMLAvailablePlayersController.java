@@ -38,27 +38,29 @@ public class FXMLAvailablePlayersController implements Initializable {
     private Label score;
     @FXML
     private ImageView logo;
-    
+
     @FXML
     private ListView<String> availablePlayersList;
-
     
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
+    public void initialize(URL url, ResourceBundle rb) {
         //animate logo
         Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
-        
+
         username.setText(SessionData.getUsername());
         score.setText(SessionData.getScore() + "");
-        
+
         showAvailablePlayers();
+
+        //this thread list for any request coms to available players
+        new Thread(() -> {
+            receiveRequests();
+        }).start();
     }
-    
-    
 
     @FXML
     private void logout(MouseEvent event) {
@@ -93,30 +95,23 @@ public class FXMLAvailablePlayersController implements Initializable {
         }
     }
     
-    private String sendRequest() {
-        
-        String response = "";
+    private List<Map<String, String>> receiveAvailablePlayers() {
+
+        List<Map<String, String>> players = new ArrayList<>();
 
         try {
             
             JSONObject request = new JSONObject();
-            
             request.put("header", "get_available_players");
 
-            response = Request.getInstance().sendRequest(request.toString());
-            
-        } catch (JSONException e) {
-            
-            e.printStackTrace();
-            
+            Request.getInstance().sendRequest(request.toString());
         } catch (IOException ex) {
-            
+
             Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
-        
+
         }
 
-        return response;
-        
+        return players;   
     }
 
 
@@ -161,32 +156,52 @@ public class FXMLAvailablePlayersController implements Initializable {
     }
 
     private void showAvailablePlayers() {
-        
-         String response = sendRequest();
-        
-        List<Map<String, String>> players = handleResponse(response);
+        JSONObject request = new JSONObject();
 
-        Platform.runLater(() -> {
-            
-            availablePlayersList.getItems().clear();
-            
-            for (Map<String, String> player : players) {
-                
-                String display = " " + player.get("username") + " - Score: " + player.get("score");
-                
-                availablePlayersList.getItems().add(display);
-            }
-        });
-    }
-    
-    @FXML
-    private void handleButton(){
+        request.put("header", "get_available_players");
+
         try {
-            SceneNavigation.getInstance().nextScene("/tictactoe/client/main_screen/FXMLMainScreen.fxml", logo);
+            Request.getInstance().sendRequest(request.toString());
         } catch (IOException ex) {
             Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    private void receiveRequests() {
+        while (true) {
+            try {
+                JSONObject jsonObject = Request.getInstance().receve();
+                System.out.println(jsonObject);
+                switch (jsonObject.getString("header")) {
+                    case "available_players":
+                        System.out.println(jsonObject);
+                        Platform.runLater(() -> updateAvailablePlayersListView(jsonObject.getJSONArray("players")));
+                        break;
+                }
+            } catch (IOException ex) {
+                System.out.println("Server error!");
+                break;
+            }
+        }
+        System.out.println("stop receving");
+    }
 
+    private void updateAvailablePlayersListView(JSONArray players) {
+
+        availablePlayersList.getItems().clear();
+        
+        String currentUser = SessionData.getUsername();
+
+        for (int i = 0; i < players.length(); i++) {
+            JSONObject player = players.getJSONObject(i);
+
+            if (!player.getString("username").equals(currentUser)) {
+                String display = " " + player.get("username") + " - Score: " + player.get("score");
+                availablePlayersList.getItems().add(display);
+            }
+        }
+    }
+    
     
 }
