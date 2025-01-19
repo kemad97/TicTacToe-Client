@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/tictactoe/client/server_connection/Request.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>112</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/TicTacToeProject/TicTacToe-Client/src/tictactoe/client/gameBoard/GameBoardController.java</file>
-            <file>file:/E:/TicTacToeProject/TicTacToe-Client/src/tictactoe/client/main_screen/FXMLMainScreenController.java</file>
-            <file>file:/E:/TicTacToeProject/TicTacToe-Client/src/tictactoe/client/gameBoardWithFriend/GameBoardWithFriendController.java</file>
-            <file>file:/E:/TicTacToeProject/TicTacToe-Client/src/tictactoe/client/gameBoard/GameBoard.fxml</file>
+            <file>file:/F:/MAD_45_SV/Developing%20Applications%20using%20Java%20SE/java_project/TicTacToe/TicTacToe-Client/src/tictactoe/client/available_players/FXMLAvailablePlayersController.java</file>
         </group>
     </open-files>
 </project-private>

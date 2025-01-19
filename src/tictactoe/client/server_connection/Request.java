@@ -80,16 +80,15 @@ public class Request {
         return new JSONObject(dis.readUTF());
     }
     
-    public String sendRequest(String request) throws IOException {
+    public void sendRequest(String request) throws IOException {
         dos.writeUTF(request);
-        return dis.readUTF();
     }
     
     // New methods for game and match functionalities
     public void sendMatchRequest(String opponentUsername) throws IOException {
         Map<String, String> map = new HashMap<>();
-        map.put("header", "match_request");
-        map.put("opponent", opponentUsername);
+        map.put("header", "request_start_match");
+        map.put("targetPlayer", opponentUsername);
 
         JSONObject jsonObject = new JSONObject(map);
         dos.writeUTF(jsonObject.toString());

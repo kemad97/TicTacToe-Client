@@ -6,12 +6,16 @@ package tictactoe.client;
  * and open the template in the editor.
  */
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import tictactoe.client.server_connection.Request;
 import tictactoe.client.server_ip.ServerIP;
 import tictactoe.client.soundManager.SoundManager;
 
@@ -36,7 +40,11 @@ public class TicTacToeClient extends Application {
     
     @Override
     public void stop() {
-      
+        try {
+            Request.getInstance().disconnectToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(TicTacToeClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
         SoundManager.stopBackgroundMusic();
     }
 
