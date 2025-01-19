@@ -54,7 +54,7 @@ public class FXMLAvailablePlayersController implements Initializable {
         username.setText(SessionData.getUsername());
         score.setText(SessionData.getScore() + "");
 
-        showAvailablePlayers();
+        requestAvailablePlayers();
 
         //this thread list for any request coms to available players
         new Thread(() -> {
@@ -94,68 +94,8 @@ public class FXMLAvailablePlayersController implements Initializable {
             }
         }
     }
-    
-    private List<Map<String, String>> receiveAvailablePlayers() {
 
-        List<Map<String, String>> players = new ArrayList<>();
-
-        try {
-            
-            JSONObject request = new JSONObject();
-            request.put("header", "get_available_players");
-
-            Request.getInstance().sendRequest(request.toString());
-        } catch (IOException ex) {
-
-            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-
-        return players;   
-    }
-
-
-    private List<Map<String, String>> handleResponse(String response) {
-        
-        List<Map<String, String>> players = new ArrayList<>();
-        
-        try {
-            
-            JSONObject jsonResponse = new JSONObject(response);
-
-            if ("available_players".equals(jsonResponse.getString("header"))) {
-                
-                JSONArray jsonArray = jsonResponse.getJSONArray("players");
-
-                String currentUser = SessionData.getUsername();
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    
-                    JSONObject player = jsonArray.getJSONObject(i);
-                    
-                    String username = player.getString("username");
-
-                    if (!username.equals(currentUser)) {
-                        
-                        Map<String, String> playerMap = new HashMap<>();
-                        
-                        playerMap.put("username", username);
-                        
-                        playerMap.put("score", player.getString("score"));
-                        
-                        players.add(playerMap);
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            
-            e.printStackTrace();
-            
-        }
-        return players;
-    }
-
-    private void showAvailablePlayers() {
+    private void requestAvailablePlayers() {
         JSONObject request = new JSONObject();
 
         request.put("header", "get_available_players");
