@@ -84,7 +84,7 @@ public class FXMLLoginController implements Initializable {
                 Request.getInstance().login(username.getText().trim(),
                         password.getText().trim().hashCode() + "");
 
-                handleLoginResponse(Request.getInstance().receve());
+                handleLoginResponse(Request.getInstance().recieve());
             } catch (IOException ex) {
                 Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -98,22 +98,22 @@ public class FXMLLoginController implements Initializable {
 
     }
 
-    private void handleLoginResponse(JSONObject receve) {
+    private void handleLoginResponse(JSONObject recieve) {
         //reenable screen ui
         Platform.runLater(() -> enableUI());
 
-        switch (receve.getString("header")) {
+        switch (recieve.getString("header")) {
             case "success":
 
                 //update session data
                 SessionData.setAuthenticated(true);
-                SessionData.setUsername(receve.getString("username"));
-                SessionData.setScore(receve.getInt("score"));
+                SessionData.setUsername(recieve.getString("username"));
+                SessionData.setScore(recieve.getInt("score"));
 
                 Platform.runLater(() -> {
                     Alert success;
                     success = new Alert(Alert.AlertType.INFORMATION);
-                    success.setContentText("Login Successful: " + receve.getString("username"));
+                    success.setContentText("Login Successful: " + recieve.getString("username"));
                     Optional<ButtonType> result = success.showAndWait();
 
                     if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -132,7 +132,7 @@ public class FXMLLoginController implements Initializable {
             case "error":
                 Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText(receve.getString("message"));
+                    alert.setContentText(recieve.getString("message"));
                     alert.show();
                 });
                 break;
