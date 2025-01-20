@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 package tictactoe.client.server_ip;
 
 import java.io.*;
@@ -21,12 +11,11 @@ public class ServerIP {
     private static final String FILE_PATH = "./src/media/server_ip/server_ip.txt";
     private static final int DEFAULT_PORT = 8080;
 
-    /**
+    /*
      * Retrieves the server IP address from the file.
      * If the file does not exist, it creates one with an empty IP address.
-     *
-     * @return The IP address as a string, or an empty string if not found.
      */
+    
     public static String getIP() {
         File ipFile = new File(FILE_PATH);
         String ip = "";

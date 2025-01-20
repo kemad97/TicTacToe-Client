@@ -15,8 +15,10 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -24,6 +26,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +35,7 @@ import tictactoe.client.animation.Animation;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.server_connection.Request;
+import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
 
 public class FXMLAvailablePlayersController implements Initializable {
 
@@ -310,10 +314,23 @@ public class FXMLAvailablePlayersController implements Initializable {
 
                         Platform.runLater(() -> showMatchRequestAlert(opponentUsername));
                         System.out.println("Received match request from: " + opponentUsername);
+                     case "start_game": // place holder
+                         
+                        Platform.runLater(() -> {
+                            try {
+                                Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/gameBoardWithFriend/GameBoardWithFriend.fxml"));
+                                Scene scene = new Scene(root);
 
-                      
+                                Stage stage = (Stage) logo.getScene().getWindow();
 
+                                stage.setScene(scene);
+                                stage.show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
                         break;
+
                 }
             } catch (IOException ex) {
                 System.out.println("Server error!");
