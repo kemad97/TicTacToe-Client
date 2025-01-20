@@ -100,7 +100,9 @@ public class Request {
         Map<String, String> map = new HashMap<>();
         map.put("header", "match_response");
         map.put("opponent", opponentUsername);
-        map.put("response", isAccepted ? "accepted" : "declined");
+      //  map.put("response", isAccepted ? "accepted" : "declined");
+        map.put("response", isAccepted ? "true" : "false");
+
 
         JSONObject jsonObject = new JSONObject(map);
         dos.writeUTF(jsonObject.toString());
@@ -115,5 +117,7 @@ public class Request {
         JSONObject jsonObject = new JSONObject(map);
         dos.writeUTF(jsonObject.toString());
     }
+      
+    
 
 }

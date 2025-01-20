@@ -58,9 +58,13 @@ public class FXMLAvailablePlayersController implements Initializable {
         score.setText(SessionData.getScore() + "");
 
         showAvailablePlayers();
-        // Start polling for available players and incoming match requests
-        startPolling();
+        
 
+        // Start listening for server responses
+        new Thread(() -> {
+            processServerResponse();
+        }).start();
+        
         availablePlayersList.setOnMouseClicked(event -> 
         {
             if(event.getClickCount ()==2)
@@ -69,21 +73,19 @@ public class FXMLAvailablePlayersController implements Initializable {
                 if (selectedPlayer != null) 
                 {
                     String opponentUsername = selectedPlayer.split(" - ")[0].trim();
+                    System.out.println(opponentUsername);
                      sendMatchRequest(opponentUsername);
                     
                 }
                 
-        
             }
-
-        
-
         });
-
+        
+        /*
         //this thread list for any request coms to available players
         new Thread(() -> {
             receiveRequests();
-        }).start();
+        }).start(); */
     }
 
     @FXML
@@ -206,36 +208,16 @@ public class FXMLAvailablePlayersController implements Initializable {
         }
     }
 
-     // Polling mechanism for available players and match requests
-    private void startPolling() {
-        pollingTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            showAvailablePlayers();
-            checkForMatchRequest();  // Check for incoming match requests
-        }));
-        pollingTimeline.setCycleCount(Timeline.INDEFINITE);
-        pollingTimeline.play(); 
-    }
-
-      // Stop polling when the scene is closed or the player logs out
-    private void stopPolling() {
-        if (pollingTimeline != null) {
-            pollingTimeline.stop();
-        }
-    }
+  
     
-      // Stop polling when the controller is destroyed or the scene is no longer needed
-    @Override
-    public void finalize() throws Throwable {
-        super.finalize();
-        stopPolling();
-    }
-    
+    /*
       // Method to check for match requests from other players
     private void checkForMatchRequest() {
         try {
             JSONObject request = new JSONObject();
             request.put("header", "check_match_request");
             String response = Request.getInstance().sendRequest(request.toString());
+            
 
             JSONObject jsonResponse = new JSONObject(response);
             if ("match_request".equals(jsonResponse.getString("header"))) {
@@ -246,7 +228,7 @@ public class FXMLAvailablePlayersController implements Initializable {
             Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    */
      // Show alert when a match request is received
     private void showMatchRequestAlert(String opponentUsername) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -275,12 +257,17 @@ public class FXMLAvailablePlayersController implements Initializable {
     private void receiveRequests() {
         while (true) {
             try {
-                JSONObject jsonObject = Request.getInstance().receve();
+                JSONObject jsonObject = Request.getInstance().recieve();
                 System.out.println(jsonObject);
                 switch (jsonObject.getString("header")) {
                     case "available_players":
                         System.out.println(jsonObject);
                         Platform.runLater(() -> updateAvailablePlayersListView(jsonObject.getJSONArray("players")));
+                        break;
+                    case "match_request":
+                        String opponentUsername = jsonObject.getString("fromPlayer");
+                        System.out.println("at avaliableplaers controller client vs " + opponentUsername);
+                        Platform.runLater(() -> showMatchRequestAlert(opponentUsername));
                         break;
                 }
             } catch (IOException ex) {
@@ -305,6 +292,35 @@ public class FXMLAvailablePlayersController implements Initializable {
                 availablePlayersList.getItems().add(display);
             }
         }
+    }
+    
+    //  method to handle all incoming server responses
+    private void processServerResponse() {
+        while (true) {
+            try {
+                JSONObject jsonObject = Request.getInstance().recieve();
+                System.out.println(jsonObject);
+                switch (jsonObject.getString("header")) {
+                    case "available_players":
+                        Platform.runLater(() -> updateAvailablePlayersListView(jsonObject.getJSONArray("players")));
+                        break;
+                    case "match_request":
+                        String opponentUsername = jsonObject.getString("fromPlayer");
+                        System.out.println("Received match request from: " + opponentUsername);
+
+                        Platform.runLater(() -> showMatchRequestAlert(opponentUsername));
+                        System.out.println("Received match request from: " + opponentUsername);
+
+                      
+
+                        break;
+                }
+            } catch (IOException ex) {
+                System.out.println("Server error!");
+                break;
+            }
+        }
+        System.out.println("Stopped receiving.");
     }
     
     
