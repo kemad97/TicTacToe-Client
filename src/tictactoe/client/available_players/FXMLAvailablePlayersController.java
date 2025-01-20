@@ -129,7 +129,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                         Platform.runLater(() -> {                            
                             String onlineGameBoardPath = "/tictactoe/client/online_game_board/FXMLOnlineGameBoard.fxml";
                             try {
-                                SceneNavigation.getInstance().gotoOnlineBoard(onlineGameBoardPath, score, jsonObject.getString("opponent"));
+                                SceneNavigation.getInstance().gotoOnlineBoard(onlineGameBoardPath, logo, jsonObject.getString("opponent"), jsonObject.getBoolean("yourTurn"));
                             } catch (IOException ex) {
                                 Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
                             }
