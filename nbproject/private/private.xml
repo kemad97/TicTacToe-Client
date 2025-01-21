@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/tictactoe/client/server_connection/Request.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>112</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/MAD_45_SV/Developing%20Applications%20using%20Java%20SE/java_project/TicTacToe/TicTacToe-Client/src/tictactoe/client/available_players/FXMLAvailablePlayersController.java</file>
+            <file>file:/D:/iti_MAD45/Java/TIC%20TAC%20TOE%20project/Repo/TicTacToe-Client/src/tictactoe/client/available_players/FXMLAvailablePlayersController.java</file>
         </group>
     </open-files>
 </project-private>
