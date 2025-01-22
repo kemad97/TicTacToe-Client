@@ -18,7 +18,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.scene_navigation.SceneNavigation;
@@ -37,7 +36,6 @@ public class FXMLAvailablePlayersController implements Initializable {
     @FXML
     private ListView<String> availablePlayersList;
 
-
     /**
      * Initializes the controller class.
      */
@@ -50,7 +48,6 @@ public class FXMLAvailablePlayersController implements Initializable {
         score.setText(SessionData.getScore() + "");
 
         requestAvailablePlayers();
-
 
         availablePlayersList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -112,7 +109,7 @@ public class FXMLAvailablePlayersController implements Initializable {
             Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
+
     private void receiveRequests() {
         while (true) {
             try {
@@ -132,7 +129,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                         Platform.runLater(() -> {                            
                             String onlineGameBoardPath = "/tictactoe/client/online_game_board/FXMLOnlineGameBoard.fxml";
                             try {
-                                SceneNavigation.getInstance().gotoOnlineBoard(onlineGameBoardPath, score, jsonObject.getString("opponent"));
+                                SceneNavigation.getInstance().gotoOnlineBoard(onlineGameBoardPath, logo, jsonObject.getString("opponent"), jsonObject.getBoolean("yourTurn"));
                             } catch (IOException ex) {
                                 Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -150,8 +147,6 @@ public class FXMLAvailablePlayersController implements Initializable {
     private void updateAvailablePlayersListView(JSONArray players) {
 
         availablePlayersList.getItems().clear();
-
-
         String currentUser = SessionData.getUsername();
 
         for (int i = 0; i < players.length(); i++) {
@@ -164,8 +159,6 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         }
     }
-    
-
     // Method to send a match request to the selected player
     private void sendMatchRequest(String opponentUsername) {
         try {
