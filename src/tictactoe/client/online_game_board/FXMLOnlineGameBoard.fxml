@@ -14,20 +14,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../gameBoardWithFriend/GameBoardWithFriend.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.onlineGameBoard.OnlineGameBoardController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../gameBoardWithFriend/GameBoardWithFriend.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.online_game_board.FXMLOnlineGameBoardController">
     <children>
         <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
             <children>
-                <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="24.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../media/images/XPlayer.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="419.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../media/images/YPlayer.png" />
-                    </image>
-                </ImageView>
                 <GridPane layoutX="118.0" layoutY="66.0" prefHeight="251.0" prefWidth="280.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -55,7 +45,7 @@
                         <String fx:value="label-with-shadow" />
                     </styleClass>
                 </GridPane>
-                <CheckBox fx:id="checkBoxRecord" layoutX="207.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleCheckBox" prefHeight="42.0" prefWidth="103.0" text="Record">
+                <CheckBox fx:id="checkBoxRecord" layoutX="207.0" layoutY="9.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="103.0" text="Record">
                     <padding>
                         <Insets bottom="22.0" left="12.0" />
                     </padding>
@@ -64,6 +54,22 @@
                         <String fx:value="label-with-shadow" />
                     </styleClass>
                 </CheckBox>
+            <Label fx:id="currentPlayerUsername" layoutX="42.0" layoutY="106.0" text="Mei">
+               <font>
+                  <Font size="21.0" />
+               </font></Label>
+            <Label fx:id="opponnetUsername" layoutX="441.0" layoutY="106.0" text="Ayah">
+               <font>
+                  <Font size="21.0" />
+               </font></Label>
+            <ImageView fx:id="myImageView" fitHeight="68.0" fitWidth="103.0" layoutX="14.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/X.png" />
+               </image></ImageView>
+            <ImageView fx:id="opponentImageView" fitHeight="68.0" fitWidth="103.0" layoutX="419.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/O.png" />
+               </image></ImageView>
             </children>
         </AnchorPane>
         <ImageView fx:id="logo" fitHeight="83.0" fitWidth="95.0" layoutX="14.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">

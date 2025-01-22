@@ -2,10 +2,6 @@ package tictactoe.client.available_players;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,9 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.scene_navigation.SceneNavigation;
@@ -41,7 +35,6 @@ public class FXMLAvailablePlayersController implements Initializable {
 
     @FXML
     private ListView<String> availablePlayersList;
-    
 
     /**
      * Initializes the controller class.
@@ -56,6 +49,16 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         requestAvailablePlayers();
 
+        availablePlayersList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                String selectedPlayer = availablePlayersList.getSelectionModel().getSelectedItem();
+                if (selectedPlayer != null) {
+                    String opponentUsername = selectedPlayer.split(" - ")[0].trim();
+                    sendMatchRequest(opponentUsername);
+                }
+            }
+        });
+
         //this thread list for any request coms to available players
         new Thread(() -> {
             receiveRequests();
@@ -64,7 +67,7 @@ public class FXMLAvailablePlayersController implements Initializable {
 
     @FXML
     private void logout(MouseEvent event) {
-        
+
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Do you want to logout!");
 
@@ -106,17 +109,31 @@ public class FXMLAvailablePlayersController implements Initializable {
             Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     private void receiveRequests() {
         while (true) {
             try {
-                JSONObject jsonObject = Request.getInstance().receve();
-                System.out.println(jsonObject);
+                JSONObject jsonObject = Request.getInstance().recieve();
+
                 switch (jsonObject.getString("header")) {
                     case "available_players":
-                        System.out.println(jsonObject);
                         Platform.runLater(() -> updateAvailablePlayersListView(jsonObject.getJSONArray("players")));
+                        break;
+                    case "match_request":
+                        Platform.runLater(() -> showMatchRequestAlert(jsonObject.getString("fromPlayer")));
+                        break;
+                    case "request_decline":
+                        Platform.runLater(() -> showDeclineMessage(jsonObject.getString("opponent")));
+                        break;
+                    case "start_game":
+                        Platform.runLater(() -> {                            
+                            String onlineGameBoardPath = "/tictactoe/client/online_game_board/FXMLOnlineGameBoard.fxml";
+                            try {
+                                SceneNavigation.getInstance().gotoOnlineBoard(onlineGameBoardPath, logo, jsonObject.getString("opponent"), jsonObject.getBoolean("yourTurn"));
+                            } catch (IOException ex) {
+                                Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        });
                         break;
                 }
             } catch (IOException ex) {
@@ -130,7 +147,7 @@ public class FXMLAvailablePlayersController implements Initializable {
     private void updateAvailablePlayersListView(JSONArray players) {
 
         availablePlayersList.getItems().clear();
-        
+
         String currentUser = SessionData.getUsername();
 
         for (int i = 0; i < players.length(); i++) {
@@ -142,6 +159,53 @@ public class FXMLAvailablePlayersController implements Initializable {
             }
         }
     }
-    
-    
+
+    // Method to send a match request to the selected player
+    private void sendMatchRequest(String opponentUsername) {
+        try {
+            Request.getInstance().sendMatchRequest(opponentUsername);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Match request sent to " + opponentUsername);
+            alert.show();
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Failed to send match request.");
+            alert.show();
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // Show alert when a match request is received
+    private void showMatchRequestAlert(String opponentUsername) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Match Request");
+        alert.setHeaderText(opponentUsername + " has sent you a match request.");
+        alert.setContentText("Do you want to accept the match?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Accept the match
+            sendMatchResponse(opponentUsername, true);
+            //goto online game board
+        } else {
+            // Decline the match
+            sendMatchResponse(opponentUsername, false);
+        }
+    }
+
+    // Method to send a response to the match request (accept/decline)
+    private void sendMatchResponse(String opponentUsername, boolean isAccepted) {
+        try {
+            Request.getInstance().sendMatchResponse(opponentUsername, isAccepted);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void showDeclineMessage(String opponentName) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Match Responce");
+        alert.setHeaderText(opponentName + " refuse your request.");
+        alert.show();
+    }
 }

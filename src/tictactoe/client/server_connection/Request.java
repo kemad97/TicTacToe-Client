@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONObject;
 import tictactoe.client.server_ip.ServerIP;
 
@@ -23,24 +25,29 @@ public class Request {
             dos = new DataOutputStream(socket.getOutputStream());
     }
 
-    public static Request getInstance() throws IOException {
-        if (instance == null) {
-            instance = new Request();
-        }
-
-        return instance;
+    public static synchronized Request getInstance() throws IOException {
+    if (instance == null) {
+        instance = new Request();
     }
+    return instance;
+}
+
     
     public static void deleteInstance(){
         instance = null;
     }
 
-    public void disconnectToServer() throws IOException {
+   public void disconnectToServer() throws IOException {
+    try {
         dos.close();
         dis.close();
         socket.close();
-        instance = null;
+    } catch (IOException ex) {
+        Logger.getLogger(Request.class.getName()).log(Level.SEVERE, "Error while closing connection", ex);
+    } finally {
+        instance = null;  // Ensure singleton instance is reset after disconnection.
     }
+}
 
     public void registration(String username, String hashedPassword) throws IOException {
 
@@ -69,7 +76,7 @@ public class Request {
         dos.writeUTF(jsonObject.toString());
     }
 
-    public JSONObject receve() throws IOException {
+    public JSONObject recieve() throws IOException {
         return new JSONObject(dis.readUTF());
     }
     
@@ -77,6 +84,37 @@ public class Request {
         dos.writeUTF(request);
     }
     
+    // New methods for game and match functionalities
+    public void sendMatchRequest(String opponentUsername) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("header", "request_start_match");
+        map.put("targetPlayer", opponentUsername);
 
+        JSONObject jsonObject = new JSONObject(map);
+        dos.writeUTF(jsonObject.toString());
+    }
+    
+    
+    public void sendMatchResponse(String opponentUsername, boolean isAccepted) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("header", "match_response");
+        map.put("opponent", opponentUsername);
+        map.put("response", isAccepted ? "accepted" : "declined");
 
+        JSONObject jsonObject = new JSONObject(map);
+        dos.writeUTF(jsonObject.toString());
+    }
+
+    /*
+      public void sendMove(String opponentUsername, String move) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("header", "move");
+        map.put("opponent", opponentUsername);
+        map.put("move", move);
+
+        JSONObject jsonObject = new JSONObject(map);
+        dos.writeUTF(jsonObject.toString());
+
+    }
+    */
 }
