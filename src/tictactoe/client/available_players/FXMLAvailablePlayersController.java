@@ -55,6 +55,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                 if (selectedPlayer != null) {
                     String opponentUsername = selectedPlayer.split(" - ")[0].trim();
                     sendMatchRequest(opponentUsername);
+                    //switch to please wait scene 
                 }
             }
         });
@@ -189,6 +190,7 @@ public class FXMLAvailablePlayersController implements Initializable {
         } else {
             // Decline the match
             sendMatchResponse(opponentUsername, false);
+            
         }
     }
 
