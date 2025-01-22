@@ -105,6 +105,7 @@ public class Request {
         dos.writeUTF(jsonObject.toString());
     }
 
+    /*
       public void sendMove(String opponentUsername, String move) throws IOException {
         Map<String, String> map = new HashMap<>();
         map.put("header", "move");
@@ -113,6 +114,7 @@ public class Request {
 
         JSONObject jsonObject = new JSONObject(map);
         dos.writeUTF(jsonObject.toString());
-    }
 
+    }
+    */
 }

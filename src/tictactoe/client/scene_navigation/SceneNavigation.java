@@ -41,7 +41,7 @@ public class SceneNavigation {
         FXMLOnlineGameBoardController onlineController;
         onlineController = loader.getController();
         onlineController.setOpponentName(opponentName);
-        onlineController.serOpponentTurn(isPlayerTurn);
+        onlineController.setPlayerTurn(isPlayerTurn);
         
         Stage stage = (Stage) node.getScene().getWindow();
 
