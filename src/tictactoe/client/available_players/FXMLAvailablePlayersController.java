@@ -238,4 +238,15 @@ public class FXMLAvailablePlayersController implements Initializable {
             Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @FXML
+    private void goToUserProfile (){
+        
+        String userProfilePath = "/tictactoe/client/userProfile/FXMLUserProfile.fxml";
+        try {
+            SceneNavigation.getInstance().nextScene(userProfilePath, score);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
