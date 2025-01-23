@@ -24,7 +24,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.JSONObject;
+import tictactoe.client.RecScreen.RecScreenController;
 import tictactoe.client.session_data.SessionData;
+import tictactoe.client.resultVideoScreenwithPC.ResultVideoScreenWithPCController;
 
 /**
  * FXML Controller class
@@ -62,6 +64,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
     private DataInputStream dis; //input stream
     
     private DataOutputStream dos; //output stream
+    private RecScreenController recScreenController;
+
     
     
      //localhost:1527
@@ -73,6 +77,9 @@ public class FXMLOnlineGameBoardController implements Initializable {
     private String[][] gameBoard = {{"", "", ""},
                                     {"", "", ""},
                                     {"", "", ""}};
+    private Boolean isMyTurnToPlay;
+    @FXML
+    private ImageView logo;
     
     
 
@@ -132,6 +139,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         */
     }
     
+    @FXML
     public void handleButtonClick(ActionEvent event){
         
         Button clickedButton = (Button) event.getSource();
@@ -180,5 +188,20 @@ public class FXMLOnlineGameBoardController implements Initializable {
         
         //gameBoard = json.getString("game_board");
     }
+
+    @FXML
+    private void handleCheckBox(ActionEvent event) {
+             if (checkBoxRecord.isSelected()) {
+            if (recScreenController == null) {
+                recScreenController = new RecScreenController();
+                recScreenController.initializeLogFile();
+            }
+            System.out.println("Recording is enabled");
+        } else {
+            recScreenController = null; 
+            System.out.println("Recording is diabled");
+        }
+    } 
+    
 
 }
