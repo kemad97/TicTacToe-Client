@@ -79,10 +79,9 @@ public class FXMLOnlineGameBoardController implements Initializable {
     public void setOpponentName(String opponetnName) {
         this.opponentName = opponetnName;
     }
-
-    
-    public void setPlayerTurn(Boolean myTurn) {
-        this.myTurn = myTurn;
+  
+    public void setMyTurn(Boolean playerTurn) {
+        this.isMyTurnToPlay = playerTurn;
         
 //        if (opponentTurn) {
 //            opponnetUsername.setText(opponentName);

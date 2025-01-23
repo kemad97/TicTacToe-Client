@@ -31,7 +31,7 @@ public class SceneNavigation {
         stage.show();
     }
     
-    public void gotoOnlineBoard(String fxmlPath, Node node, String opponentName, Boolean isPlayerTurn) throws IOException {
+    public void gotoOnlineBoard(String fxmlPath, Node node, String opponentName, Boolean isMyTurn) throws IOException {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         
@@ -41,7 +41,7 @@ public class SceneNavigation {
         FXMLOnlineGameBoardController onlineController;
         onlineController = loader.getController();
         onlineController.setOpponentName(opponentName);
-        onlineController.setPlayerTurn(isPlayerTurn);
+        onlineController.setMyTurn(isMyTurn);
         
         Stage stage = (Stage) node.getScene().getWindow();
 

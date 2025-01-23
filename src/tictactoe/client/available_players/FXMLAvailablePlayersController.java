@@ -36,6 +36,8 @@ public class FXMLAvailablePlayersController implements Initializable {
     @FXML
     private ListView<String> availablePlayersList;
 
+    private boolean isReceiving;
+
     /**
      * Initializes the controller class.
      */
@@ -62,6 +64,7 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         //this thread list for any request coms to available players
         new Thread(() -> {
+            isReceiving = true;
             receiveRequests();
         }).start();
     }
@@ -112,7 +115,7 @@ public class FXMLAvailablePlayersController implements Initializable {
     }
 
     private void receiveRequests() {
-        while (true) {
+        while (isReceiving) {
             try {
                 JSONObject jsonObject = Request.getInstance().recieve();
 
@@ -127,7 +130,8 @@ public class FXMLAvailablePlayersController implements Initializable {
                         Platform.runLater(() -> showDeclineMessage(jsonObject.getString("opponent")));
                         break;
                     case "start_game":
-                        Platform.runLater(() -> {                            
+                        isReceiving = false;
+                        Platform.runLater(() -> {
                             String onlineGameBoardPath = "/tictactoe/client/online_game_board/FXMLOnlineGameBoard.fxml";
                             try {
                                 SceneNavigation.getInstance().gotoOnlineBoard(onlineGameBoardPath, logo, jsonObject.getString("opponent"), jsonObject.getBoolean("yourTurn"));
@@ -136,13 +140,17 @@ public class FXMLAvailablePlayersController implements Initializable {
                             }
                         });
                         break;
+
+                    case "server_dowen":
+                        Platform.runLater(() -> terminateAvailablePlayersScreen());
+                        break;
                 }
             } catch (IOException ex) {
-                System.out.println("Server error!");
+                System.out.println("Server dowen!");
                 break;
             }
         }
-        System.out.println("stop receving");
+        System.out.println("finalize receving thread");
     }
 
     private void updateAvailablePlayersListView(JSONArray players) {
@@ -191,7 +199,7 @@ public class FXMLAvailablePlayersController implements Initializable {
         } else {
             // Decline the match
             sendMatchResponse(opponentUsername, false);
-            
+
         }
     }
 
@@ -209,5 +217,26 @@ public class FXMLAvailablePlayersController implements Initializable {
         alert.setTitle("Match Responce");
         alert.setHeaderText(opponentName + " refuse your request.");
         alert.show();
+    }
+
+    private void terminateAvailablePlayersScreen() {
+        //show aleart the server is dowen
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Server Message");
+        alert.setHeaderText("Server now is dowen!");
+        alert.show();
+        //close conniction with server
+        try {
+            Request.getInstance().disconnectToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //redirect all users to main screen
+        String mainScenePath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
+        try {
+            SceneNavigation.getInstance().nextScene(mainScenePath, score);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
