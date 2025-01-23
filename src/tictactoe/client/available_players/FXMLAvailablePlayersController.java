@@ -141,7 +141,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                         });
                         break;
 
-                    case "server_dowen":
+                    case "server_down":
                         Platform.runLater(() -> terminateAvailablePlayersScreen());
                         break;
                 }
@@ -238,5 +238,6 @@ public class FXMLAvailablePlayersController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        SessionData.deleteDate();
     }
 }

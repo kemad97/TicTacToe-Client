@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe.client.online_game_board;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,105 +15,73 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import org.json.JSONObject;
 import tictactoe.client.server_connection.Request;
-import tictactoe.client.session_data.SessionData;
 import tictactoe.client.soundManager.SoundManager;
 import tictactoe.client.RecScreen.RecScreenController;
+import tictactoe.client.available_players.FXMLAvailablePlayersController;
 import tictactoe.client.session_data.SessionData;
-import tictactoe.client.resultVideoScreenwithPC.ResultVideoScreenWithPCController;
+import tictactoe.client.scene_navigation.SceneNavigation;
 
-/**
- * FXML Controller class
- *
- * @author musta
- */
+
 public class FXMLOnlineGameBoardController implements Initializable {
 
     @FXML
     private Label opponnetUsername;
-    
-    @FXML 
+
+    @FXML
     private Label currentPlayerUsername;
-    
-    @FXML 
+
+    @FXML
     private ImageView myImageView;
-    
-    @FXML 
+
+    @FXML
     private ImageView opponentImageView;
-    
+
     @FXML
     private CheckBox checkBoxRecord;
-    
+
     @FXML
     private Button Btn11, Btn12, Btn13, Btn21, Btn22, Btn23, Btn31, Btn32, Btn33;
-    
 
     private Boolean firstTurn;
-    
-    //private Boolean opponentTurn;
-    
+
     private String opponentName;
-    
+
     private Button[][] board;
-    
-    private DataInputStream dis; //input stream
-    
-    private DataOutputStream dos; //output stream
+
     private RecScreenController recScreenController;
 
-    
-    
-//    private String[][] gameBoard = {{"", "", ""},
-//                                    {"", "", ""},
-//                                    {"", "", ""}};
-    
-
-    private Socket socket;
-    
-    private String[][] gameBoard = {{"", "", ""},
-                                    {"", "", ""},
-                                    {"", "", ""}};
-    private Boolean isMyTurnToPlay;
     @FXML
     private ImageView logo;
-    
+
     private String winnerPlayer;
     private boolean isGameOver;
     @FXML
     private GridPane boardPane;
-    
+
     String symbol;
 
     public void setOpponentName(String opponetnName) {
         this.opponentName = opponetnName;
     }
 
-
     public void setMyTurn(Boolean firstTurn) {
         this.firstTurn = firstTurn;
 
-        
-//        if (opponentTurn) {
-//            opponnetUsername.setText(opponentName);
-//        } else {
-//            opponnetUsername.setText(opponentName);
-//        }
-
-         if(!firstTurn)
+        if (!firstTurn) {
             boardPane.setDisable(true);
+        }
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         currentPlayerUsername.setText(SessionData.getUsername());
         opponnetUsername.setText(opponentName);
-        
+
         board = new Button[3][3];
         board[0][0] = Btn11;
         board[0][1] = Btn12;
@@ -133,12 +92,11 @@ public class FXMLOnlineGameBoardController implements Initializable {
         board[2][0] = Btn31;
         board[2][1] = Btn32;
         board[2][2] = Btn33;
-        
+
         winnerPlayer = "";
         isGameOver = false;
         symbol = "";
-      
-        
+
         /*
         Image xImage = new Image(getClass().getResource("/media/images/X.png").toExternalForm());
         Image oImage = new Image(getClass().getResource("/media/images/O.png").toExternalForm());
@@ -152,50 +110,45 @@ public class FXMLOnlineGameBoardController implements Initializable {
             myImageView.setImage(oImage);
             opponentImageView.setImage(xImage);
         }
-        */
-        
-        new Thread(()->{
-            System.out.println("hhhhhhhhhh");
+         */
+        new Thread(() -> {
             recieveRosponse();
         }).start();
-        
-       
+
     }
-    
+
     @FXML
-    public void handleButtonClick(ActionEvent event){
-        
+    public void handleButtonClick(ActionEvent event) {
+
         Button clickedButton = (Button) event.getSource();
-        
-        for(int i=0; i<3; i++){
-            for(int j=0; j<3; j++){
-                if(clickedButton.equals(board[i][j])){
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (clickedButton.equals(board[i][j])) {
                     System.out.println("Button clicked at position: (" + i + ", " + j + ")");
-                    if(firstTurn){  
+                    if (firstTurn) {
                         symbol = "X";
                         sendMoveToServer(symbol, i, j);
                         clickedButton.setText("X");
                         //firstTurn = false;
-                    }
-                    
-                    else{
+                    } else {
                         symbol = "O";
                         sendMoveToServer(symbol, i, j);
                         clickedButton.setText("O");
-                       // firstTurn = true;
+                        // firstTurn = true;
                     }
-                   // System.out.println(""+Arrays.deepToString(gameBoard));
+                    // System.out.println(""+Arrays.deepToString(gameBoard));
                     break;
                 }
             }
         }
     }
-    
-    public void sendMoveToServer(String symbol, int row, int col){   // technically send game board
-        
+
+    public void sendMoveToServer(String symbol, int row, int col) {   // technically send game board
+
         boardPane.setDisable(true);
-        
-        try{
+
+        try {
             JSONObject json = new JSONObject();
             json.put("header", "move");
             json.put("opponent", opponentName);
@@ -206,18 +159,17 @@ public class FXMLOnlineGameBoardController implements Initializable {
             Request.getInstance().sendMove(json.toString());
             //dos.flush();
             System.out.println("Move sent to server: " + json.toString());
-            
+
             checkWhoIsTheWinner();
-            
-        }
-        catch(Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
             Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
-    public void recieveMoveFromServer(JSONObject json){
- 
+
+    public void recieveMoveFromServer(JSONObject json) {
+
         symbol = json.getString("symbol");
         int row = json.getInt("row");
         int col = json.getInt("column");
@@ -225,33 +177,28 @@ public class FXMLOnlineGameBoardController implements Initializable {
         checkWhoIsTheWinner();
         boardPane.setDisable(false);
     }
-    
-    
+
     // check winner
-     private void checkWhoIsTheWinner() {
+    private void checkWhoIsTheWinner() {
 
         if (checkWin()) {
 
             winnerPlayer = firstTurn ? "O" : "X";
-            
-            if (winnerPlayer.equals("X")) {
-                
-               // xScore++;
-                
-            } else {
-                
-               // oScore++;
-                
-            }
-   
-            // updateScoreLabels();
 
+            if (winnerPlayer.equals("X")) {
+
+                // xScore++;
+            } else {
+
+                // oScore++;
+            }
+
+            // updateScoreLabels();
             highlightWinnerButtons();
 
             isGameOver = true;
 
-           // goToResultVideoScreen();
-
+            // goToResultVideoScreen();
         } else if (isBoardFull()) {
 
             showAlertAndReset();
@@ -266,15 +213,13 @@ public class FXMLOnlineGameBoardController implements Initializable {
             //نتشك لو الشخص فائز عن طريق الصفوف 
             if (checkThreeButtonsEquality(board[i][0], board[i][1], board[i][2])) {
 
-              //  winningButtons = new Button[]{board[i][0], board[i][1], board[i][2]};
-
+                //  winningButtons = new Button[]{board[i][0], board[i][1], board[i][2]};
                 return true;
 
             } // نتشك لو الشخص فائز عن طريق الأعمده
             else if (checkThreeButtonsEquality(board[0][i], board[1][i], board[2][i])) {
 
-               // winningButtons = new Button[]{board[0][i], board[1][i], board[2][i]};
-
+                // winningButtons = new Button[]{board[0][i], board[1][i], board[2][i]};
                 return true;
 
             }
@@ -284,14 +229,12 @@ public class FXMLOnlineGameBoardController implements Initializable {
         // نتشك لو الشخص فاز عن طريق القطر
         if (checkThreeButtonsEquality(board[0][0], board[1][1], board[2][2])) {
 
-         //   winningButtons = new Button[]{board[0][0], board[1][1], board[2][2]};
-
+            //   winningButtons = new Button[]{board[0][0], board[1][1], board[2][2]};
             return true;
 
         } else if (checkThreeButtonsEquality(board[0][2], board[1][1], board[2][0])) {
 
-         //   winningButtons = new Button[]{board[0][2], board[1][1], board[2][0]};
-
+            //   winningButtons = new Button[]{board[0][2], board[1][1], board[2][0]};
             return true;
 
         }
@@ -325,7 +268,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
             button.setStyle("-fx-background-color: yellow; -fx-border-color: green; -fx-font-weight: bold;");
 
         }
-        */
+         */
     }
 
     private boolean isBoardFull() {
@@ -362,7 +305,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
         isGameOver = false;
 
-       // isXTurn = true;
+        // isXTurn = true;
     }
 
     private void showAlertAndReset() {
@@ -384,8 +327,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         Optional<ButtonType> result = aboutAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            
-             
+
             SoundManager.playSoundEffect("click.wav");
 
             System.out.println("Play another Match");
@@ -393,52 +335,69 @@ public class FXMLOnlineGameBoardController implements Initializable {
             resetBoard();
 
         } else {
-            
-             
+
             SoundManager.playSoundEffect("click.wav");
 
             //backToMainScreen();
-
         }
 
     }
 
     private void recieveRosponse() {
-        System.out.println("kkkkkkkkkk");
-        while(true){
-            
-            System.out.println("lllllllllllllllll");
+        while (true) {
             try {
                 JSONObject json = Request.getInstance().recieve();
                 System.out.println(json);
-                switch(json.getString("header")){
-                    
+                switch (json.getString("header")) {
                     case "move_res":
-                        Platform.runLater(()->recieveMoveFromServer(json));
+                        Platform.runLater(() -> recieveMoveFromServer(json));
                         break;
-                    
+                    case "server_down":
+                        Platform.runLater(() -> terminateOnlineGameBoardScreen());
+                        break;
                 }
             } catch (IOException ex) {
-                Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("finalize conniction");
+                break;
             }
         }
-        
+
     }
-   
 
     @FXML
     private void handleCheckBox(ActionEvent event) {
-             if (checkBoxRecord.isSelected()) {
+        if (checkBoxRecord.isSelected()) {
             if (recScreenController == null) {
                 recScreenController = new RecScreenController();
                 recScreenController.initializeLogFile();
             }
             System.out.println("Recording is enabled");
         } else {
-            recScreenController = null; 
+            recScreenController = null;
             System.out.println("Recording is diabled");
         }
-    } 
-    
+    }
+
+    private void terminateOnlineGameBoardScreen() {
+        //show aleart the server is dowen
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Server Message");
+        alert.setHeaderText("Server now is dowen!");
+        alert.show();
+        //close conniction with server
+        try {
+            Request.getInstance().disconnectToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //redirect all users to main screen
+        String mainScenePath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
+        try {
+            SceneNavigation.getInstance().nextScene(mainScenePath, logo);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SessionData.deleteDate();
+    }
 
 }

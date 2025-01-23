@@ -5,8 +5,8 @@ public class SessionData {
     private static boolean authenticated;
     private static String username;
     private static int score;
-    
-    static{
+
+    static {
         authenticated = false;
         username = null;
     }
@@ -30,9 +30,14 @@ public class SessionData {
     public static int getScore() {
         return score;
     }
-    
-    public static void setScore(int score){
+
+    public static void setScore(int score) {
         SessionData.score = score;
     }
 
+    public static void deleteDate() {
+        authenticated = false;
+        username = "";
+        score = 0;
+    }
 }
