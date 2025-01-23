@@ -43,7 +43,7 @@ public class TicTacToeClient extends Application {
         try {
             Request.getInstance().disconnectToServer();
         } catch (IOException ex) {
-            Logger.getLogger(TicTacToeClient.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("server is dowen");
         }
         SoundManager.stopBackgroundMusic();
     }

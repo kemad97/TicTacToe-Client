@@ -31,6 +31,9 @@ import org.json.JSONObject;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.soundManager.SoundManager;
+import tictactoe.client.RecScreen.RecScreenController;
+import tictactoe.client.session_data.SessionData;
+import tictactoe.client.resultVideoScreenwithPC.ResultVideoScreenWithPCController;
 
 /**
  * FXML Controller class
@@ -66,13 +69,26 @@ public class FXMLOnlineGameBoardController implements Initializable {
     
     private Button[][] board;
     
-   
+    private DataInputStream dis; //input stream
+    
+    private DataOutputStream dos; //output stream
+    private RecScreenController recScreenController;
+
     
     
 //    private String[][] gameBoard = {{"", "", ""},
 //                                    {"", "", ""},
 //                                    {"", "", ""}};
     
+
+    private Socket socket;
+    
+    private String[][] gameBoard = {{"", "", ""},
+                                    {"", "", ""},
+                                    {"", "", ""}};
+    private Boolean isMyTurnToPlay;
+    @FXML
+    private ImageView logo;
     
     private String winnerPlayer;
     private boolean isGameOver;
@@ -87,9 +103,13 @@ public class FXMLOnlineGameBoardController implements Initializable {
         this.opponentName = opponetnName;
     }
 
-    
+
     public void setPlayerTurn(Boolean firstTurn) {
         this.firstTurn = firstTurn;
+  
+    public void setMyTurn(Boolean playerTurn) {
+        this.isMyTurnToPlay = playerTurn;
+
         
 //        if (opponentTurn) {
 //            opponnetUsername.setText(opponentName);
@@ -410,5 +430,20 @@ public class FXMLOnlineGameBoardController implements Initializable {
         
     }
    
+
+    @FXML
+    private void handleCheckBox(ActionEvent event) {
+             if (checkBoxRecord.isSelected()) {
+            if (recScreenController == null) {
+                recScreenController = new RecScreenController();
+                recScreenController.initializeLogFile();
+            }
+            System.out.println("Recording is enabled");
+        } else {
+            recScreenController = null; 
+            System.out.println("Recording is diabled");
+        }
+    } 
+    
 
 }
