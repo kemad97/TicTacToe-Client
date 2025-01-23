@@ -94,8 +94,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
     private boolean isGameOver;
     @FXML
     private GridPane boardPane;
-    @FXML
-    private ImageView logo;
     
     String symbol;
 
@@ -104,11 +102,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
     }
 
 
-    public void setPlayerTurn(Boolean firstTurn) {
+    public void setMyTurn(Boolean firstTurn) {
         this.firstTurn = firstTurn;
-  
-    public void setMyTurn(Boolean playerTurn) {
-        this.isMyTurnToPlay = playerTurn;
 
         
 //        if (opponentTurn) {
