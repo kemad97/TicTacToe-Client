@@ -20,34 +20,36 @@ public class Request {
     public DataInputStream dis;
 
     private Request() throws IOException {
-            socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
-            dis = new DataInputStream(socket.getInputStream());
-            dos = new DataOutputStream(socket.getOutputStream());
+        socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
+        dis = new DataInputStream(socket.getInputStream());
+        dos = new DataOutputStream(socket.getOutputStream());
     }
 
     public static synchronized Request getInstance() throws IOException {
-    if (instance == null) {
-        instance = new Request();
+        if (instance == null) {
+            instance = new Request();
+        }
+        return instance;
     }
-    return instance;
-}
 
-    
-    public static void deleteInstance(){
+    public static void deleteInstance() {
         instance = null;
     }
 
-   public void disconnectToServer() throws IOException {
-    try {
-        dos.close();
-        dis.close();
-        socket.close();
-    } catch (IOException ex) {
-        Logger.getLogger(Request.class.getName()).log(Level.SEVERE, "Error while closing connection", ex);
-    } finally {
-        instance = null;  // Ensure singleton instance is reset after disconnection.
+    public void disconnectToServer() throws IOException {
+        if (socket.isClosed()) {
+            return;
+        }
+        try {
+            dos.close();
+            dis.close();
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Request.class.getName()).log(Level.SEVERE, "Error while closing connection", ex);
+        } finally {
+            instance = null;  // Ensure singleton instance is reset after disconnection.
+        }
     }
-}
 
     public void registration(String username, String hashedPassword) throws IOException {
 
@@ -79,11 +81,11 @@ public class Request {
     public JSONObject recieve() throws IOException {
         return new JSONObject(dis.readUTF());
     }
-    
+
     public void sendRequest(String request) throws IOException {
         dos.writeUTF(request);
     }
-    
+
     // New methods for game and match functionalities
     public void sendMatchRequest(String opponentUsername) throws IOException {
         Map<String, String> map = new HashMap<>();
@@ -93,8 +95,7 @@ public class Request {
         JSONObject jsonObject = new JSONObject(map);
         dos.writeUTF(jsonObject.toString());
     }
-    
-    
+
     public void sendMatchResponse(String opponentUsername, boolean isAccepted) throws IOException {
         Map<String, String> map = new HashMap<>();
         map.put("header", "match_response");
@@ -105,6 +106,8 @@ public class Request {
         dos.writeUTF(jsonObject.toString());
     }
 
+  
+    /*
       public void sendMove(String opponentUsername, String move) throws IOException {
         Map<String, String> map = new HashMap<>();
         map.put("header", "move");
@@ -113,6 +116,7 @@ public class Request {
 
         JSONObject jsonObject = new JSONObject(map);
         dos.writeUTF(jsonObject.toString());
-    }
 
+    }
+    */
 }
