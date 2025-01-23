@@ -2,3 +2,27 @@
     -fx-background-image: url("../../../media/images/mainBackground.png");
     -fx-background-size: 100%;
 }
+
+.button{
+    
+    -fx-font: 18px "Abel";
+    -fx-background-color: #BED5EE;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+
+.basicBtn{
+    -fx-background-color: white;
+    -fx-background-radius: 8,7,6;
+    -fx-margen-left: 3;
+    -fx-font-size: 13;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.basicBtn:pressed{
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+}

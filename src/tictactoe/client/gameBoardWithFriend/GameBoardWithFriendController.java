@@ -26,6 +26,9 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.application.Platform;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
@@ -39,6 +42,13 @@ public class GameBoardWithFriendController implements Initializable {
 
     @FXML
     private Button Btn11, Btn12, Btn13, Btn21, Btn22, Btn23, Btn31, Btn32, Btn33;
+    
+    @FXML
+    private CheckBox checkBoxRecord;
+    
+    @FXML
+    private Label XScore , OScore;
+    
 
     private boolean isXTurn;
     private boolean isGameOver;
@@ -48,6 +58,9 @@ public class GameBoardWithFriendController implements Initializable {
     private String winnerPlayer;
     public String logFileName;
 
+    private static int xScore = 0 , oScore = 0 ;
+    
+    
     private RecScreenController recScreenController = new RecScreenController();
 
     @Override
@@ -65,12 +78,22 @@ public class GameBoardWithFriendController implements Initializable {
         isGameOver = false;
         isXTurn = true;  // اللي هيلعب الأول دائما  X
       
+        recScreenController = new RecScreenController();
         recScreenController.initializeLogFile();
+        
+      
+
+        updateScoreLabels();
+        
+        handleCheckBox();
       
     }
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
+         
+        SoundManager.playSoundEffect("click.wav");
+ 
 
         if (isGameOver) {
 
@@ -107,9 +130,16 @@ public class GameBoardWithFriendController implements Initializable {
             isXTurn = true;
 
         }      
-        recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());      
-
+        // Log button click only if recording is enabled
+        if (recScreenController != null) {
+            recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());
+        } else {
+            System.out.println("Recording is disabled. Button click not logged.");
+        }
         checkWhoIsTheWinner();
+      
+        // disable checkbox
+        checkBoxRecord.setDisable(true);
 
     }
 
@@ -118,6 +148,18 @@ public class GameBoardWithFriendController implements Initializable {
         if (checkWin()) {
 
             winnerPlayer = isXTurn ? "O" : "X";
+            
+            if (winnerPlayer.equals("X")) {
+                
+                xScore++;
+                
+            } else {
+                
+                oScore++;
+                
+            }
+   
+            updateScoreLabels();
 
             highlightWinnerButtons();
 
@@ -257,12 +299,18 @@ public class GameBoardWithFriendController implements Initializable {
         Optional<ButtonType> result = aboutAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            
+             
+            SoundManager.playSoundEffect("click.wav");
 
             System.out.println("Play another Match");
 
             resetBoard();
 
         } else {
+            
+             
+            SoundManager.playSoundEffect("click.wav");
 
             backToMainScreen();
 
@@ -273,10 +321,14 @@ public class GameBoardWithFriendController implements Initializable {
     private void backToMainScreen() {
 
         try {
+            
+            GameBoardWithFriendController.setxScore(0);
+            GameBoardWithFriendController.setoScore(0);
 
             System.out.println("Back To Main Screen");
 
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
@@ -327,4 +379,45 @@ public class GameBoardWithFriendController implements Initializable {
 
         pause.play();
     }
+    
+    @FXML
+    public void handleCheckBox() {
+        if (checkBoxRecord.isSelected()) {
+            if (recScreenController == null) {
+                recScreenController = new RecScreenController();
+                recScreenController.initializeLogFile();
+            }
+            System.out.println("Recording is enabled");
+        } else {
+            System.out.println("Recording is disabled");
+            recScreenController = null;
+        }
+    }
+    
+
+    private void updateScoreLabels() {
+        
+        XScore.setText(String.valueOf(xScore));
+        OScore.setText(String.valueOf(oScore));
+
+    }
+
+    public static int getxScore() {
+        return xScore;
+    }
+
+    public static void setxScore(int xScore) {
+        GameBoardWithFriendController.xScore = xScore;
+    }
+
+    public static int getoScore() {
+        return oScore;
+    }
+
+    public static void setoScore(int oScore) {
+        GameBoardWithFriendController.oScore = oScore;
+    }
+    
+    
+
 }

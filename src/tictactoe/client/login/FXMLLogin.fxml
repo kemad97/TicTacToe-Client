@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -20,37 +21,54 @@
             <Image url="@../../../media/images/logo.png" />
          </image>
       </ImageView>
-      <Pane layoutX="210.0" layoutY="86.0" prefHeight="328.0" prefWidth="281.0">
+      <ImageView fitHeight="30.0" fitWidth="56.0" layoutX="634.0" layoutY="29.0" onMouseClicked="#showIpEdit" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/settings.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="159.0" layoutY="59.0" prefHeight="383.0" prefWidth="382.0">
          <children>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="298.0" layoutX="15.0" layoutY="17.0" opacity="0.85" stroke="#d7d7d7" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="formBackground" width="251.0" />
-            <Label layoutX="118.0" layoutY="41.0" text="Login">
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="389.0" layoutX="5.0" layoutY="-3.0" opacity="0.85" stroke="#d7d7d7" strokeType="OUTSIDE" strokeWidth="3.0" width="373.0">
+               <styleClass>
+                  <String fx:value="formBackground" />
+                  <String fx:value="anchor-pane" />
+               </styleClass></Rectangle>
+            <Label alignment="CENTER" layoutX="160.0" layoutY="35.0" text="Login">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="username" layoutX="34.0" layoutY="102.0" prefHeight="30.0" prefWidth="213.0" promptText="Username">
+            <TextField fx:id="username" alignment="CENTER" layoutX="85.0" layoutY="104.0" prefHeight="30.0" prefWidth="213.0" promptText="Username" styleClass="label-with-shadow">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="password" layoutX="32.0" layoutY="160.0" prefHeight="25.0" prefWidth="213.0" promptText="Password">
+            <PasswordField fx:id="password" alignment="CENTER" layoutX="85.0" layoutY="171.0" prefHeight="25.0" prefWidth="213.0" promptText="Password" styleClass="label-with-shadow">
                <font>
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Button fx:id="LoginBtn" defaultButton="true" layoutX="113.0" layoutY="218.0" mnemonicParsing="false" onAction="#login" text="Login" textFill="WHITE">
+            <Button fx:id="LoginBtn" alignment="CENTER" defaultButton="true" layoutX="147.0" layoutY="242.0" mnemonicParsing="false" onAction="#login" prefHeight="39.0" prefWidth="90.0" text="Login">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label fx:id="Register_label" alignment="CENTER" layoutX="109.0" layoutY="264.0" onMouseClicked="#gotoRegisterationPage" text="Register">
+            <Label fx:id="Register_label" alignment="CENTER" layoutX="147.0" layoutY="301.0" onMouseClicked="#gotoRegisterationPage" text="Register">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
             </Label>
+            <ImageView fx:id="btnBack" fitHeight="30.0" fitWidth="33.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#backToMainScreen" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/back%20(1).png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </children>

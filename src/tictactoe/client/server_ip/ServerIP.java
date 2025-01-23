@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class ServerIP {
 
     private static DataOutputStream dos;
-    private static final String filePath = "./src/media/server_ip/server_ip.txt";
+    private static final String filePath = "./src/media/server_ip/server_ip";
 
     public static String getIP() {
         File ipFile = new File(filePath);

@@ -12,31 +12,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import session_data.SessionData;
+import org.json.JSONObject;
+import tictactoe.client.scene_navigation.SceneNavigation;
+import tictactoe.client.session_data.SessionData;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.server_connection.Request;
-import tictactoe.client.animation.Animation;
-import tictactoe.client.server_ip.ServerIP;
-
+import tictactoe.client.soundManager.SoundManager;
 
 public class FXMLMainScreenController implements Initializable {
 
     @FXML
     private ImageView logo;
-    @FXML
-    private TextField inputIP;
-    @FXML
-    private Button authentication;
-    @FXML
-    private Label username;
+
     @FXML
     private Pane onlineBtn;
     @FXML
@@ -44,45 +35,48 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private Pane offlinePCBtn;
     @FXML
-    private Button updateIPBtn;
-    @FXML
-    private Button logsBtn;
+    private ImageView logsBtn;
 
-    
-    public void updateUsername(String username){
-        this.username.setText(username);
-        this.authentication.setText("Logout");
-    }
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //animate logo
         Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
-
-        //initialize server ip
-        new Thread(() -> {
-            inputIP.setText(ServerIP.getIP());
-        }).start();
-
-        if (SessionData.isAuthenticated()) {
-            authentication.setText("Logout");
-            username.setText(SessionData.getUsername());
-
-        } else {
-            username.setText("");
-        }
     }
 
     @FXML
     private void startOnlineMatch(MouseEvent event) {
+
+        SoundManager.playSoundEffect("click.wav");
+
         System.out.println("start online match");
+
+        if (!SessionData.isAuthenticated()) {
+            
+            String loginFXMLPath = "/tictactoe/client/login/FXMLLogin.fxml";
+            
+            try {
+                
+                SceneNavigation.getInstance().nextScene(loginFXMLPath, logo);
+                
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                //if user logged in goto available palayers
+                SceneNavigation.getInstance().nextScene("/tictactoe/client/available_players/FXMLAvailablePlayers.fxml", logo);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @FXML
     private void startOfflineMatchVSFriend(MouseEvent event) {
 
         try {
+
+            SoundManager.playSoundEffect("click.wav");
 
             System.out.println("start offline match vs. Friend");
 
@@ -101,6 +95,9 @@ public class FXMLMainScreenController implements Initializable {
     @FXML
     private void startOfflineMatchVSPC(MouseEvent event) {
         try {
+
+            SoundManager.playSoundEffect("click.wav");
+
             System.out.println("start offline match vs. PC");
 
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/levels/levelsUI.fxml"));
@@ -116,79 +113,22 @@ public class FXMLMainScreenController implements Initializable {
     }
 
     @FXML
-    private void updateIP(ActionEvent event) {
-        String ip = inputIP.getText().trim();
+    private void showGameLogs(MouseEvent event) {
+        Parent root;
+        try {
+            SoundManager.playSoundEffect("click.wav");
 
-        if (!ServerIP.getIP().equals(ip)) {
-            if (ServerIP.isValidIP(ip)) {
+            root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
+            Scene scene = new Scene(root);
 
-                ServerIP.saveIP(ip);
+            Stage stage = (Stage) logo.getScene().getWindow();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("New IP updated");
-                alert.show();
-            } else if (!ServerIP.getIP().equals(ip)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid ip format");
-                alert.show();
-            }
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @FXML
-    private void authenticate(ActionEvent event) {
-        if (authentication.getText().equals("Login")) {
-
-            Parent root;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/login/FXMLLogin.fxml"));
-                Scene scene = new Scene(root);
-
-                Stage stage = (Stage) logo.getScene().getWindow();
-
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            authentication.setText("Login");
-            username.setText("");
-
-            try {
-                //cloase connection with server
-                Request.getInstance().disconnectToServer();
-                System.out.println("logged out.");
-            } catch (IOException ex) {
-                System.out.println("can't disconnect with server");
-            }
-            
-            //update session data
-            SessionData.setAuthenticated(false);
-            SessionData.setUsername(null);            
-        }
-    }
-
-    @FXML
-    private void showGameLogs(ActionEvent event) 
-    {
-        
-        
-         Parent root;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/tictactoe/client/RecScreen/RecScreen.fxml"));
-                Scene scene = new Scene(root);
-
-                Stage stage = (Stage) logo.getScene().getWindow();
-
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }       
-
     }
 
 }

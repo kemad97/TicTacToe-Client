@@ -2,4 +2,5 @@
 /build/*
 /nbproject/private/*
 /build.xml
+*.txt
 /manifest.mf

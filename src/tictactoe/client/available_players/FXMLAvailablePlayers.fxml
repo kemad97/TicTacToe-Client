@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../splash_screen/fxmlsplashscreen.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.client.available_players.FXMLAvailablePlayersController">
+   <children>
+      <Pane layoutX="496.0" layoutY="24.0" prefHeight="70.0" prefWidth="223.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="171.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/usename_and_score.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="179.0" layoutY="14.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/logout.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="22.0" prefHeight="27.0" prefWidth="98.0" text="username">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="21.0" prefWidth="59.0" text="score">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ImageView fx:id="logo" fitHeight="69.0" fitWidth="94.0" layoutX="24.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../media/images/logo.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="48.0" layoutY="103.0" prefHeight="384.0" prefWidth="604.0" styleClass="anchor-pane">
+         <children>
+            <ListView fx:id="availablePlayersList" layoutX="27.0" layoutY="54.0" prefHeight="323.0" prefWidth="551.0" style="-fx-background-radius: 10; -fx-background-color: #FFA800; -fx-opacity: 65%;" />
+            <Label layoutX="226.0" layoutY="9.0" prefHeight="29.0" prefWidth="152.0" style="-fx-background-color: #FFA800; -fx-background-radius: 8;" text="Available Players">
+               <font>
+                  <Font name="Agency FB" size="24.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="8.0" right="8.0" top="5.0" />
+               </padding>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -16,19 +16,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.replay.ReplayController;
+import tictactoe.client.soundManager.SoundManager;
+import tictactoe.client.session_data.SessionData;
 
 
 /**
@@ -45,7 +46,7 @@ public class RecScreenController implements Initializable {
     @FXML
     private ListView<String> fileListView;
     @FXML
-    private Button backBtn;
+    private ImageView backBtn;
     
     private ReplayController replayController;
 
@@ -63,7 +64,16 @@ public class RecScreenController implements Initializable {
         public void initializeLogFile() 
         {
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmms").format(new Date());
-            logFileName = "game_log_" + timestamp ;
+             if(SessionData.isAuthenticated())
+            {
+                logFileName=SessionData.getUsername() + "_"+timestamp;
+            }
+            
+            else
+            {
+                logFileName="local"+"_"+timestamp;
+            }
+            
             System.out.println("New match log file: " + logFileName);
         }
         
@@ -71,7 +81,8 @@ public class RecScreenController implements Initializable {
         {
             
             String logEntry =  buttonId + "," + symbol + "\n";
-            try (FileWriter writer = new FileWriter("gamelogs/"+logFileName +".txt", true)) 
+           
+            try (FileWriter writer = new FileWriter("gamelogs/"+logFileName+".txt" , true)) 
             { 
                 // Append mode
                 writer.write(logEntry);
@@ -84,31 +95,33 @@ public class RecScreenController implements Initializable {
             }
         }
         
-        public void loadRecordedFiles ()
-        {
-            File directory= new File (logDirectory);
-             if (!directory.exists()) 
-             {
+       public void loadRecordedFiles() 
+       {
+            File directory = new File(logDirectory);
+            if (!directory.exists()) {
                 directory.mkdirs(); // Create the directory if it doesn't exist
-                System.out.println("new dir created");
-             }
-             
-            File[] files = directory.listFiles();//(dir, name) -> name.endsWith(".txt"));
+                System.out.println("New directory created.");
+            }
+
+            File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
             ObservableList<String> fileNames = FXCollections.observableArrayList();
 
             if (files != null) {
                 for (File file : files) {
-                    fileNames.add(file.getName());
+                    String fileName = file.getName();
+                    // Remove the ".txt" extension
+                    if (fileName.endsWith(".txt")) {
+                        fileName = fileName.substring(0, fileName.length() - 4);
+                    }
+                    fileNames.add(fileName);
                 }
             }
 
             if (fileListView != null) {
                 fileListView.setItems(fileNames);
             }
-        
-        
-        
         }
+
 
     @FXML
     private void openGameLogFile(MouseEvent event) 
@@ -118,7 +131,7 @@ public class RecScreenController implements Initializable {
             String selectedFile = fileListView.getSelectionModel().getSelectedItem(); // Get the selected file name
             if (selectedFile != null) 
             {
-                openFile(logDirectory + selectedFile, event); 
+                openFile(logDirectory + selectedFile+".txt", event); 
             }
         }
     }
@@ -127,6 +140,9 @@ public class RecScreenController implements Initializable {
     {
         
         try {
+             
+            SoundManager.playSoundEffect("click.wav");
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/replay/Replay.fxml"));
             Parent root = loader.load();
             replayController = loader.getController();
@@ -152,10 +168,12 @@ public class RecScreenController implements Initializable {
     }
 
     @FXML
-    private void goBackMainMenu(ActionEvent event) 
+    private void goBackMainMenu() 
     {
         
         try {
+             
+            SoundManager.playSoundEffect("click.wav");
 
             System.out.println("Back To Main Screen");
 
