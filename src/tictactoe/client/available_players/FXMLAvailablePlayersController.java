@@ -36,6 +36,8 @@ public class FXMLAvailablePlayersController implements Initializable {
     @FXML
     private ListView<String> availablePlayersList;
 
+    private boolean isReceiving;
+
     /**
      * Initializes the controller class.
      */
@@ -62,6 +64,7 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         //this thread list for any request coms to available players
         new Thread(() -> {
+            isReceiving = true;
             receiveRequests();
         }).start();
     }
@@ -112,7 +115,7 @@ public class FXMLAvailablePlayersController implements Initializable {
     }
 
     private void receiveRequests() {
-        while (true) {
+        while (isReceiving) {
             try {
                 JSONObject jsonObject = Request.getInstance().recieve();
 
@@ -127,6 +130,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                         Platform.runLater(() -> showDeclineMessage(jsonObject.getString("opponent")));
                         break;
                     case "start_game":
+                        isReceiving = false;
                         Platform.runLater(() -> {
                             String onlineGameBoardPath = "/tictactoe/client/online_game_board/FXMLOnlineGameBoard.fxml";
                             try {
@@ -138,7 +142,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                         break;
 
                     case "server_dowen":
-                        Platform.runLater(()->terminateAvailablePlayersScreen());
+                        Platform.runLater(() -> terminateAvailablePlayersScreen());
                         break;
                 }
             } catch (IOException ex) {
@@ -146,6 +150,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                 break;
             }
         }
+        System.out.println("finalize receving thread");
     }
 
     private void updateAvailablePlayersListView(JSONArray players) {
