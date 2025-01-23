@@ -199,7 +199,11 @@ public class FXMLAvailablePlayersController implements Initializable {
         } else {
             // Decline the match
             sendMatchResponse(opponentUsername, false);
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 954ca1b80fd9273fa001d95b846467f2b39c6261
         }
     }
 
