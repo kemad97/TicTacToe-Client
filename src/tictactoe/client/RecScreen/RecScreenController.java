@@ -95,7 +95,7 @@ public class RecScreenController implements Initializable {
             }
         }
         
-       public void loadRecordedFiles() 
+       public void loadRecordedFiles() //show files on listview
        {
             File directory = new File(logDirectory);
             if (!directory.exists()) {
