@@ -6,10 +6,14 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -17,13 +21,18 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.JSONObject;
+import sun.misc.REException;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.soundManager.SoundManager;
 import tictactoe.client.RecScreen.RecScreenController;
 import tictactoe.client.available_players.FXMLAvailablePlayersController;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.scene_navigation.SceneNavigation;
+import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
+
 
 
 public class FXMLOnlineGameBoardController implements Initializable {
@@ -53,6 +62,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
     private Button[][] board;
 
     private RecScreenController recScreenController;
+    private ResultVideoScreenController resVideo;
 
     @FXML
     private ImageView logo;
@@ -121,6 +131,11 @@ public class FXMLOnlineGameBoardController implements Initializable {
     public void handleButtonClick(ActionEvent event) {
 
         Button clickedButton = (Button) event.getSource();
+        
+            // Check if the button is already filled or game is over
+        if (!clickedButton.getText().isEmpty() || isGameOver) {
+            return;
+        }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -138,6 +153,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
                         // firstTurn = true;
                     }
                     // System.out.println(""+Arrays.deepToString(gameBoard));
+                    clickedButton.setDisable(true);
+                    clickedButton.setStyle("-fx-opacity: 1.0;");
                     break;
                 }
             }
@@ -173,9 +190,15 @@ public class FXMLOnlineGameBoardController implements Initializable {
         symbol = json.getString("symbol");
         int row = json.getInt("row");
         int col = json.getInt("column");
-        board[row][col].setText(symbol);
-        checkWhoIsTheWinner();
-        boardPane.setDisable(false);
+        
+        // Check if the button is empty before setting text
+        if (board[row][col].getText().isEmpty()) {
+            board[row][col].setText(symbol);
+            board[row][col].setDisable(true);
+            board[row][col].setStyle("-fx-opacity: 1.0;");
+            checkWhoIsTheWinner();
+            boardPane.setDisable(false);
+        }
     }
 
     // check winner
@@ -195,6 +218,15 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
             // updateScoreLabels();
             highlightWinnerButtons();
+            if (resVideo==null)
+            {
+                resVideo=new ResultVideoScreenController();
+                
+            }
+            this.goToResultVideoScreen();
+
+        
+
 
             isGameOver = true;
 
@@ -205,6 +237,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
         }
     }
+    
+
 
     private boolean checkWin() {
 
@@ -307,7 +341,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
         // isXTurn = true;
     }
-
+    /*
     private void showAlertAndReset() {
 
         Alert aboutAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -341,6 +375,28 @@ public class FXMLOnlineGameBoardController implements Initializable {
             //backToMainScreen();
         }
 
+    }*/
+    private void showAlertAndReset() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Draw Game");
+            alert.setHeaderText(null);
+            alert.setContentText("Do you want to Play Another Match?");
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
+            alert.getDialogPane().getStyleClass().add("dialog-pane");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) 
+            {
+                SoundManager.playSoundEffect("click.wav");
+                resetBoard();
+            } 
+            else 
+            {
+                SoundManager.playSoundEffect("click.wav");
+                //backToMainScreen();       
+            }
+        });
     }
 
     private void recieveRosponse() {
@@ -399,5 +455,44 @@ public class FXMLOnlineGameBoardController implements Initializable {
         }
         SessionData.deleteDate();
     }
+    
+      public void goToResultVideoScreen() {
+        System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+        pause.setOnFinished(event -> {
+            try {
+                System.out.println("GO To Result Video Screen");
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
+                Parent root = loader.load();
+
+                ResultVideoScreenController controller = loader.getController();
+
+                Platform.runLater(() -> {
+                    try {
+                        controller.setWinner(winnerPlayer);
+
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) logo.getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+
+                        SoundManager.pauseBackgroundMusic();
+
+                        System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: ");
+                    } catch (Exception e) {
+                        Logger.getLogger(ResultVideoScreenController.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                });
+
+            } catch (IOException ex) {
+                Logger.getLogger(ResultVideoScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+    pause.play();
+}
 
 }
