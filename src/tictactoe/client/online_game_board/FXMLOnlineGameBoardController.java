@@ -221,7 +221,16 @@ public class FXMLOnlineGameBoardController implements Initializable {
             // Simple winner determination
             boolean isCurrentPlayerWinner = (firstTurn && symbol.equals("X")) || (!firstTurn && symbol.equals("O"));
 
-            // Only show video to winner
+             try {
+                    // update winner score
+                    JSONObject json = new JSONObject();
+                    json.put("header", "update_score");
+                    Request.getInstance().notifyServerOfWinner(json.toString());
+                    System.out.println("send update score request to server");
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+          
             isGameOver = true;
             this.goToResultVideoScreen(isCurrentPlayerWinner);
         } else if (isBoardFull()) {
@@ -285,6 +294,14 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
     }
 
+       private void highlightLoserButtons() {
+
+        for (Button button : winningButtons) {
+            button.setStyle("-fx-background-color: red; -fx-border-color: green; -fx-font-weight: bold;");
+        }
+
+    }
+       
     private void highlightWinnerButtons() {
 
         for (Button button : winningButtons) {

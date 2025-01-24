@@ -107,10 +107,10 @@ public class Request {
     }
 
 
-    public void sendMove(String json){
+    public void sendMove(String msg){
         
         try {
-            dos.writeUTF(json);
+            dos.writeUTF(msg);
             dos.flush();
         } catch (IOException ex) {
             Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,5 +119,15 @@ public class Request {
 
     public void endPlayerGame() throws IOException {
         dos.writeUTF(new JSONObject().put("header", "end_player_game").toString());
+  }
+    
+    public void notifyServerOfWinner(String message){
+    
+        try {
+            dos.writeUTF(message);
+            dos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
