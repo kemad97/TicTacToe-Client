@@ -159,6 +159,12 @@ public class FXMLOnlineGameBoardController implements Initializable {
                 }
             }
         }
+         // Log button click only if recording is enabled
+        if (recScreenController != null) {
+            recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());
+        } else {
+            System.out.println("Recording is disabled. Button click not logged.");
+        }
     }
 
     public void sendMoveToServer(String symbol, int row, int col) {   // technically send game board
@@ -200,6 +206,13 @@ public class FXMLOnlineGameBoardController implements Initializable {
             board[row][col].setStyle("-fx-opacity: 1.0;");
             checkWhoIsTheWinner();
             boardPane.setDisable(false);
+        }
+        
+        // Log button click only if recording is enabled
+        if (recScreenController != null) {
+            
+            String buttonId = "Btn" + (row + 1) + (col + 1);
+            recScreenController.logButtonClick(buttonId, symbol);
         }
     }
 /*
