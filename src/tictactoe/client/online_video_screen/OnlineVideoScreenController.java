@@ -50,16 +50,11 @@ public class OnlineVideoScreenController implements Initializable {
     @FXML
     private ImageView btnBack;
 
-    private static String prevScreenPath;
     private static String videoPath;
     private static boolean isWinner;
     private static String opponentName;
 
     private MediaPlayer mediaPlayer;
-
-    public static void setPrevScreenPath(String prev_screen_path) {
-        prevScreenPath = prev_screen_path;
-    }
 
     public static void setIsWinner(boolean is_winner) {
         isWinner = is_winner;

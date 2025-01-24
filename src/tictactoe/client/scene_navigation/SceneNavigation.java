@@ -36,13 +36,11 @@ public class SceneNavigation {
 
     public void gotoVideoScreen(Node node,
             boolean isWinner,
-            String opponentName,
-            String prevScreen) throws IOException {
+            String opponentName) throws IOException {
 
         OnlineVideoScreenController.setIsWinner(isWinner);
-        OnlineVideoScreenController.setPrevScreenPath(prevScreen);
         OnlineVideoScreenController.setOpponentName(opponentName);
-        
+
         String fxmlPath = "/tictactoe/client/online_video_screen/OnlineVideoScreen.fxml";
         Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
         Scene scene = new Scene(root);
