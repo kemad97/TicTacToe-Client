@@ -239,6 +239,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
                 this.goToResultVideoScreen();
             } else {  // Show alert to loser
+                highlightLoserButtons();
                 System.out.println("looooooooooooooooooser");
                 Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -311,6 +312,14 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
     }
 
+       private void highlightLoserButtons() {
+
+        for (Button button : winningButtons) {
+            button.setStyle("-fx-background-color: red; -fx-border-color: green; -fx-font-weight: bold;");
+        }
+
+    }
+       
     private void highlightWinnerButtons() {
 
         for (Button button : winningButtons) {
