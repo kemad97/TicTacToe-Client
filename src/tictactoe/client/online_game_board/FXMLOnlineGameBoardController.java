@@ -213,7 +213,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
             
             String buttonId = "Btn" + (row + 1) + (col + 1);
             recScreenController.logButtonClick(buttonId, symbol);
-        }
+        }        
+        checkWhoIsTheWinner();        
     }
 /*
     // check winner
@@ -266,7 +267,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
 {
         if (checkWin()) 
         {
-            winnerPlayer = firstTurn ? "O" : "X";
+            winnerPlayer = firstTurn ? "X" : "O";
             highlightWinnerButtons();
 
             // Get current player's username
@@ -276,7 +277,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
             boolean isCurrentPlayerWinner = (firstTurn && symbol.equals("X")) || (!firstTurn && symbol.equals("O"));
 
             // Only show video to winner
-            if (!isCurrentPlayerWinner) {  // Show video to winner
+            if (isCurrentPlayerWinner) {  // Show video to winner
                 System.out.println("Showing winner video to: " + currentPlayer);
                 this.goToResultVideoScreen();
             } 
