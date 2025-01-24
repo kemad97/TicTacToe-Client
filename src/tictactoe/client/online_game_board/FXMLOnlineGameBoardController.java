@@ -7,13 +7,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -25,10 +23,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.JSONObject;
-import sun.misc.REException;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.soundManager.SoundManager;
 import tictactoe.client.RecScreen.RecScreenController;
+import tictactoe.client.animation.Animation;
 import tictactoe.client.available_players.FXMLAvailablePlayersController;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.scene_navigation.SceneNavigation;
@@ -101,6 +99,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //animate logo
+        Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
 
         currentPlayerUsername.setText(SessionData.getUsername());
         //opponnetUsername.setText(opponentName);
@@ -147,7 +147,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
                     clickedButton.setDisable(true);
                     clickedButton.setStyle("-fx-opacity: 1.0;");
 
-                    checkWhoIsTheWinner();
                     // Send the move to the server
                     sendMoveToServer(symbol, i, j);
 
@@ -175,7 +174,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
             json.put("row", row);
             json.put("column", col);
 
-            //checkWhoIsTheWinner();
             Request.getInstance().sendMove(json.toString());
             //dos.flush();
             System.out.println("Move sent to server: " + json.toString());
@@ -185,7 +183,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
             checkWhoIsTheWinner();
 
         } catch (Exception e) {
-            e.printStackTrace();
             Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -225,21 +222,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
             boolean isCurrentPlayerWinner = (firstTurn && symbol.equals("X")) || (!firstTurn && symbol.equals("O"));
 
             // Only show video to winner
-            if (isCurrentPlayerWinner) {  // Show video to winner
-                System.out.println("Showing winner video to: " + currentPlayer);
-                this.goToResultVideoScreen();
-            } else {  // Show alert to loser
-                System.out.println("looooooooooooooooooser");
-                Platform.runLater(() -> {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Game Over");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Game Over! You lost!");
-                    alert.showAndWait();
-                });
-            }
-
             isGameOver = true;
+            this.goToResultVideoScreen(isCurrentPlayerWinner);
         } else if (isBoardFull()) {
             showAlertAndReset();
         }
@@ -371,10 +355,10 @@ public class FXMLOnlineGameBoardController implements Initializable {
     }
 
     private void recieveRosponse() {
-        while (true) {
+        while (!isGameOver) {
             try {
                 JSONObject json = Request.getInstance().recieve();
-                System.out.println(json);
+
                 switch (json.getString("header")) {
                     case "move_res":
                         Platform.runLater(() -> recieveMoveFromServer(json));
@@ -382,13 +366,16 @@ public class FXMLOnlineGameBoardController implements Initializable {
                     case "server_down":
                         Platform.runLater(() -> terminateOnlineGameBoardScreen());
                         break;
+                    case "end_of_game":
+                        isGameOver = true;
+                        break;
                 }
             } catch (IOException ex) {
                 System.out.println("finalize conniction");
                 break;
             }
         }
-
+        System.out.println("game over");
     }
 
     @FXML
@@ -427,7 +414,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         SessionData.deleteDate();
     }
 
-    public void goToResultVideoScreen() {
+    public void goToResultVideoScreen(boolean isWinner) {
         System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
 
         // Store the stage reference using boardPane instead of logo
@@ -437,27 +424,10 @@ public class FXMLOnlineGameBoardController implements Initializable {
         pause.setOnFinished(event -> {
             try {
                 System.out.println("GO To Result Video Screen");
+                String thisScrenePath = "/tictactoe/client/online_game_board/FXMLOnlineGameBoard.fxml";
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
-                Parent root = loader.load();
-
-                ResultVideoScreenController controller = loader.getController();
-
-                Platform.runLater(() -> {
-                    try {
-                        controller.setWinner(winnerPlayer);
-
-                        Scene scene = new Scene(root);
-                        currentStage.setScene(scene);
-                        currentStage.show();
-
-                        SoundManager.pauseBackgroundMusic();
-
-                        System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: ");
-                    } catch (Exception e) {
-                        Logger.getLogger(ResultVideoScreenController.class.getName()).log(Level.SEVERE, null, e);
-                    }
-                });
+                SceneNavigation.getInstance().gotoVideoScreen(logo, isWinner, opponentName, thisScrenePath);
+                SoundManager.pauseBackgroundMusic();
 
             } catch (IOException ex) {
                 Logger.getLogger(ResultVideoScreenController.class.getName()).log(Level.SEVERE, null, ex);
