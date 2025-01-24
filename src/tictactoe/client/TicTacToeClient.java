@@ -42,7 +42,7 @@ public class TicTacToeClient extends Application {
     @Override
     public void stop() {
         try {
-            if (!SessionData.getOpponentName().isEmpty()) {
+            if (SessionData.getOpponentName() != null && !SessionData.getOpponentName().isEmpty()) {
                 Request.getInstance().exitMatch(SessionData.getOpponentName());
             }
             Request.getInstance().disconnectToServer();
