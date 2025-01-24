@@ -17,7 +17,7 @@ public class Request {
 
     private Socket socket;
     private DataOutputStream dos;
-    public DataInputStream dis;
+    private DataInputStream dis;
 
     private Request() throws IOException {
         socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
@@ -117,6 +117,9 @@ public class Request {
         }
     }
 
+    public void endPlayerGame() throws IOException {
+        dos.writeUTF(new JSONObject().put("header", "end_player_game").toString());
+  }
     
     public void notifyServerOfWinner(String message){
     
@@ -127,16 +130,4 @@ public class Request {
             Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    /*
-      public void sendMove(String opponentUsername, String move) throws IOException {
-        Map<String, String> map = new HashMap<>();
-        map.put("header", "move");
-        map.put("opponent", opponentUsername);
-        map.put("move", move);
-
-        JSONObject jsonObject = new JSONObject(map);
-        dos.writeUTF(jsonObject.toString());
-
-    }
-    */
 }
