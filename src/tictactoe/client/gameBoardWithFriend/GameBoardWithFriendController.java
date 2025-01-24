@@ -341,7 +341,7 @@ public class GameBoardWithFriendController implements Initializable {
 
     }
   
-    private void goToResultVideoScreen() {
+    public void goToResultVideoScreen() {
 
         System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
 
