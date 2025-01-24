@@ -189,6 +189,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
     public void recieveMoveFromServer(JSONObject json) {
 
+        checkBoxRecord.setDisable(true);
+        
         symbol = json.getString("symbol");
         int row = json.getInt("row");
         int col = json.getInt("column");
