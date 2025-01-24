@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -32,8 +33,6 @@ import tictactoe.client.available_players.FXMLAvailablePlayersController;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
-
-
 
 public class FXMLOnlineGameBoardController implements Initializable {
 
@@ -74,12 +73,26 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
     String symbol;
 
+    Button[] winningButtons;
+
     public void setOpponentName(String opponetnName) {
         this.opponentName = opponetnName;
+        opponnetUsername.setText(opponetnName);
     }
 
     public void setMyTurn(Boolean firstTurn) {
         this.firstTurn = firstTurn;
+
+        Image xImage = new Image(getClass().getResource("/media/images/X.png").toExternalForm());
+        Image oImage = new Image(getClass().getResource("/media/images/O.png").toExternalForm());
+
+        if (firstTurn) {
+            myImageView.setImage(xImage);
+            opponentImageView.setImage(oImage);
+        } else {
+            myImageView.setImage(oImage);
+            opponentImageView.setImage(xImage);
+        }
 
         if (!firstTurn) {
             boardPane.setDisable(true);
@@ -90,7 +103,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         currentPlayerUsername.setText(SessionData.getUsername());
-        opponnetUsername.setText(opponentName);
+        //opponnetUsername.setText(opponentName);
 
         board = new Button[3][3];
         board[0][0] = Btn11;
@@ -107,20 +120,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
         isGameOver = false;
         symbol = "";
 
-        /*
-        Image xImage = new Image(getClass().getResource("/media/images/X.png").toExternalForm());
-        Image oImage = new Image(getClass().getResource("/media/images/O.png").toExternalForm());
-        
-        if(myTurn){
-            myImageView.setImage(xImage);
-            opponentImageView.setImage(oImage);
-        }
-        
-        else{
-            myImageView.setImage(oImage);
-            opponentImageView.setImage(xImage);
-        }
-         */
         new Thread(() -> {
             recieveRosponse();
         }).start();
@@ -131,8 +130,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
     public void handleButtonClick(ActionEvent event) {
 
         Button clickedButton = (Button) event.getSource();
-        
-            // Check if the button is already filled or game is over
+
+        // Check if the button is already filled or game is over
         if (!clickedButton.getText().isEmpty() || isGameOver) {
             return;
         }
@@ -141,20 +140,18 @@ public class FXMLOnlineGameBoardController implements Initializable {
             for (int j = 0; j < 3; j++) {
                 if (clickedButton.equals(board[i][j])) {
                     System.out.println("Button clicked at position: (" + i + ", " + j + ")");
-                    if (firstTurn) {
-                        symbol = "X";
-                        sendMoveToServer(symbol, i, j);
-                        clickedButton.setText("X");
-                        //firstTurn = false;
-                    } else {
-                        symbol = "O";
-                        sendMoveToServer(symbol, i, j);
-                        clickedButton.setText("O");
-                        // firstTurn = true;
-                    }
-                    // System.out.println(""+Arrays.deepToString(gameBoard));
+                    symbol = firstTurn ? "X" : "O";
+
+                    // Update the button with the player's symbol
+                    clickedButton.setText(symbol);
                     clickedButton.setDisable(true);
                     clickedButton.setStyle("-fx-opacity: 1.0;");
+
+                    checkWhoIsTheWinner();
+                    // Send the move to the server
+                    sendMoveToServer(symbol, i, j);
+
+                   
                     break;
                 }
             }
@@ -167,7 +164,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         }
     }
 
-    public void sendMoveToServer(String symbol, int row, int col) {   // technically send game board
+    public void sendMoveToServer(String symbol, int row, int col) {
 
         boardPane.setDisable(true);
 
@@ -179,13 +176,17 @@ public class FXMLOnlineGameBoardController implements Initializable {
             json.put("row", row);
             json.put("column", col);
 
+            //checkWhoIsTheWinner();
             Request.getInstance().sendMove(json.toString());
             //dos.flush();
             System.out.println("Move sent to server: " + json.toString());
+
+
             // Disable record checkbox after move
             checkBoxRecord.setDisable(true);
             checkWhoIsTheWinner();
              
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -198,13 +199,12 @@ public class FXMLOnlineGameBoardController implements Initializable {
         symbol = json.getString("symbol");
         int row = json.getInt("row");
         int col = json.getInt("column");
-        
+
         // Check if the button is empty before setting text
         if (board[row][col].getText().isEmpty()) {
             board[row][col].setText(symbol);
             board[row][col].setDisable(true);
             board[row][col].setStyle("-fx-opacity: 1.0;");
-            checkWhoIsTheWinner();
             boardPane.setDisable(false);
         }
         
@@ -221,7 +221,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
         if (checkWin()) {
 
-            winnerPlayer = firstTurn ? "O" : "X";
+            winnerPlayer = firstTurn ? "X" : "O";
 
             if (winnerPlayer.equals("X")) {
 
@@ -232,6 +232,15 @@ public class FXMLOnlineGameBoardController implements Initializable {
             }
 
             // updateScoreLabels();
+
+            Platform.runLater(()->highlightWinnerButtons());
+           
+
+            // Only show video to winner
+            if ((!firstTurn && winnerPlayer.equals("O")) || (firstTurn && winnerPlayer.equals("X"))) {
+                this.goToResultVideoScreen();
+            }
+
             highlightWinnerButtons();
                   // Only show video to winner
             if ((!firstTurn && winnerPlayer.equals("O")) || (firstTurn && winnerPlayer.equals("X"))) 
@@ -242,14 +251,16 @@ public class FXMLOnlineGameBoardController implements Initializable {
            
 
 
+
             isGameOver = true;
 
-            // goToResultVideoScreen();
+            goToResultVideoScreen();
         } else if (isBoardFull()) {
 
             showAlertAndReset();
 
         }
+
     }*/
  private void checkWhoIsTheWinner() 
 {
@@ -284,37 +295,38 @@ public class FXMLOnlineGameBoardController implements Initializable {
         else if (isBoardFull()) {
             showAlertAndReset();
         }
+
     }
 
     private boolean checkWin() {
 
         for (int i = 0; i < 3; i++) {
 
-            //نتشك لو الشخص فائز عن طريق الصفوف 
+            //check rows
             if (checkThreeButtonsEquality(board[i][0], board[i][1], board[i][2])) {
 
-                //  winningButtons = new Button[]{board[i][0], board[i][1], board[i][2]};
+                winningButtons = new Button[]{board[i][0], board[i][1], board[i][2]};
                 return true;
 
-            } // نتشك لو الشخص فائز عن طريق الأعمده
+            } // check columns
             else if (checkThreeButtonsEquality(board[0][i], board[1][i], board[2][i])) {
 
-                // winningButtons = new Button[]{board[0][i], board[1][i], board[2][i]};
+                winningButtons = new Button[]{board[0][i], board[1][i], board[2][i]};
                 return true;
 
             }
 
         }
 
-        // نتشك لو الشخص فاز عن طريق القطر
+        // check diagonals
         if (checkThreeButtonsEquality(board[0][0], board[1][1], board[2][2])) {
 
-            //   winningButtons = new Button[]{board[0][0], board[1][1], board[2][2]};
+            winningButtons = new Button[]{board[0][0], board[1][1], board[2][2]};
             return true;
 
         } else if (checkThreeButtonsEquality(board[0][2], board[1][1], board[2][0])) {
 
-            //   winningButtons = new Button[]{board[0][2], board[1][1], board[2][0]};
+            winningButtons = new Button[]{board[0][2], board[1][1], board[2][0]};
             return true;
 
         }
@@ -342,13 +354,11 @@ public class FXMLOnlineGameBoardController implements Initializable {
     }
 
     private void highlightWinnerButtons() {
-        /*
+
         for (Button button : winningButtons) {
-
             button.setStyle("-fx-background-color: yellow; -fx-border-color: green; -fx-font-weight: bold;");
-
         }
-         */
+
     }
 
     private boolean isBoardFull() {
@@ -391,8 +401,44 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
         // isXTurn = true;
     }
-    
-    
+
+
+    /*
+    private void showAlertAndReset() {
+
+        Alert aboutAlert = new Alert(Alert.AlertType.CONFIRMATION);
+
+        aboutAlert.setTitle("No one won this match.");
+
+        aboutAlert.setHeaderText(null);
+
+        aboutAlert.setGraphic(null);
+
+        aboutAlert.setContentText("Do you want to Play Another Mathch ?");
+
+        aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
+
+        aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
+
+        Optional<ButtonType> result = aboutAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+
+            SoundManager.playSoundEffect("click.wav");
+
+            System.out.println("Play another Match");
+
+            resetBoard();
+
+        } else {
+
+            SoundManager.playSoundEffect("click.wav");
+
+            //backToMainScreen();
+        }
+
+    }*/
+
     private void showAlertAndReset() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -403,13 +449,10 @@ public class FXMLOnlineGameBoardController implements Initializable {
             alert.getDialogPane().getStyleClass().add("dialog-pane");
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) 
-            {
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 SoundManager.playSoundEffect("click.wav");
                 resetBoard();
-            } 
-            else 
-            {
+            } else {
                 SoundManager.playSoundEffect("click.wav");
                 //backToMainScreen();       
             }
@@ -452,10 +495,10 @@ public class FXMLOnlineGameBoardController implements Initializable {
     }
 
     private void terminateOnlineGameBoardScreen() {
-        //show aleart the server is dowen
+        //show aleart the server is down
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
-        alert.setHeaderText("Server now is dowen!");
+        alert.setHeaderText("Server now is down!");
         alert.show();
         //close conniction with server
         try {
@@ -472,8 +515,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
         }
         SessionData.deleteDate();
     }
-    
-      public void goToResultVideoScreen() {
+
+    public void goToResultVideoScreen() {
         System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
 
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
@@ -509,7 +552,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
             }
         });
 
-    pause.play();
-}
+        pause.play();
+    }
 
 }
