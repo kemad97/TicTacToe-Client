@@ -2,7 +2,6 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -28,42 +27,43 @@
                   <Image url="@../../../media/images/X.png" />
                </image>
             </ImageView>
-            <TextField fx:id="email" layoutX="258.0" layoutY="236.0">
-               <styleClass>
-                  <String fx:value="label-with-shadow" />
-                  <String fx:value="text-feild" />
-               </styleClass>
-            </TextField>
-            <Label layoutX="156.0" layoutY="237.0" prefHeight="27.0" prefWidth="59.0" text="Email">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <TextField fx:id="name" layoutX="258.0" layoutY="161.0">
-               <styleClass>
-                  <String fx:value="label-with-shadow" />
-                  <String fx:value="text-feild" />
-               </styleClass>
-            </TextField>
-            <Label layoutX="156.0" layoutY="162.0" prefHeight="27.0" prefWidth="59.0" text="Name">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <TextField fx:id="score" layoutX="258.0" layoutY="314.0">
+            <Label fx:id="name" layoutX="262.0" layoutY="71.0" prefHeight="28.0" prefWidth="125.0" text="aya" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="text-feild" />
                   <String fx:value="label-with-shadow" />
                </styleClass>
-            </TextField>
-            <Label layoutX="156.0" layoutY="315.0" prefHeight="27.0" prefWidth="59.0" text="Score">
+            </Label>
+            <Label layoutX="123.0" layoutY="185.0" prefHeight="30.0" prefWidth="67.0" text="Score :">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="258.0" layoutY="67.0" prefHeight="35.0" prefWidth="132.0" text="User Profile">
+            <Label fx:id="score" layoutX="304.0" layoutY="180.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
+               <styleClass>
+                  <String fx:value="numbers" />
+                  <String fx:value="label-with-shadow" />
+               </styleClass>
+            </Label>
+            <Label fx:id="win_matches" layoutX="304.0" layoutY="306.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
+               <styleClass>
+                  <String fx:value="numbers" />
+                  <String fx:value="label-with-shadow" />
+               </styleClass>
+            </Label>
+            <Label layoutX="123.0" layoutY="249.0" prefHeight="30.0" prefWidth="111.0" text="Match_No :">
                <font>
-                  <Font size="24.0" />
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="matches_no" layoutX="304.0" layoutY="244.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
+               <styleClass>
+                  <String fx:value="numbers" />
+                  <String fx:value="label-with-shadow" />
+               </styleClass>
+            </Label>
+            <Label layoutX="123.0" layoutY="311.0" prefHeight="30.0" prefWidth="125.0" text="Win Matches :">
+               <font>
+                  <Font size="20.0" />
                </font>
             </Label>
          </children>

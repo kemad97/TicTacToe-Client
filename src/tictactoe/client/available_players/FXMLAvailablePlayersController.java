@@ -37,6 +37,7 @@ public class FXMLAvailablePlayersController implements Initializable {
     private ListView<String> availablePlayersList;
 
     private boolean isReceiving;
+    private Thread receivingThread;
 
     /**
      * Initializes the controller class.
@@ -63,11 +64,12 @@ public class FXMLAvailablePlayersController implements Initializable {
         });
 
         //this thread list for any request coms to available players
-        new Thread(() -> {
+        receivingThread = new Thread(() -> {
             isReceiving = true;
             receiveRequests();
-        }).start();
-    }
+        });
+        receivingThread.start();
+        }
 
     @FXML
     private void logout(MouseEvent event) {
@@ -244,6 +246,11 @@ public class FXMLAvailablePlayersController implements Initializable {
     @FXML
     private void goToUserProfile (){
         
+        isReceiving = false;
+        if (receivingThread != null && receivingThread.isAlive()) {
+            receivingThread.interrupt();
+        }
+
         String userProfilePath = "/tictactoe/client/userProfile/FXMLUserProfile.fxml";
         try {
             SceneNavigation.getInstance().nextScene(userProfilePath, score);

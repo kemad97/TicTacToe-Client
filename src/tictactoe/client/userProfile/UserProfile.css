@@ -23,3 +23,9 @@
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 }
+.numbers{
+    -fx-font: 15px "Abel";
+    -fx-background-color: #ffd02d;
+    -fx-background-radius: 50;
+    -fx-border-radius: 10;
+}
