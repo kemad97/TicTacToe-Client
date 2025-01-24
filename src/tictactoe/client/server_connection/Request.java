@@ -106,6 +106,17 @@ public class Request {
         dos.writeUTF(jsonObject.toString());
     }
 
+    public void askServerToMakeMeNotAvailable() throws IOException{
+        JSONObject json = new JSONObject();
+        json.put("header", "ask_to_be_not_available");
+        dos.writeUTF(json.toString());
+    }
+    
+    public void askServerToMakeMeAvailable() throws IOException{
+        JSONObject json = new JSONObject();
+        json.put("header", "ask_to_be_available");
+        dos.writeUTF(json.toString());
+    }
 
     public void sendMove(String msg){
         

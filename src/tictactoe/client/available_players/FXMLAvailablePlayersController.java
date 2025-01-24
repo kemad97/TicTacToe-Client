@@ -142,6 +142,9 @@ public class FXMLAvailablePlayersController implements Initializable {
                             }
                         });
                         break;
+                    case "your_state_not_available":
+                        isReceiving = false;
+                        break;
 
                     case "server_down":
                         Platform.runLater(() -> terminateAvailablePlayersScreen());
@@ -245,9 +248,11 @@ public class FXMLAvailablePlayersController implements Initializable {
 
     @FXML
     private void goToUserProfile() {
-        isReceiving = false;
-        if (receivingThread != null && receivingThread.isAlive()) {
-            receivingThread.interrupt();
+        try {
+            //send to server i will be not available
+            Request.getInstance().askServerToMakeMeNotAvailable();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         String userProfilePath = "/tictactoe/client/userProfile/FXMLUserProfile.fxml";

@@ -14,11 +14,17 @@ import tictactoe.client.server_connection.Request;
 import tictactoe.client.session_data.SessionData;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import tictactoe.client.animation.Animation;
+import tictactoe.client.available_players.FXMLAvailablePlayersController;
+import tictactoe.client.scene_navigation.SceneNavigation;
 
 /**
  *
@@ -40,6 +46,9 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private Label win_matches;
+    private boolean isReceving;
+    @FXML
+    private ImageView btnBack;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,9 +60,9 @@ public class UserProfileController implements Initializable {
     private void requestUserData() {
         new Thread(() -> {
             try {
-
                 sendRequest();
 
+                isReceving = true;
                 handleResponse();
 
             } catch (IOException e) {
@@ -77,26 +86,65 @@ public class UserProfileController implements Initializable {
         }
     }
 
-    private void handleResponse() throws IOException {
+    private void handleResponse() {
+        while (isReceving) {
+            try {
+                JSONObject jsonObject = Request.getInstance().recieve();
+
+                switch (jsonObject.getString("header")) {
+                    case "user_profile":
+                        Platform.runLater(() -> {
+                            name.setText(jsonObject.getString("name"));
+                            score.setText(jsonObject.getString("score"));
+                            matches_no.setText(jsonObject.getString("matches_no"));
+                            win_matches.setText(jsonObject.getString("won_matches"));
+                        });
+                        break;
+                    case "server_down":
+                        Platform.runLater(() -> terminateUserProfileScreen());
+                        break;
+                    case "your_state_available":
+                        isReceving = false;
+                        break;
+                }
+            } catch (IOException ex) {
+                break;
+            }
+        }
+    }
+
+    private void terminateUserProfileScreen() {
+        //show aleart the server is dowen
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Server Message");
+        alert.setHeaderText("Server now is dowen!");
+        alert.show();
+        //close conniction with server
         try {
-            JSONObject jsonObject = Request.getInstance().recieve();
-            if (jsonObject == null) {
-                System.out.println("No response received from server.");
-                return;
-            }
+            Request.getInstance().disconnectToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //redirect all users to main screen
+        String mainScenePath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
+        try {
+            SceneNavigation.getInstance().nextScene(mainScenePath, score);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SessionData.deleteDate();
+    }
 
-            System.out.println("Response: " + jsonObject.toString());
-
-            if (jsonObject.getString("header").equals("user_profile")) {
-                Platform.runLater(() -> {
-                    name.setText(jsonObject.getString("name"));
-                    score.setText(jsonObject.getString("score"));
-                    matches_no.setText(jsonObject.getString("matches_no"));
-                    win_matches.setText(jsonObject.getString("won_matches"));
-                });
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    @FXML
+    private void backToAvailablePlayers(MouseEvent event) {
+        try {
+            Request.getInstance().askServerToMakeMeAvailable();
+            
+            
+            String availableScreenPath = "/tictactoe/client/available_players/FXMLAvailablePlayers.fxml";
+            SceneNavigation.getInstance().nextScene(availableScreenPath, logo);
+        } catch (IOException ex) {
+            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
