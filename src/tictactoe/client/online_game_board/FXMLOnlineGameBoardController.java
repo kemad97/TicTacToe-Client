@@ -213,53 +213,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
         checkWhoIsTheWinner();
     }
 
-    /*
-    // check winner
-    private void checkWhoIsTheWinner() {
-
-        if (checkWin()) {
-
-            winnerPlayer = firstTurn ? "X" : "O";
-
-            if (winnerPlayer.equals("X")) {
-
-                // xScore++;
-            } else {
-
-                // oScore++;
-            }
-
-            // updateScoreLabels();
-
-            Platform.runLater(()->highlightWinnerButtons());
-           
-
-            // Only show video to winner
-            if ((!firstTurn && winnerPlayer.equals("O")) || (firstTurn && winnerPlayer.equals("X"))) {
-                this.goToResultVideoScreen();
-            }
-
-            highlightWinnerButtons();
-                  // Only show video to winner
-            if ((!firstTurn && winnerPlayer.equals("O")) || (firstTurn && winnerPlayer.equals("X"))) 
-            {
-                this.goToResultVideoScreen();
-            }
-           
-           
-
-
-
-            isGameOver = true;
-
-            goToResultVideoScreen();
-        } else if (isBoardFull()) {
-
-            showAlertAndReset();
-
-        }
-
-    }*/
     private void checkWhoIsTheWinner() {
         if (checkWin()) {
             winnerPlayer = firstTurn ? "X" : "O";
@@ -397,42 +350,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
         // isXTurn = true;
     }
 
-
-    /*
-    private void showAlertAndReset() {
-
-        Alert aboutAlert = new Alert(Alert.AlertType.CONFIRMATION);
-
-        aboutAlert.setTitle("No one won this match.");
-
-        aboutAlert.setHeaderText(null);
-
-        aboutAlert.setGraphic(null);
-
-        aboutAlert.setContentText("Do you want to Play Another Mathch ?");
-
-        aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
-
-        aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
-
-        Optional<ButtonType> result = aboutAlert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-
-            SoundManager.playSoundEffect("click.wav");
-
-            System.out.println("Play another Match");
-
-            resetBoard();
-
-        } else {
-
-            SoundManager.playSoundEffect("click.wav");
-
-            //backToMainScreen();
-        }
-
-    }*/
     private void showAlertAndReset() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -549,44 +466,4 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
         pause.play();
     }
-/*
-    public void goToResultVideoScreen() {
-        System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
-
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-
-        pause.setOnFinished(event -> {
-            try {
-                System.out.println("GO To Result Video Screen");
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/resultVideoScreen/ResultVideoScreen.fxml"));
-                Parent root = loader.load();
-
-                ResultVideoScreenController controller = loader.getController();
-
-                Platform.runLater(() -> {
-                    try {
-                        controller.setWinner(winnerPlayer);
-
-                        Scene scene = new Scene(root);
-                        Stage stage = (Stage) logo.getScene().getWindow();
-                        stage.setScene(scene);
-                        stage.show();
-
-                        SoundManager.pauseBackgroundMusic();
-
-                        System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: ");
-                    } catch (Exception e) {
-                        Logger.getLogger(ResultVideoScreenController.class.getName()).log(Level.SEVERE, null, e);
-                    }
-                });
-
-            } catch (IOException ex) {
-                Logger.getLogger(ResultVideoScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-
-        pause.play();
-    }
-*/
 }
