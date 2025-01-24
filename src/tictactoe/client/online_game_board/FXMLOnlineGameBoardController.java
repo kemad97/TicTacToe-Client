@@ -189,6 +189,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
     public void recieveMoveFromServer(JSONObject json) {
 
+        checkBoxRecord.setDisable(true);
+
         symbol = json.getString("symbol");
         int row = json.getInt("row");
         int col = json.getInt("column");
@@ -221,7 +223,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
             // Simple winner determination
             boolean isCurrentPlayerWinner = (firstTurn && symbol.equals("X")) || (!firstTurn && symbol.equals("O"));
 
-             try {
+            if (isCurrentPlayerWinner) {
+                try {
                     // update winner score
                     JSONObject json = new JSONObject();
                     json.put("header", "update_score");
@@ -229,12 +232,13 @@ public class FXMLOnlineGameBoardController implements Initializable {
                     System.out.println("send update score request to server");
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
-               }
-          
+                }
+            }
+
             isGameOver = true;
             this.goToResultVideoScreen(isCurrentPlayerWinner);
         } else if (isBoardFull()) {
-            showAlertAndReset();
+            showAlertAndBackToAvailableScreen();
         }
 
     }
@@ -294,14 +298,14 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
     }
 
-       private void highlightLoserButtons() {
+    private void highlightLoserButtons() {
 
         for (Button button : winningButtons) {
             button.setStyle("-fx-background-color: red; -fx-border-color: green; -fx-font-weight: bold;");
         }
 
     }
-       
+
     private void highlightWinnerButtons() {
 
         for (Button button : winningButtons) {
@@ -351,24 +355,23 @@ public class FXMLOnlineGameBoardController implements Initializable {
         // isXTurn = true;
     }
 
-    private void showAlertAndReset() {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Draw Game");
-            alert.setHeaderText(null);
-            alert.setContentText("Do you want to Play Another Match?");
-            alert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
-            alert.getDialogPane().getStyleClass().add("dialog-pane");
+    private void showAlertAndBackToAvailableScreen() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Draw Game");
+        alert.setHeaderText(null);
+        alert.setContentText("You draw with your opponent!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                SoundManager.playSoundEffect("click.wav");
-                resetBoard();
-            } else {
-                SoundManager.playSoundEffect("click.wav");
-                //backToMainScreen();       
-            }
-        });
+        alert.showAndWait();
+
+        try {
+            Request.getInstance().endPlayerGame();
+            SceneNavigation.getInstance().nextScene("/tictactoe/client/available_players/FXMLAvailablePlayers.fxml", logo);
+            SoundManager.pauseBackgroundMusic();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void recieveRosponse() {
@@ -441,9 +444,9 @@ public class FXMLOnlineGameBoardController implements Initializable {
         pause.setOnFinished(event -> {
             try {
                 System.out.println("GO To Result Video Screen");
-                String thisScrenePath = "/tictactoe/client/online_game_board/FXMLOnlineGameBoard.fxml";
 
-                SceneNavigation.getInstance().gotoVideoScreen(logo, isWinner, opponentName, thisScrenePath);
+                SceneNavigation.getInstance().gotoVideoScreen(logo, isWinner, opponentName);
+                Request.getInstance().endPlayerGame();
                 SoundManager.pauseBackgroundMusic();
 
             } catch (IOException ex) {
