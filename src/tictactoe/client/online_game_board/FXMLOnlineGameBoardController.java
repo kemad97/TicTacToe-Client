@@ -76,6 +76,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
     public void setOpponentName(String opponetnName) {
         this.opponentName = opponetnName;
         opponnetUsername.setText(opponetnName);
+        SessionData.setOpponentName(opponentName);
     }
 
     public void setMyTurn(Boolean firstTurn) {
@@ -364,7 +365,10 @@ public class FXMLOnlineGameBoardController implements Initializable {
         alert.getDialogPane().getStyleClass().add("dialog-pane");
 
         alert.showAndWait();
+        backToAvailableScreen();
+    }
 
+    private void backToAvailableScreen() {
         try {
             Request.getInstance().endPlayerGame();
             SceneNavigation.getInstance().nextScene("/tictactoe/client/available_players/FXMLAvailablePlayers.fxml", logo);
@@ -373,6 +377,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
             Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
     private void recieveRosponse() {
         while (!isGameOver) {
@@ -388,6 +393,11 @@ public class FXMLOnlineGameBoardController implements Initializable {
                         break;
                     case "end_of_game":
                         isGameOver = true;
+                        SessionData.setOpponentName("");
+                        break;
+                    case "opponent_exit_match":
+                        System.out.println(json);
+                        Platform.runLater(() -> opponentExitMatch());
                         break;
                 }
             } catch (IOException ex) {
@@ -395,7 +405,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
                 break;
             }
         }
-        System.out.println("game over");
     }
 
     @FXML
@@ -455,5 +464,14 @@ public class FXMLOnlineGameBoardController implements Initializable {
         });
 
         pause.play();
+    }
+
+    private void opponentExitMatch() {
+        //show aleart the server is down
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Server Message");
+        alert.setHeaderText(opponentName + " go out!");
+        alert.show();
+        backToAvailableScreen();
     }
 }

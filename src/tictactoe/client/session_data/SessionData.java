@@ -5,6 +5,15 @@ public class SessionData {
     private static boolean authenticated;
     private static String username;
     private static int score;
+    private static String opponentName;
+
+    public static String getOpponentName() {
+        return opponentName;
+    }
+
+    public static void setOpponentName(String opponentName) {
+        SessionData.opponentName = opponentName;
+    }
 
     static {
         authenticated = false;
@@ -39,5 +48,6 @@ public class SessionData {
         authenticated = false;
         username = "";
         score = 0;
+        opponentName = "";
     }
 }
