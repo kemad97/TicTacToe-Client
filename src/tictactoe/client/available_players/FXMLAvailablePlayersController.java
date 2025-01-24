@@ -46,10 +46,10 @@ public class FXMLAvailablePlayersController implements Initializable {
         //animate logo
         Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
 
+        requestAvailablePlayers();
+
         username.setText(SessionData.getUsername());
         score.setText(SessionData.getScore() + "");
-
-        requestAvailablePlayers();
 
         availablePlayersList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -57,7 +57,6 @@ public class FXMLAvailablePlayersController implements Initializable {
                 if (selectedPlayer != null) {
                     String opponentUsername = selectedPlayer.split(" - ")[0].trim();
                     sendMatchRequest(opponentUsername);
-                    //switch to please wait scene 
                 }
             }
         });
@@ -165,6 +164,14 @@ public class FXMLAvailablePlayersController implements Initializable {
             if (!player.getString("username").equals(currentUser)) {
                 String display = " " + player.get("username") + " - Score: " + player.get("score");
                 availablePlayersList.getItems().add(display);
+            } else {
+                if (SessionData.getScore() != Integer.parseInt(player.getString("score"))) {
+                    SessionData.setScore(Integer.parseInt(player.getString("score")));
+                    //update user score
+                    Platform.runLater(() -> {
+                        score.setText(SessionData.getScore() + "");
+                    });
+                }
             }
         }
     }
