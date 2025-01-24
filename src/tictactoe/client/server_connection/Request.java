@@ -107,16 +107,26 @@ public class Request {
     }
 
 
-    public void sendMove(String json){
+    public void sendMove(String msg){
         
         try {
-            dos.writeUTF(json);
+            dos.writeUTF(msg);
             dos.flush();
         } catch (IOException ex) {
             Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    
+    public void notifyServerOfWinner(String message){
+    
+        try {
+            dos.writeUTF(message);
+            dos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /*
       public void sendMove(String opponentUsername, String move) throws IOException {
         Map<String, String> map = new HashMap<>();
