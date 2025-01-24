@@ -5,26 +5,21 @@
  */
 package tictactoe.client.userProfile;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
-import tictactoe.client.animation.Animation;
-import tictactoe.client.available_players.FXMLAvailablePlayersController;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.session_data.SessionData;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.animation.ScaleTransition;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
+import tictactoe.client.animation.Animation;
 
 /**
  *
@@ -46,6 +41,7 @@ public class UserProfileController implements Initializable {
     
     @FXML
     private Label win_matches;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -99,6 +95,6 @@ public class UserProfileController implements Initializable {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    }  
 
 }

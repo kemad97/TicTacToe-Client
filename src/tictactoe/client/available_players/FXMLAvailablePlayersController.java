@@ -158,7 +158,6 @@ public class FXMLAvailablePlayersController implements Initializable {
     private void updateAvailablePlayersListView(JSONArray players) {
 
         availablePlayersList.getItems().clear();
-
         String currentUser = SessionData.getUsername();
 
         for (int i = 0; i < players.length(); i++) {
@@ -168,9 +167,9 @@ public class FXMLAvailablePlayersController implements Initializable {
                 String display = " " + player.get("username") + " - Score: " + player.get("score");
                 availablePlayersList.getItems().add(display);
             }
+
         }
     }
-
     // Method to send a match request to the selected player
     private void sendMatchRequest(String opponentUsername) {
         try {
@@ -245,7 +244,7 @@ public class FXMLAvailablePlayersController implements Initializable {
     
     @FXML
     private void goToUserProfile (){
-        
+
         isReceiving = false;
         if (receivingThread != null && receivingThread.isAlive()) {
             receivingThread.interrupt();
