@@ -69,7 +69,7 @@ public class FXMLAvailablePlayersController implements Initializable {
             receiveRequests();
         });
         receivingThread.start();
-        }
+    }
 
     @FXML
     private void logout(MouseEvent event) {
@@ -170,6 +170,7 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         }
     }
+
     // Method to send a match request to the selected player
     private void sendMatchRequest(String opponentUsername) {
         try {
@@ -241,10 +242,9 @@ public class FXMLAvailablePlayersController implements Initializable {
         }
         SessionData.deleteDate();
     }
-    
-    @FXML
-    private void goToUserProfile (){
 
+    @FXML
+    private void goToUserProfile() {
         isReceiving = false;
         if (receivingThread != null && receivingThread.isAlive()) {
             receivingThread.interrupt();

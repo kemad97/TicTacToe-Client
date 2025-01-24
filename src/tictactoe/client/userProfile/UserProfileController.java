@@ -5,7 +5,6 @@
  */
 package tictactoe.client.userProfile;
 
-
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -35,13 +34,12 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private Label score;
-    
+
     @FXML
     private Label matches_no;
-    
+
     @FXML
     private Label win_matches;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,7 +58,7 @@ public class UserProfileController implements Initializable {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                
+
             }
         }).start();
     }
@@ -82,6 +80,11 @@ public class UserProfileController implements Initializable {
     private void handleResponse() throws IOException {
         try {
             JSONObject jsonObject = Request.getInstance().recieve();
+            if (jsonObject == null) {
+                System.out.println("No response received from server.");
+                return;
+            }
+
             System.out.println("Response: " + jsonObject.toString());
 
             if (jsonObject.getString("header").equals("user_profile")) {
@@ -91,10 +94,10 @@ public class UserProfileController implements Initializable {
                     matches_no.setText(jsonObject.getString("matches_no"));
                     win_matches.setText(jsonObject.getString("won_matches"));
                 });
-            } 
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }  
+    }
 
 }
