@@ -218,13 +218,12 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
             // updateScoreLabels();
             highlightWinnerButtons();
-            if (resVideo==null)
+           
+                // Only show video to winner
+            if ((!firstTurn && winnerPlayer.equals("O")) || (firstTurn && winnerPlayer.equals("X"))) 
             {
-                resVideo=new ResultVideoScreenController();
-                
+                this.goToResultVideoScreen();
             }
-            this.goToResultVideoScreen();
-
         
 
 
