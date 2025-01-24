@@ -31,6 +31,10 @@ public class SceneNavigation {
         stage.show();
     }
     
+    public void gotoVideoScreen(String fxmlPath, Node node) throws IOException {
+        //
+    }
+    
     public void gotoOnlineBoard(String fxmlPath, Node node, String opponentName, Boolean isMyTurn) throws IOException {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
