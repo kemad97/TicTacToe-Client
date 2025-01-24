@@ -176,8 +176,10 @@ public class FXMLOnlineGameBoardController implements Initializable {
             Request.getInstance().sendMove(json.toString());
             //dos.flush();
             System.out.println("Move sent to server: " + json.toString());
-
+            // Disable record checkbox after move
+            checkBoxRecord.setDisable(true);
             checkWhoIsTheWinner();
+             
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,7 +202,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
             boardPane.setDisable(false);
         }
     }
-
+/*
     // check winner
     private void checkWhoIsTheWinner() {
 
@@ -218,13 +220,13 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
             // updateScoreLabels();
             highlightWinnerButtons();
-           
-                // Only show video to winner
+                  // Only show video to winner
             if ((!firstTurn && winnerPlayer.equals("O")) || (firstTurn && winnerPlayer.equals("X"))) 
             {
                 this.goToResultVideoScreen();
             }
-        
+           
+           
 
 
             isGameOver = true;
@@ -235,9 +237,41 @@ public class FXMLOnlineGameBoardController implements Initializable {
             showAlertAndReset();
 
         }
-    }
-    
+    }*/
+ private void checkWhoIsTheWinner() 
+{
+        if (checkWin()) 
+        {
+            winnerPlayer = firstTurn ? "O" : "X";
+            highlightWinnerButtons();
 
+            // Get current player's username
+            String currentPlayer = SessionData.getUsername();
+
+            // Simple winner determination
+            boolean isCurrentPlayerWinner = (firstTurn && symbol.equals("X")) || (!firstTurn && symbol.equals("O"));
+
+            // Only show video to winner
+            if (!isCurrentPlayerWinner) {  // Show video to winner
+                System.out.println("Showing winner video to: " + currentPlayer);
+                this.goToResultVideoScreen();
+            } 
+            else {  // Show alert to loser
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Game Over");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Game Over! You lost!");
+                    alert.showAndWait();
+                });
+            }
+
+            isGameOver = true;
+        } 
+        else if (isBoardFull()) {
+            showAlertAndReset();
+        }
+    }
 
     private boolean checkWin() {
 
@@ -337,44 +371,15 @@ public class FXMLOnlineGameBoardController implements Initializable {
         }
 
         isGameOver = false;
+        // Re-enable record checkbox for new game
+        checkBoxRecord.setDisable(false);
+        checkBoxRecord.setSelected(false);
+        recScreenController = null;
 
         // isXTurn = true;
     }
-    /*
-    private void showAlertAndReset() {
-
-        Alert aboutAlert = new Alert(Alert.AlertType.CONFIRMATION);
-
-        aboutAlert.setTitle("No one won this match.");
-
-        aboutAlert.setHeaderText(null);
-
-        aboutAlert.setGraphic(null);
-
-        aboutAlert.setContentText("Do you want to Play Another Mathch ?");
-
-        aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
-
-        aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
-
-        Optional<ButtonType> result = aboutAlert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-
-            SoundManager.playSoundEffect("click.wav");
-
-            System.out.println("Play another Match");
-
-            resetBoard();
-
-        } else {
-
-            SoundManager.playSoundEffect("click.wav");
-
-            //backToMainScreen();
-        }
-
-    }*/
+    
+    
     private void showAlertAndReset() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
