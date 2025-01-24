@@ -1,16 +1,11 @@
 package tictactoe.client.gameBoardWithFriend;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.concurrent.Delayed;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
@@ -28,9 +23,8 @@ import javafx.util.Duration;
 import javafx.application.Platform;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import tictactoe.client.animation.Animation;
-import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.mainScreen.FXMLMainScreenController;
 import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 import tictactoe.client.RecScreen.RecScreenController;
 import tictactoe.client.soundManager.SoundManager;
@@ -39,6 +33,9 @@ public class GameBoardWithFriendController implements Initializable {
 
     @FXML
     private ImageView logo;
+    
+    @FXML
+    private Label player1Label, player2Label;
 
     @FXML
     private Button Btn11, Btn12, Btn13, Btn21, Btn22, Btn23, Btn31, Btn32, Btn33;
@@ -82,6 +79,8 @@ public class GameBoardWithFriendController implements Initializable {
         recScreenController.initializeLogFile();
         
       
+        player1Label.getStyleClass().add("bold-label");
+        player2Label.getStyleClass().add("bold-label");
 
         updateScoreLabels();
         

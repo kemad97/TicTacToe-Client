@@ -30,7 +30,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
-import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.mainScreen.FXMLMainScreenController;
 import tictactoe.client.soundManager.SoundManager;
 
 /**
@@ -177,7 +177,7 @@ public class ResultVideoScreenController implements Initializable {
             
             mediaPlayer.stop();
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/mainScreen/FXMLMainScreen.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);

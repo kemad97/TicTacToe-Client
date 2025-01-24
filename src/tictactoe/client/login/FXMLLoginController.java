@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.animation.Animation;
-import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.mainScreen.FXMLMainScreenController;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.server_ip.ServerIP;
 import tictactoe.client.soundManager.SoundManager;

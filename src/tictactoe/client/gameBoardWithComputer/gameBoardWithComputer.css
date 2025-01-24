@@ -1,5 +1,4 @@
 
-
 .mainFxmlClass {
     -fx-background-image: url("../../../media/images/mainBackground.png");
     -fx-background-size: 100%;
@@ -26,6 +25,11 @@
     -fx-border-radius: 20;
 }
 
+.bold-label{
+    
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
 .label-with-shadow {
     -fx-effect: dropshadow(gaussian, gray, 5, 0.0, 3, 3);
 }
@@ -38,4 +42,3 @@
     -fx-start-margin: 15;
     
 }
-

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe.client.levels;
 
 import java.io.IOException;
@@ -17,10 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import tictactoe.client.main_screen.FXMLMainScreenController;
-import tictactoe.client.gameBoard.GameBoardController;
+import tictactoe.client.mainScreen.FXMLMainScreenController;
+import tictactoe.client.gameBoardWithComputer.GameBoardWithComputerController;
  
 
 /**
@@ -66,7 +60,7 @@ public class LevelsUIController implements Initializable {
         System.out.println ("Selected diffculty :" + selectedDifficulty);
        
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoardWithComputer/GameBoardWithComputer.fxml"));
         loadFXMLFile(loader,event);
 
     }
@@ -79,7 +73,7 @@ public class LevelsUIController implements Initializable {
            selectedDifficulty="Medium";
            System.out.println ("Selected diffculty :" + selectedDifficulty);
            
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoardWithComputer/GameBoardWithComputer.fxml"));
            loadFXMLFile(loader,event);
 
     }
@@ -93,7 +87,7 @@ public class LevelsUIController implements Initializable {
         selectedDifficulty = "Easy";
         System.out.println("Selected difficulty: " + selectedDifficulty);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoard/GameBoard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/gameBoardWithComputer/GameBoardWithComputer.fxml"));
         loadFXMLFile(loader,event);
       
     }
@@ -113,7 +107,7 @@ public class LevelsUIController implements Initializable {
             Parent root = loader.load(); // Load the FXML file first
 
             // Now you can safely get the controller
-            GameBoardController controller = loader.getController();
+            GameBoardWithComputerController controller = loader.getController();
             controller.setDifficulty(selectedDifficulty);
 
             System.out.println("Start offline match vs. PC");

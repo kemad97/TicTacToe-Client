@@ -26,7 +26,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.mainScreen.FXMLMainScreenController;
 import tictactoe.client.replay.ReplayController;
 import tictactoe.client.soundManager.SoundManager;
 import tictactoe.client.session_data.SessionData;

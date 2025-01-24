@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe.client.resultVideoScreenwithPC;
 
 import java.io.IOException;
@@ -27,13 +22,9 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tictactoe.client.animation.Animation;
-import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.mainScreen.FXMLMainScreenController;
 import tictactoe.client.soundManager.SoundManager;
 
-/**
- *
- * @author ayaah
- */
 public class ResultVideoScreenWithPCController implements Initializable {
 
    @FXML
@@ -157,7 +148,7 @@ public class ResultVideoScreenWithPCController implements Initializable {
             
             mediaPlayer.stop();
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/mainScreen/FXMLMainScreen.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);

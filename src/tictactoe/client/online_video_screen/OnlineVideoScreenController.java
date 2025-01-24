@@ -25,7 +25,7 @@ import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
-import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.mainScreen.FXMLMainScreenController;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.session_data.SessionData;

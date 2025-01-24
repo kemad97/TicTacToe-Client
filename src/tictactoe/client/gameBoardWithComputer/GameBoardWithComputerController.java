@@ -1,4 +1,4 @@
-package tictactoe.client.gameBoard;
+package tictactoe.client.gameBoardWithComputer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,23 +22,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import tictactoe.client.animation.Animation;
-import tictactoe.client.main_screen.FXMLMainScreenController;
 import javafx.util.Duration;
 import tictactoe.client.animation.Animation;
-import tictactoe.client.main_screen.FXMLMainScreenController;
+import tictactoe.client.mainScreen.FXMLMainScreenController;
 import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
-import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 import tictactoe.client.RecScreen.RecScreenController;
 import tictactoe.client.resultVideoScreenwithPC.ResultVideoScreenWithPCController;
 import tictactoe.client.soundManager.SoundManager;
 
-public class GameBoardController implements Initializable {
+public class GameBoardWithComputerController implements Initializable {
 
     @FXML
     private ImageView logo;
+    @FXML
+    private Label playerLabel, computerLabel;
     @FXML
     private Button Btn11, Btn12, Btn13, Btn21, Btn22, Btn23, Btn31, Btn32, Btn33;
     @FXML
@@ -75,8 +75,10 @@ public class GameBoardController implements Initializable {
 
         isGameOver = false;
         isXTurn = true;
+        
+        playerLabel.getStyleClass().add("bold-label");
+        computerLabel.getStyleClass().add("bold-label");
 
-       // difficulty = "Medium"; // test
        handleCheckBox();
     }
     
@@ -354,7 +356,7 @@ public class GameBoardController implements Initializable {
 
             System.out.println("Back To Main Screen");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/mainScreen/FXMLMainScreen.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);

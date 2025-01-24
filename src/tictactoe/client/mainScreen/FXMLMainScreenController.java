@@ -1,4 +1,4 @@
-package tictactoe.client.main_screen;
+package tictactoe.client.mainScreen;
 
 import java.io.IOException;
 import java.net.URL;
