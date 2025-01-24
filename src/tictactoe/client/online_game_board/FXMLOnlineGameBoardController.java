@@ -151,12 +151,11 @@ public class FXMLOnlineGameBoardController implements Initializable {
                     // Send the move to the server
                     sendMoveToServer(symbol, i, j);
 
-                   
                     break;
                 }
             }
         }
-         // Log button click only if recording is enabled
+        // Log button click only if recording is enabled
         if (recScreenController != null) {
             recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());
         } else {
@@ -181,12 +180,9 @@ public class FXMLOnlineGameBoardController implements Initializable {
             //dos.flush();
             System.out.println("Move sent to server: " + json.toString());
 
-
             // Disable record checkbox after move
             checkBoxRecord.setDisable(true);
             checkWhoIsTheWinner();
-             
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -207,36 +203,30 @@ public class FXMLOnlineGameBoardController implements Initializable {
             board[row][col].setStyle("-fx-opacity: 1.0;");
             boardPane.setDisable(false);
         }
-        
+
         // Log button click only if recording is enabled
         if (recScreenController != null) {
-            
+
             String buttonId = "Btn" + (row + 1) + (col + 1);
             recScreenController.logButtonClick(buttonId, symbol);
         }
+        checkWhoIsTheWinner();
     }
 
     private void checkWhoIsTheWinner() {
-
         if (checkWin()) {
-
             winnerPlayer = firstTurn ? "X" : "O";
+            highlightWinnerButtons();
 
-            if (winnerPlayer.equals("X")) {
+            // Get current player's username
+            String currentPlayer = SessionData.getUsername();
 
-                // xScore++;
-            } else {
-
-                // oScore++;
-            }
-
-            // updateScoreLabels();
-
-            Platform.runLater(()->highlightWinnerButtons());
-           
+            // Simple winner determination
+            boolean isCurrentPlayerWinner = (firstTurn && symbol.equals("X")) || (!firstTurn && symbol.equals("O"));
 
             // Only show video to winner
-            if ((!firstTurn && winnerPlayer.equals("O")) || (firstTurn && winnerPlayer.equals("X"))) {
+            if (isCurrentPlayerWinner) {  // Show video to winner
+                System.out.println("Showing winner video to: " + currentPlayer);
                 try {
                     // update winner score
                     JSONObject json = new JSONObject();
@@ -246,28 +236,24 @@ public class FXMLOnlineGameBoardController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
                 this.goToResultVideoScreen();
+            } else {  // Show alert to loser
+                System.out.println("looooooooooooooooooser");
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Game Over");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Game Over! You lost!");
+                    alert.showAndWait();
+                });
             }
-
-            highlightWinnerButtons();
-                  // Only show video to winner
-            if ((!firstTurn && winnerPlayer.equals("O")) || (firstTurn && winnerPlayer.equals("X"))) 
-            {
-                this.goToResultVideoScreen();
-            }
-           
-           
-
-
 
             isGameOver = true;
-
-            goToResultVideoScreen();
         } else if (isBoardFull()) {
-
             showAlertAndReset();
-
         }
+
     }
 
     private boolean checkWin() {
@@ -374,7 +360,6 @@ public class FXMLOnlineGameBoardController implements Initializable {
         // isXTurn = true;
     }
 
-
     private void showAlertAndReset() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -455,8 +440,10 @@ public class FXMLOnlineGameBoardController implements Initializable {
     public void goToResultVideoScreen() {
         System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        // Store the stage reference using boardPane instead of logo
+        Stage currentStage = (Stage) boardPane.getScene().getWindow();
 
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(event -> {
             try {
                 System.out.println("GO To Result Video Screen");
@@ -471,9 +458,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
                         controller.setWinner(winnerPlayer);
 
                         Scene scene = new Scene(root);
-                        Stage stage = (Stage) logo.getScene().getWindow();
-                        stage.setScene(scene);
-                        stage.show();
+                        currentStage.setScene(scene);
+                        currentStage.show();
 
                         SoundManager.pauseBackgroundMusic();
 
@@ -490,5 +476,4 @@ public class FXMLOnlineGameBoardController implements Initializable {
 
         pause.play();
     }
-
 }
