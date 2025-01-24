@@ -130,4 +130,14 @@ public class Request {
             Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void exitMatch(String opponentName) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("header", "exit_mathc");
+        map.put("opponent", opponentName);
+
+        JSONObject jsonObject = new JSONObject(map);
+        dos.writeUTF(jsonObject.toString());
+        System.out.println(jsonObject);
+    }
 }
