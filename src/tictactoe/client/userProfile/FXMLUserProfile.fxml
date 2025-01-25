@@ -29,7 +29,10 @@
                </font>
             </Button>
             <Circle fill="DODGERBLUE" layoutX="97.0" layoutY="84.0" opacity="0.28" radius="59.0" stroke="BLACK" strokeType="INSIDE" styleClass="label-with-shadow" />
-            <ImageView fx:id="userProfileImg" fitHeight="100.0" fitWidth="100.0" layoutX="47.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" styleClass="img" />
+            <ImageView fx:id="userProfileImg" fitHeight="100.0" fitWidth="100.0" layoutX="47.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" styleClass="img">
+               <image>
+                  <Image url="@../../../media/images/user.png" />
+               </image></ImageView>
 
             <Label fx:id="name" alignment="CENTER" layoutX="253.0" layoutY="67.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="aya" textAlignment="CENTER">
                <font>
