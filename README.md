@@ -1,4 +1,4 @@
-
+![Tic Tac Toe](src/media/images/project_image.png)
 # Network-Based Tic-Tac-Toe Application
 
 ## Overview
