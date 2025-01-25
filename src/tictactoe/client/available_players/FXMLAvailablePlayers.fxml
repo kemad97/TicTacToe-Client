@@ -27,7 +27,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="22.0" prefHeight="27.0" prefWidth="98.0" text="username">
+            <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="22.0" onMouseClicked="#goToUserProfile" prefHeight="27.0" prefWidth="98.0" text="username">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

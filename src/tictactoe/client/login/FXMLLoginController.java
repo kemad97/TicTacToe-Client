@@ -72,6 +72,7 @@ public class FXMLLoginController implements Initializable {
         if (username.getText().trim().isEmpty() || password.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("You must fill username and password!");
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
             alert.show();
             return;
         }
@@ -89,6 +90,7 @@ public class FXMLLoginController implements Initializable {
                 Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("can't connect to server.");
+                    alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
                     alert.show();
                     enableUI();
                     Request.deleteInstance();
@@ -114,11 +116,13 @@ public class FXMLLoginController implements Initializable {
                     Alert success;
                     success = new Alert(Alert.AlertType.INFORMATION);
                     success.setContentText("Login Successful: " + recieve.getString("username"));
+                    success.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
                     Optional<ButtonType> result = success.showAndWait();
 
                     if (result.isPresent() && result.get() == ButtonType.OK) {
 
                         try {
+                            SoundManager.playSoundEffect("click.wav");
                             String availablePlayersPath = "/tictactoe/client/available_players/FXMLAvailablePlayers.fxml";
                             SceneNavigation.getInstance().nextScene(availablePlayersPath, logo);
                         } catch (IOException ex) {
@@ -133,6 +137,7 @@ public class FXMLLoginController implements Initializable {
                 Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(recieve.getString("message"));
+                    alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
                     alert.show();
                 });
                 break;
@@ -170,6 +175,7 @@ public class FXMLLoginController implements Initializable {
     private void backToMainScreen() {
 
         try {
+            SoundManager.playSoundEffect("click.wav");
             String mainScrenePath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
             SceneNavigation.getInstance().nextScene(mainScrenePath, logo);
         } catch (IOException ex) {
@@ -184,6 +190,7 @@ public class FXMLLoginController implements Initializable {
 
         TextInputDialog dialog = new TextInputDialog(ServerIP.getIP());
         dialog.setTitle("Update server IP");
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         dialog.showAndWait().ifPresent(string -> updateIP(string.trim()));
     }
 
@@ -194,10 +201,12 @@ public class FXMLLoginController implements Initializable {
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("New IP updated");
+                alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
                 alert.show();
             } else if (!ServerIP.getIP().equals(ip)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Invalid ip format");
+                alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
                 alert.show();
             }
         }

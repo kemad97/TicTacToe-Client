@@ -1,0 +1,36 @@
+
+.mainFxmlClass {
+    -fx-background-image: url("../../../media/images/mainBackground.png");
+    -fx-background-size: 100%;
+}
+
+
+.anchor-pane{
+    
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+
+.label-with-shadow {
+    -fx-effect: dropshadow(gaussian, gray, 5, 0.0, 3, 3);
+}
+
+.text-feild{
+    
+    -fx-font: 15px "Abel";
+    -fx-background-color: #ffd02d;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.numbers{
+    -fx-font: 15px "Abel";
+    -fx-background-color: #ffd02d;
+    -fx-background-radius: 50;
+    -fx-border-radius: 10;
+}
+.img{
+    -fx-background-radius: 50;
+    -fx-border-radius: 10; 
+}

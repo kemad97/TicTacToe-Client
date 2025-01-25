@@ -59,9 +59,9 @@ public class OnlineVideoScreenController implements Initializable {
     public static void setIsWinner(boolean is_winner) {
         isWinner = is_winner;
         if (is_winner) {
-            videoPath = "/media/video/winner-video.mp4";
+            videoPath = "/media/video/onlineWinnerVideo.mp4";
         } else {
-            videoPath = "/media/video/loser-video.mp4";
+            videoPath = "/media/video/onlineLosserVideo.mp4";
         }
     }
 
