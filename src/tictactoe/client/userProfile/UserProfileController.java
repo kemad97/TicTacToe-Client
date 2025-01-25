@@ -70,6 +70,9 @@ public class UserProfileController implements Initializable {
         // Animate logo
         Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
         requestUserData();
+        if (SessionData.getUserAvatar() != null) {
+            userProfileImg.setImage(SessionData.getUserAvatar());
+        }
     }
 
     private void requestUserData() {
@@ -120,7 +123,7 @@ public class UserProfileController implements Initializable {
                         break;
                     case "your_state_available":
                         isReceving = false;
-                        Platform.runLater(()->goToAvailableScreen());
+                        Platform.runLater(() -> goToAvailableScreen());
                         break;
                     case "UserDeleted":
                         deleteMeResponce();
@@ -233,6 +236,7 @@ public class UserProfileController implements Initializable {
             if (selectedImage != null) {
 
                 userProfileImg.setImage(selectedImage);
+                SessionData.setUserImage(selectedImage);
             }
         } catch (IOException ex) {
             Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
