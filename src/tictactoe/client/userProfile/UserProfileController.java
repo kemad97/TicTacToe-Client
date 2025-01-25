@@ -18,15 +18,24 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.ScaleTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.available_players.FXMLAvailablePlayersController;
+import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.soundManager.SoundManager;
 
@@ -56,6 +65,8 @@ public class UserProfileController implements Initializable {
     private boolean isReceving;
     @FXML
     private ImageView btnBack;
+    @FXML
+    private Button delBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -155,7 +166,60 @@ public class UserProfileController implements Initializable {
             Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @FXML
+    private void handleDelAccountBtn(ActionEvent event) throws IOException 
+    {
+        try {
+            System.out.println("Starting delete account process...");
 
+            // First, send delete request
+            JSONObject request = new JSONObject();
+            request.put("header", "delete_user");
+            request.put("username", SessionData.getUsername());
+
+            System.out.println("Sending delete request: " + request.toString());
+
+            // Send delete request to server
+            Request.getInstance().sendRequest(request.toString());
+
+            System.out.println("Waiting for server response...");
+
+            // Wait for response
+            JSONObject response = Request.getInstance().recieve();
+            System.out.println("Received response: " + response.toString());
+
+            if (response.getString("header").equals("UserDeleted"))
+            {
+                System.out.println("User handle delete at client");
+
+                // Clean up session and disconnect AFTER successful deletion
+                SessionData.setAuthenticated(false);
+                SessionData.setUsername(null);
+                Request.getInstance().disconnectToServer();
+
+                // Navigate to main screen LAST
+                Platform.runLater(() -> {
+                    try {
+                        String mainScreenPath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
+                        SceneNavigation.getInstance().nextScene(mainScreenPath, logo);
+                    } catch (IOException ex) {
+                        Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
+            } 
+            else {
+                System.out.println("Failed to delete account. Response header: " + response.getString("header"));
+                System.out.println("Error message: " + response.getString("message"));
+            }
+        } catch (JSONException ex) {
+            System.out.println("JSON Error: " + ex.getMessage());
+            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            System.out.println("IO Error: " + ex.getMessage());
+            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /*@FXML
     private void uploadAvatar() {
         
@@ -179,4 +243,5 @@ public class UserProfileController implements Initializable {
             }
         }
     }*/
+
 }
