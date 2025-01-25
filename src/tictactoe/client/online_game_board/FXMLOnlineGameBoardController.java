@@ -229,6 +229,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
                     // update winner score
                     JSONObject json = new JSONObject();
                     json.put("header", "update_score");
+                    json.put("winner", currentPlayer);
                     Request.getInstance().notifyServerOfWinner(json.toString());
                     System.out.println("send update score request to server");
                 } catch (IOException ex) {
