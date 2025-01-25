@@ -356,7 +356,8 @@ public class GameBoardController implements Initializable {
 
             System.out.println("Back To Main Screen");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/mainScreen/FXMLMainScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
@@ -364,10 +365,8 @@ public class GameBoardController implements Initializable {
 
         } catch (IOException ex) {
 
-            Logger.getLogger(FXMLMainScreenController.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLMainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
   
     private void goToResultVideoScreen() {
