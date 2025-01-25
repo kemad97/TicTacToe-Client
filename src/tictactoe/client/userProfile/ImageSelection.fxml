@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="tictactoe.client.userProfile.ImageSelectionController" spacing="10" alignment="CENTER">
+    <ImageView fx:id="image1" fitWidth="100" fitHeight="100" onMouseClicked="#selectImage1" style="-fx-background-color: transparent;"/>
+    <ImageView fx:id="image2" fitWidth="100" fitHeight="100" onMouseClicked="#selectImage2" style="-fx-background-color: transparent;"/>
+    <ImageView fx:id="image3" fitWidth="100" fitHeight="100" onMouseClicked="#selectImage3" style="-fx-background-color: transparent;"/>
+    <ImageView fx:id="image4" fitWidth="100" fitHeight="100" onMouseClicked="#selectImage4" style="-fx-background-color: transparent;"/>
+    <Button text="Confirm" onAction="#confirmSelection" />
+</HBox>

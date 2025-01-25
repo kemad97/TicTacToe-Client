@@ -14,7 +14,8 @@ import java.util.logging.Logger;
 public class ServerIP {
 
     private static DataOutputStream dos;
-    private static final String filePath = "./src/media/server_ip/server_ip";
+    private static final String fileDirectory = "server_ip/";
+    private static final String filePath = "server_ip/server_ip";
 
     public static String getIP() {
         File ipFile = new File(filePath);
@@ -34,12 +35,19 @@ public class ServerIP {
 
         return ip;
     }
-    
-    public static int getPort(){
+
+    public static int getPort() {
         return 8080;
     }
 
     public static void saveIP(String ip) {
+
+        File directory = new File(fileDirectory);
+        
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+
         File ipFile = new File(filePath);
 
         try (FileOutputStream outputStream = new FileOutputStream(ipFile);
@@ -56,7 +64,7 @@ public class ServerIP {
 
     public static boolean isValidIP(String ip) {
         StringTokenizer arr = new StringTokenizer(ip, ".");
-        
+
         if (arr.countTokens() != 4) {
             return false;
         }

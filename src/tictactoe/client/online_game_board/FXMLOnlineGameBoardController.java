@@ -130,6 +130,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
     @FXML
     public void handleButtonClick(ActionEvent event) {
 
+        SoundManager.playSoundEffect("click.wav");
+        
         Button clickedButton = (Button) event.getSource();
 
         // Check if the button is already filled or game is over
@@ -146,7 +148,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
                     // Update the button with the player's symbol
                     clickedButton.setText(symbol);
                     clickedButton.setDisable(true);
-                    clickedButton.setStyle("-fx-opacity: 1.0;");
+                    clickedButton.setStyle("-fx-opacity: 1.0; -fx-text-fill: #843CE0; -fx-font-size: 22px; -fx-font-weight: bold;");
 
                     // Send the move to the server
                     sendMoveToServer(symbol, i, j);
@@ -200,7 +202,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
         if (board[row][col].getText().isEmpty()) {
             board[row][col].setText(symbol);
             board[row][col].setDisable(true);
-            board[row][col].setStyle("-fx-opacity: 1.0;");
+            board[row][col].setStyle("-fx-opacity: 1.0; -fx-text-fill: #843CE0; -fx-font-size: 22px; -fx-font-weight: bold;");
+            //board[row][col].setStyle("-fx-opacity: 1.0;");
             boardPane.setDisable(false);
         }
 
@@ -229,6 +232,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
                     // update winner score
                     JSONObject json = new JSONObject();
                     json.put("header", "update_score");
+                    json.put("winner", currentPlayer);
                     Request.getInstance().notifyServerOfWinner(json.toString());
                     System.out.println("send update score request to server");
                 } catch (IOException ex) {
@@ -361,7 +365,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         alert.setTitle("Draw Game");
         alert.setHeaderText(null);
         alert.setContentText("You draw with your opponent!");
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.getDialogPane().getStyleClass().add("dialog-pane");
 
         alert.showAndWait();
@@ -426,6 +430,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText("Server now is down!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.show();
         //close conniction with server
         try {
@@ -457,6 +462,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
                 SceneNavigation.getInstance().gotoVideoScreen(logo, isWinner, opponentName);
                 Request.getInstance().endPlayerGame();
                 SoundManager.pauseBackgroundMusic();
+                sendRequestToUpdateMatche_NO();
 
             } catch (IOException ex) {
                 Logger.getLogger(ResultVideoScreenController.class.getName()).log(Level.SEVERE, null, ex);
@@ -471,7 +477,22 @@ public class FXMLOnlineGameBoardController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText(opponentName + " go out!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.show();
         backToAvailableScreen();
     }
+    
+    public void sendRequestToUpdateMatche_NO() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put("header", "update_matches_NO");
+            json.put("username", SessionData.getUsername());
+
+            Request.getInstance().sendMove(json.toString());
+            System.out.println("Send request to server to update matche_no for each user: " + json.toString());
+        } catch (Exception e) {
+            Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
 }

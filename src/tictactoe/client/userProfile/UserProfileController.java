@@ -5,7 +5,6 @@
  */
 package tictactoe.client.userProfile;
 
-import java.io.File;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -21,17 +20,17 @@ import java.util.logging.Logger;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.available_players.FXMLAvailablePlayersController;
 import tictactoe.client.scene_navigation.SceneNavigation;
@@ -121,6 +120,7 @@ public class UserProfileController implements Initializable {
                         break;
                     case "your_state_available":
                         isReceving = false;
+                        Platform.runLater(()->goToAvailableScreen());
                         break;
                     case "UserDeleted":
                         deleteMeResponce();
@@ -162,8 +162,6 @@ public class UserProfileController implements Initializable {
             SoundManager.playSoundEffect("click.wav");
             Request.getInstance().askServerToMakeMeAvailable();
 
-            String availableScreenPath = "/tictactoe/client/available_players/FXMLAvailablePlayers.fxml";
-            SceneNavigation.getInstance().nextScene(availableScreenPath, logo);
         } catch (IOException ex) {
             Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -203,8 +201,7 @@ public class UserProfileController implements Initializable {
 
             try {
                 SoundManager.playSoundEffect("click.wav");
-                
-                
+
                 JSONObject request = new JSONObject();
                 request.put("header", "delete_user");
                 request.put("username", SessionData.getUsername());
@@ -217,29 +214,39 @@ public class UserProfileController implements Initializable {
             }
         }
     }
-    
-    /*@FXML
+
+    @FXML
     private void uploadAvatar() {
-        
-        FileChooser fileChooser = new FileChooser();
-        
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
-        );
+        try {
 
-        File selectedFile = fileChooser.showOpenDialog(null);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/userProfile/ImageSelection.fxml"));
+            Parent root = loader.load();
 
-        if (selectedFile != null) {
-            try {
-                
-                Image image = new Image(selectedFile.toURI().toString());
-                userProfileImg.setImage(image);
+            Stage stage = new Stage();
+            stage.setTitle("Choose Profile Image");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
 
+            ImageSelectionController controller = loader.getController();
+            Image selectedImage = controller.getSelectedImage();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (selectedImage != null) {
+
+                userProfileImg.setImage(selectedImage);
             }
+        } catch (IOException ex) {
+            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }*/
+    }
+
+    private void goToAvailableScreen() {
+        String availableScreenPath = "/tictactoe/client/available_players/FXMLAvailablePlayers.fxml";
+        try {
+            SceneNavigation.getInstance().nextScene(availableScreenPath, logo);
+        } catch (IOException ex) {
+            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
 }
