@@ -125,6 +125,7 @@ public class UserProfileController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText("Server now is dowen!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.show();
         //close conniction with server
         try {

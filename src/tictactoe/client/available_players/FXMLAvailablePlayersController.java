@@ -87,7 +87,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         SoundManager.playSoundEffect("click.wav");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Do you want to logout!");
-
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -199,6 +200,8 @@ public class FXMLAvailablePlayersController implements Initializable {
             Request.getInstance().sendMatchRequest(opponentUsername);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Match request sent to " + opponentUsername);
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+            alert.getDialogPane().getStyleClass().add("dialog-pane");
             alert.show();
 
             //start wating screen
@@ -219,6 +222,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         alert.setTitle("Match Request");
         alert.setHeaderText(opponentUsername + " has sent you a match request.");
         alert.setContentText("Do you want to accept the match?");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
 
         //sleep for 10 sec then cancel this request
         new Thread(() -> {
@@ -262,6 +267,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Match Responce");
         alert.setHeaderText(opponentName + " refuse your request.");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.show();
 
         //stop wating screen
@@ -275,6 +282,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText("Server now is dowen!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.show();
         //close conniction with server
         try {

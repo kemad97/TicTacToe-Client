@@ -365,7 +365,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         alert.setTitle("Draw Game");
         alert.setHeaderText(null);
         alert.setContentText("You draw with your opponent!");
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.getDialogPane().getStyleClass().add("dialog-pane");
 
         alert.showAndWait();
@@ -430,6 +430,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText("Server now is down!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.show();
         //close conniction with server
         try {
@@ -476,6 +477,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText(opponentName + " go out!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.show();
         backToAvailableScreen();
     }
