@@ -7,7 +7,6 @@ The Network-Based Tic-Tac-Toe Application is a Java-based game that allows users
 ---
 
 ## Features
-
 ### Game Modes:
 1. **Single-Player Mode:**
    - Play against the computer.
@@ -38,6 +37,11 @@ The Network-Based Tic-Tac-Toe Application is a Java-based game that allows users
 
 - **User Authentication:**
   - Players can register and log in to the server to access online features.
+ 
+---
+### Prerequisites:
+- Java Development Kit (JDK) installed on your machine.
+- Download Json.jar  .
 
 
 
