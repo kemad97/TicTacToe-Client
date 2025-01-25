@@ -18,14 +18,14 @@
    <children>
       <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
          <children>
-            <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="24.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="63.0" fitWidth="95.0" layoutX="24.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../media/images/XPlayer.png" />
+                  <Image url="@../../../media/images/X.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="419.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="63.0" fitWidth="95.0" layoutX="419.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../media/images/YPlayer.png" />
+                  <Image url="@../../../media/images/O.png" />
                </image>
             </ImageView>
             <GridPane layoutX="118.0" layoutY="66.0" prefHeight="251.0" prefWidth="280.0">
@@ -76,6 +76,8 @@
                   <String fx:value="checkBox" />
                </styleClass>
             </Label>
+            <Label fx:id="player1Label" layoutX="29.0" layoutY="93.0" text="PLAYER 1" />
+            <Label fx:id="player2Label" layoutX="425.0" layoutY="93.0" text="PLAYER 2" />
          </children>
       </AnchorPane>
       <ImageView id="logo" fx:id="logo" fitHeight="83.0" fitWidth="95.0" layoutX="14.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
