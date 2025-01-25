@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.session_data.SessionData;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,12 +31,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.available_players.FXMLAvailablePlayersController;
-import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.soundManager.SoundManager;
 
@@ -124,6 +125,9 @@ public class UserProfileController implements Initializable {
                     case "your_state_available":
                         isReceving = false;
                         break;
+                    case "UserDeleted":
+                        deleteMeResponce();
+                        break;
                 }
             } catch (IOException ex) {
                 break;
@@ -167,80 +171,55 @@ public class UserProfileController implements Initializable {
         }
     }
 
-    @FXML
-    private void handleDelAccountBtn(ActionEvent event) throws IOException {
-        try {
-            System.out.println("Starting delete account process...");
+    private void deleteMeResponce() throws IOException {
 
-            // First, send delete request
-            JSONObject request = new JSONObject();
-            request.put("header", "delete_user");
-            request.put("username", SessionData.getUsername());
+        // Clean up session and disconnect AFTER successful deletion
+        SessionData.deleteDate();
 
-            System.out.println("Sending delete request: " + request.toString());
+        Request.getInstance().disconnectToServer();
 
-            // Send delete request to server
-            Request.getInstance().sendRequest(request.toString());
-
-            System.out.println("Waiting for server response...");
-
-            // Wait for response
-            JSONObject response = Request.getInstance().recieve();
-            System.out.println("Received response: " + response.toString());
-
-            if (response.getString("header").equals("UserDeleted")) {
-                System.out.println("User handle delete at client");
-
-                // Clean up session and disconnect AFTER successful deletion
-                SessionData.setAuthenticated(false);
-                SessionData.setUsername(null);
-                Request.getInstance().disconnectToServer();
-
-                // Navigate to main screen LAST
-                Platform.runLater(() -> {
-                    try {
-                        String mainScreenPath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
-                        SceneNavigation.getInstance().nextScene(mainScreenPath, logo);
-                    } catch (IOException ex) {
-                        Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                });
-            } else {
-                System.out.println("Failed to delete account. Response header: " + response.getString("header"));
-                System.out.println("Error message: " + response.getString("message"));
+        // Navigate to main screen LAST
+        Platform.runLater(() -> {
+            try {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Delete Acctoun");
+                alert.setHeaderText("Account Deleted Successfully!");
+                alert.show();
+                String mainScreenPath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
+                SceneNavigation.getInstance().nextScene(mainScreenPath, logo);
+            } catch (IOException ex) {
+                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (JSONException ex) {
-            System.out.println("JSON Error: " + ex.getMessage());
-            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            System.out.println("IO Error: " + ex.getMessage());
-            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        });
     }
 
-    /*@FXML
-    private void uploadAvatar() {
-        
-        FileChooser fileChooser = new FileChooser();
-        
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
-        );
+    @FXML
+    private void handleDelAccountBtn(ActionEvent event) throws IOException {
 
-        File selectedFile = fileChooser.showOpenDialog(null);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText("Do you want to Delete Your Account!");
 
-        if (selectedFile != null) {
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+
             try {
+                SoundManager.playSoundEffect("click.wav");
                 
-                Image image = new Image(selectedFile.toURI().toString());
-                userProfileImg.setImage(image);
+                
+                JSONObject request = new JSONObject();
+                request.put("header", "delete_user");
+                request.put("username", SessionData.getUsername());
 
+                // Send delete request to server
+                Request.getInstance().sendRequest(request.toString());
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                System.out.println("server is dowen!");
             }
         }
-    }*/
+    }
+    
     
     @FXML
     private void uploadAvatar() {
