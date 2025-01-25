@@ -57,6 +57,11 @@
                   <Insets bottom="5.0" left="8.0" right="8.0" top="5.0" />
                </padding>
             </Label>
+            <ImageView fx:id="loading_img" fitHeight="75.0" fitWidth="100.0" layoutX="265.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/Loading.gif" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
