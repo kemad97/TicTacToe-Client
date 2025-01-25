@@ -328,7 +328,7 @@ public class GameBoardController implements Initializable {
             aboutAlert.setHeaderText(null);
             aboutAlert.setGraphic(null);
             aboutAlert.setContentText("Do you want to Play Another Match ?");
-            aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("/tictactoe/client/gameBoardWithFriend/alert-style.css").toExternalForm());
+            aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
             aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
             Optional<ButtonType> result = aboutAlert.showAndWait();
 

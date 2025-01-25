@@ -5,6 +5,7 @@
  */
 package tictactoe.client.userProfile;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -23,6 +24,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
@@ -132,6 +137,7 @@ public class UserProfileController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText("Server now is dowen!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.show();
         //close conniction with server
         try {
@@ -210,4 +216,29 @@ public class UserProfileController implements Initializable {
             }
         }
     }
+    
+    /*@FXML
+    private void uploadAvatar() {
+        
+        FileChooser fileChooser = new FileChooser();
+        
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            try {
+                
+                Image image = new Image(selectedFile.toURI().toString());
+                userProfileImg.setImage(image);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }*/
+
 }

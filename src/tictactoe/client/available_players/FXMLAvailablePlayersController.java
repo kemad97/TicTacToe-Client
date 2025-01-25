@@ -12,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -38,7 +41,11 @@ public class FXMLAvailablePlayersController implements Initializable {
     private ListView<String> availablePlayersList;
 
     private boolean isReceiving;
+
     private Thread receivingThread;
+
+    @FXML
+    private ImageView loading_img;
 
     /**
      * Initializes the controller class.
@@ -47,6 +54,8 @@ public class FXMLAvailablePlayersController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //animate logo
         Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
+
+        loading_img.setVisible(false);
 
         requestAvailablePlayers();
 
@@ -78,7 +87,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         SoundManager.playSoundEffect("click.wav");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Do you want to logout!");
-
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -190,7 +200,14 @@ public class FXMLAvailablePlayersController implements Initializable {
             Request.getInstance().sendMatchRequest(opponentUsername);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Match request sent to " + opponentUsername);
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+            alert.getDialogPane().getStyleClass().add("dialog-pane");
             alert.show();
+
+            //start wating screen
+            availablePlayersList.setDisable(true);
+            loading_img.setVisible(true);
+
         } catch (IOException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Failed to send match request.");
@@ -205,6 +222,23 @@ public class FXMLAvailablePlayersController implements Initializable {
         alert.setTitle("Match Request");
         alert.setHeaderText(opponentUsername + " has sent you a match request.");
         alert.setContentText("Do you want to accept the match?");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
+
+        //sleep for 10 sec then cancel this request
+        new Thread(() -> {
+            try {
+                Thread.sleep(10000);
+                if (alert.isShowing()) {
+                    System.out.println("alert is showing");
+                    Platform.runLater(() -> {
+                        alert.close();
+                    });
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -219,8 +253,8 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         }
     }
-
     // Method to send a response to the match request (accept/decline)
+
     private void sendMatchResponse(String opponentUsername, boolean isAccepted) {
         try {
             Request.getInstance().sendMatchResponse(opponentUsername, isAccepted);
@@ -233,7 +267,14 @@ public class FXMLAvailablePlayersController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Match Responce");
         alert.setHeaderText(opponentName + " refuse your request.");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.show();
+
+        //stop wating screen
+        availablePlayersList.setDisable(false);
+        loading_img.setVisible(false);
+
     }
 
     private void terminateAvailablePlayersScreen() {
@@ -241,6 +282,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText("Server now is dowen!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.show();
         //close conniction with server
         try {

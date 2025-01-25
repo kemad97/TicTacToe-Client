@@ -33,6 +33,7 @@ public class TicTacToeClient extends Application {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 
         SoundManager.playBackgroundMusic();
@@ -42,7 +43,7 @@ public class TicTacToeClient extends Application {
     @Override
     public void stop() {
         try {
-            if (!SessionData.getOpponentName().isEmpty()) {
+            if (SessionData.getOpponentName() != null && !SessionData.getOpponentName().isEmpty()) {
                 Request.getInstance().exitMatch(SessionData.getOpponentName());
             }
             Request.getInstance().disconnectToServer();
