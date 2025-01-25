@@ -25,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.available_players.FXMLAvailablePlayersController;
 import tictactoe.client.scene_navigation.SceneNavigation;
+import tictactoe.client.soundManager.SoundManager;
 
 /**
  *
@@ -43,6 +44,9 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private Label matches_no;
+    
+    @FXML
+    private ImageView userProfileImg;
 
     @FXML
     private Label win_matches;
@@ -138,8 +142,8 @@ public class UserProfileController implements Initializable {
     @FXML
     private void backToAvailablePlayers(MouseEvent event) {
         try {
+            SoundManager.playSoundEffect("click.wav");
             Request.getInstance().askServerToMakeMeAvailable();
-            
             
             String availableScreenPath = "/tictactoe/client/available_players/FXMLAvailablePlayers.fxml";
             SceneNavigation.getInstance().nextScene(availableScreenPath, logo);

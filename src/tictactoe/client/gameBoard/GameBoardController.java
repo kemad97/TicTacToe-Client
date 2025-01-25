@@ -99,7 +99,7 @@ public class GameBoardController implements Initializable {
 
         if (isXTurn) {
             clickedButton.setText("X");
-            clickedButton.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            clickedButton.setStyle("-fx-text-fill: #843CE0; -fx-font-weight: bold; -fx-font-size: 22px;");
             isXTurn = false;
             
             if(recScreenController != null){
@@ -136,7 +136,7 @@ public class GameBoardController implements Initializable {
             int row = bestMove[0];
             int col = bestMove[1];
             board[row][col].setText("O");
-            board[row][col].setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            board[row][col].setStyle("-fx-text-fill: #005761; -fx-font-weight: bold; -fx-font-size: 22px;");
             isXTurn = true;
 
             if(recScreenController != null){

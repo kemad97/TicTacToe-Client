@@ -130,6 +130,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
     @FXML
     public void handleButtonClick(ActionEvent event) {
 
+        SoundManager.playSoundEffect("click.wav");
+        
         Button clickedButton = (Button) event.getSource();
 
         // Check if the button is already filled or game is over
@@ -146,7 +148,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
                     // Update the button with the player's symbol
                     clickedButton.setText(symbol);
                     clickedButton.setDisable(true);
-                    clickedButton.setStyle("-fx-opacity: 1.0;");
+                    clickedButton.setStyle("-fx-opacity: 1.0; -fx-text-fill: #843CE0; -fx-font-size: 22px; -fx-font-weight: bold;");
 
                     // Send the move to the server
                     sendMoveToServer(symbol, i, j);
@@ -200,7 +202,8 @@ public class FXMLOnlineGameBoardController implements Initializable {
         if (board[row][col].getText().isEmpty()) {
             board[row][col].setText(symbol);
             board[row][col].setDisable(true);
-            board[row][col].setStyle("-fx-opacity: 1.0;");
+            board[row][col].setStyle("-fx-opacity: 1.0; -fx-text-fill: #843CE0; -fx-font-size: 22px; -fx-font-weight: bold;");
+            //board[row][col].setStyle("-fx-opacity: 1.0;");
             boardPane.setDisable(false);
         }
 

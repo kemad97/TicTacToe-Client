@@ -119,6 +119,7 @@ public class FXMLLoginController implements Initializable {
                     if (result.isPresent() && result.get() == ButtonType.OK) {
 
                         try {
+                            SoundManager.playSoundEffect("click.wav");
                             String availablePlayersPath = "/tictactoe/client/available_players/FXMLAvailablePlayers.fxml";
                             SceneNavigation.getInstance().nextScene(availablePlayersPath, logo);
                         } catch (IOException ex) {
@@ -170,6 +171,7 @@ public class FXMLLoginController implements Initializable {
     private void backToMainScreen() {
 
         try {
+            SoundManager.playSoundEffect("click.wav");
             String mainScrenePath = "/tictactoe/client/main_screen/FXMLMainScreen.fxml";
             SceneNavigation.getInstance().nextScene(mainScrenePath, logo);
         } catch (IOException ex) {
