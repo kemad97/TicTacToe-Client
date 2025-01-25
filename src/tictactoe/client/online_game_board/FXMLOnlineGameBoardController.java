@@ -483,7 +483,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
             json.put("username", SessionData.getUsername());
 
             Request.getInstance().sendMove(json.toString());
-            System.out.println("Send request to server to update matche_no for player: " + json.toString());
+            System.out.println("Send request to server to update matche_no for each user: " + json.toString());
         } catch (Exception e) {
             Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, e);
         }
