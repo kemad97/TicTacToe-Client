@@ -135,6 +135,8 @@ public class LevelsUIController implements Initializable {
     private void backToMainScreen() {
 
         try {
+          
+            SoundManager.playSoundEffect("click.wav");
 
             System.out.println("Back To Main Screen");
 
