@@ -30,7 +30,10 @@
             <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="22.0" onMouseClicked="#goToUserProfile" prefHeight="27.0" prefWidth="98.0" text="username">
                <font>
                   <Font name="System Bold" size="15.0" />
-               </font></Label>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="21.0" prefWidth="59.0" text="score">
                <font>
                   <Font size="18.0" />
@@ -54,6 +57,11 @@
                   <Insets bottom="5.0" left="8.0" right="8.0" top="5.0" />
                </padding>
             </Label>
+            <ImageView fx:id="loading_img" fitHeight="75.0" fitWidth="100.0" layoutX="265.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/Loading.gif" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
