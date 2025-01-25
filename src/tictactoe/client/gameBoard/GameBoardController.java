@@ -99,7 +99,7 @@ public class GameBoardController implements Initializable {
 
         if (isXTurn) {
             clickedButton.setText("X");
-            clickedButton.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            clickedButton.setStyle("-fx-text-fill: #843CE0; -fx-font-weight: bold; -fx-font-size: 22px;");
             isXTurn = false;
             
             if(recScreenController != null){
@@ -136,7 +136,7 @@ public class GameBoardController implements Initializable {
             int row = bestMove[0];
             int col = bestMove[1];
             board[row][col].setText("O");
-            board[row][col].setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            board[row][col].setStyle("-fx-text-fill: #005761; -fx-font-weight: bold; -fx-font-size: 22px;");
             isXTurn = true;
 
             if(recScreenController != null){
@@ -328,7 +328,7 @@ public class GameBoardController implements Initializable {
             aboutAlert.setHeaderText(null);
             aboutAlert.setGraphic(null);
             aboutAlert.setContentText("Do you want to Play Another Match ?");
-            aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("/tictactoe/client/gameBoardWithFriend/alert-style.css").toExternalForm());
+            aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
             aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
             Optional<ButtonType> result = aboutAlert.showAndWait();
 

@@ -26,6 +26,7 @@ import tictactoe.client.animation.Animation;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.server_connection.Request;
+import tictactoe.client.soundManager.SoundManager;
 
 public class FXMLAvailablePlayersController implements Initializable {
 
@@ -40,6 +41,9 @@ public class FXMLAvailablePlayersController implements Initializable {
     private ListView<String> availablePlayersList;
 
     private boolean isReceiving;
+
+    private Thread receivingThread;
+
     @FXML
     private ImageView loading_img;
 
@@ -60,6 +64,7 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         availablePlayersList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
+                SoundManager.playSoundEffect("click.wav");
                 String selectedPlayer = availablePlayersList.getSelectionModel().getSelectedItem();
                 if (selectedPlayer != null) {
                     String opponentUsername = selectedPlayer.split(" - ")[0].trim();
@@ -69,24 +74,27 @@ public class FXMLAvailablePlayersController implements Initializable {
         });
 
         //this thread list for any request coms to available players
-        new Thread(() -> {
+        receivingThread = new Thread(() -> {
             isReceiving = true;
             receiveRequests();
-        }).start();
+        });
+        receivingThread.start();
     }
 
     @FXML
     private void logout(MouseEvent event) {
 
+        SoundManager.playSoundEffect("click.wav");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Do you want to logout!");
-
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
             try {
-
+                SoundManager.playSoundEffect("click.wav");
                 //cloase connection with server
                 Request.getInstance().disconnectToServer();
             } catch (IOException ex) {
@@ -146,6 +154,9 @@ public class FXMLAvailablePlayersController implements Initializable {
                             }
                         });
                         break;
+                    case "your_state_not_available":
+                        isReceiving = false;
+                        break;
 
                     case "server_down":
                         Platform.runLater(() -> terminateAvailablePlayersScreen());
@@ -162,7 +173,6 @@ public class FXMLAvailablePlayersController implements Initializable {
     private void updateAvailablePlayersListView(JSONArray players) {
 
         availablePlayersList.getItems().clear();
-
         String currentUser = SessionData.getUsername();
 
         for (int i = 0; i < players.length(); i++) {
@@ -180,6 +190,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                     });
                 }
             }
+
         }
     }
 
@@ -189,6 +200,8 @@ public class FXMLAvailablePlayersController implements Initializable {
             Request.getInstance().sendMatchRequest(opponentUsername);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Match request sent to " + opponentUsername);
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+            alert.getDialogPane().getStyleClass().add("dialog-pane");
             alert.show();
 
             //start wating screen
@@ -209,6 +222,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         alert.setTitle("Match Request");
         alert.setHeaderText(opponentUsername + " has sent you a match request.");
         alert.setContentText("Do you want to accept the match?");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
 
         //sleep for 10 sec then cancel this request
         new Thread(() -> {
@@ -227,11 +242,13 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            SoundManager.playSoundEffect("click.wav");
             // Accept the match
             sendMatchResponse(opponentUsername, true);
             //goto online game board
         } else {
             // Decline the match
+            SoundManager.playSoundEffect("click.wav");
             sendMatchResponse(opponentUsername, false);
 
         }
@@ -250,6 +267,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Match Responce");
         alert.setHeaderText(opponentName + " refuse your request.");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.show();
 
         //stop wating screen
@@ -263,6 +282,8 @@ public class FXMLAvailablePlayersController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
         alert.setHeaderText("Server now is dowen!");
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.show();
         //close conniction with server
         try {
@@ -279,4 +300,24 @@ public class FXMLAvailablePlayersController implements Initializable {
         }
         SessionData.deleteDate();
     }
+
+    @FXML
+    private void goToUserProfile() {
+        
+        SoundManager.playSoundEffect("click.wav");
+        try {
+            //send to server i will be not available
+            Request.getInstance().askServerToMakeMeNotAvailable();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        String userProfilePath = "/tictactoe/client/userProfile/FXMLUserProfile.fxml";
+        try {
+            SceneNavigation.getInstance().nextScene(userProfilePath, logo);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
