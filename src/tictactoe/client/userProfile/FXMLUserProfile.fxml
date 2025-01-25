@@ -40,7 +40,7 @@
                <font>
                   <Font size="20.0" />
                </font></Label>
-            <Label fx:id="score" layoutX="304.0" layoutY="180.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
+            <Label fx:id="score" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="304.0" layoutY="180.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="numbers" />
                   <String fx:value="label-with-shadow" />
@@ -49,7 +49,7 @@
                   <Insets left="15.0" />
                </padding>
             </Label>
-            <Label fx:id="win_matches" layoutX="304.0" layoutY="306.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="win_matches" contentDisplay="CENTER" layoutX="304.0" layoutY="306.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
                <styleClass>
                   <String fx:value="numbers" />
                   <String fx:value="label-with-shadow" />
@@ -63,7 +63,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="matches_no" layoutX="304.0" layoutY="244.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
+            <Label fx:id="matches_no" contentDisplay="CENTER" layoutX="304.0" layoutY="244.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="numbers" />
                   <String fx:value="label-with-shadow" />
@@ -77,6 +77,11 @@
                   <Font size="20.0" />
                </font>
             </Label>
+            <ImageView fx:id="btnBack" fitHeight="30.0" fitWidth="33.0" layoutX="9.0" layoutY="13.0" onMouseClicked="#backToAvailablePlayers" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../media/images/back%20(1).png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

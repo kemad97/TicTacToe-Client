@@ -457,6 +457,7 @@ public class FXMLOnlineGameBoardController implements Initializable {
                 SceneNavigation.getInstance().gotoVideoScreen(logo, isWinner, opponentName);
                 Request.getInstance().endPlayerGame();
                 SoundManager.pauseBackgroundMusic();
+                sendRequestToUpdateMatche_NO();
 
             } catch (IOException ex) {
                 Logger.getLogger(ResultVideoScreenController.class.getName()).log(Level.SEVERE, null, ex);
@@ -474,4 +475,18 @@ public class FXMLOnlineGameBoardController implements Initializable {
         alert.show();
         backToAvailableScreen();
     }
+    
+    public void sendRequestToUpdateMatche_NO() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put("header", "update_matches_NO");
+            json.put("username", SessionData.getUsername());
+
+            Request.getInstance().sendMove(json.toString());
+            System.out.println("Send request to server to update matche_no for player: " + json.toString());
+        } catch (Exception e) {
+            Logger.getLogger(FXMLOnlineGameBoardController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
 }
