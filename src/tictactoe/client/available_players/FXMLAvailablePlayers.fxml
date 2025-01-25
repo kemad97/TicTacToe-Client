@@ -30,7 +30,10 @@
             <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="22.0" prefHeight="27.0" prefWidth="98.0" text="username">
                <font>
                   <Font name="System Bold" size="15.0" />
-               </font></Label>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="21.0" prefWidth="59.0" text="score">
                <font>
                   <Font size="18.0" />
