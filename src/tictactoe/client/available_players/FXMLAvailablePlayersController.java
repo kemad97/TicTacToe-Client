@@ -223,8 +223,7 @@ public class FXMLAvailablePlayersController implements Initializable {
             } catch (InterruptedException ex) {
                 Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }).
-                start();
+        }).start();
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
