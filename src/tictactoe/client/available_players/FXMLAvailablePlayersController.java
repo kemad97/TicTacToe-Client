@@ -23,6 +23,7 @@ import tictactoe.client.animation.Animation;
 import tictactoe.client.scene_navigation.SceneNavigation;
 import tictactoe.client.session_data.SessionData;
 import tictactoe.client.server_connection.Request;
+import tictactoe.client.soundManager.SoundManager;
 
 public class FXMLAvailablePlayersController implements Initializable {
 
@@ -54,6 +55,7 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         availablePlayersList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
+                SoundManager.playSoundEffect("click.wav");
                 String selectedPlayer = availablePlayersList.getSelectionModel().getSelectedItem();
                 if (selectedPlayer != null) {
                     String opponentUsername = selectedPlayer.split(" - ")[0].trim();
@@ -73,6 +75,7 @@ public class FXMLAvailablePlayersController implements Initializable {
     @FXML
     private void logout(MouseEvent event) {
 
+        SoundManager.playSoundEffect("click.wav");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Do you want to logout!");
 
@@ -81,7 +84,7 @@ public class FXMLAvailablePlayersController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
             try {
-
+                SoundManager.playSoundEffect("click.wav");
                 //cloase connection with server
                 Request.getInstance().disconnectToServer();
             } catch (IOException ex) {
@@ -205,11 +208,13 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            SoundManager.playSoundEffect("click.wav");
             // Accept the match
             sendMatchResponse(opponentUsername, true);
             //goto online game board
         } else {
             // Decline the match
+            SoundManager.playSoundEffect("click.wav");
             sendMatchResponse(opponentUsername, false);
 
         }
@@ -255,6 +260,8 @@ public class FXMLAvailablePlayersController implements Initializable {
 
     @FXML
     private void goToUserProfile() {
+        
+        SoundManager.playSoundEffect("click.wav");
         try {
             //send to server i will be not available
             Request.getInstance().askServerToMakeMeNotAvailable();
@@ -264,7 +271,7 @@ public class FXMLAvailablePlayersController implements Initializable {
 
         String userProfilePath = "/tictactoe/client/userProfile/FXMLUserProfile.fxml";
         try {
-            SceneNavigation.getInstance().nextScene(userProfilePath, score);
+            SceneNavigation.getInstance().nextScene(userProfilePath, logo);
         } catch (IOException ex) {
             Logger.getLogger(FXMLAvailablePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -113,7 +113,7 @@ public class GameBoardWithFriendController implements Initializable {
 
             clickedButton.setText("X");
 
-            clickedButton.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            clickedButton.setStyle("-fx-text-fill: #843CE0; -fx-font-weight: bold; ");
 
             System.out.println("Button " + clickedButton.getId() + " is Clicked With sympol X");
 
@@ -123,7 +123,7 @@ public class GameBoardWithFriendController implements Initializable {
 
             clickedButton.setText("O");
 
-            clickedButton.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            clickedButton.setStyle("-fx-text-fill: #005761; -fx-font-weight: bold;");
 
             System.out.println("Button " + clickedButton.getId() + " is Clicked With sympol O");
 

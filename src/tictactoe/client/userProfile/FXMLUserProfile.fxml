@@ -24,13 +24,13 @@
       <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
          <children>
             <Circle fill="DODGERBLUE" layoutX="97.0" layoutY="84.0" radius="59.0" stroke="BLACK" strokeType="INSIDE" styleClass="label-with-shadow" />
-            <ImageView fitHeight="83.0" fitWidth="118.0" layoutX="38.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="userProfileImg" fitHeight="83.0" fitWidth="118.0" layoutX="38.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../media/images/X.png" />
                </image>
             </ImageView>
 
-            <Label fx:id="name" layoutX="262.0" layoutY="74.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="aya" textAlignment="CENTER">
+            <Label fx:id="name" alignment="CENTER" layoutX="262.0" layoutY="74.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="aya" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
@@ -41,37 +41,28 @@
                <font>
                   <Font size="20.0" />
                </font></Label>
-            <Label fx:id="score" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="304.0" layoutY="180.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
+            <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="304.0" layoutY="180.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="numbers" />
                   <String fx:value="label-with-shadow" />
                </styleClass>
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
             </Label>
-            <Label fx:id="win_matches" contentDisplay="CENTER" layoutX="304.0" layoutY="306.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="win_matches" alignment="CENTER" contentDisplay="CENTER" layoutX="304.0" layoutY="306.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
                <styleClass>
                   <String fx:value="numbers" />
                   <String fx:value="label-with-shadow" />
                </styleClass>
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
             </Label>
             <Label layoutX="128.0" layoutY="249.0" prefHeight="30.0" prefWidth="111.0" text="Match_No :">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="matches_no" contentDisplay="CENTER" layoutX="304.0" layoutY="244.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
+            <Label fx:id="matches_no" alignment="CENTER" contentDisplay="CENTER" layoutX="304.0" layoutY="244.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="numbers" />
                   <String fx:value="label-with-shadow" />
                </styleClass>
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
             </Label>
             <Label layoutX="128.0" layoutY="311.0" prefHeight="30.0" prefWidth="125.0" text="Win Matches :">
                <font>
