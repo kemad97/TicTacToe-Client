@@ -22,15 +22,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import tictactoe.client.animation.Animation;
-import tictactoe.client.main_screen.FXMLMainScreenController;
 import javafx.util.Duration;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
-import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 import tictactoe.client.RecScreen.RecScreenController;
 import tictactoe.client.resultVideoScreenwithPC.ResultVideoScreenWithPCController;
 import tictactoe.client.soundManager.SoundManager;
@@ -39,6 +37,8 @@ public class GameBoardController implements Initializable {
 
     @FXML
     private ImageView logo;
+    @FXML
+    private Label playerLabel, computerLabel;
     @FXML
     private Button Btn11, Btn12, Btn13, Btn21, Btn22, Btn23, Btn31, Btn32, Btn33;
     @FXML
@@ -75,8 +75,10 @@ public class GameBoardController implements Initializable {
 
         isGameOver = false;
         isXTurn = true;
+        
+        playerLabel.getStyleClass().add("bold-label");
+        computerLabel.getStyleClass().add("bold-label");
 
-       // difficulty = "Medium"; // test
        handleCheckBox();
     }
     
@@ -99,7 +101,7 @@ public class GameBoardController implements Initializable {
 
         if (isXTurn) {
             clickedButton.setText("X");
-            clickedButton.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            clickedButton.setStyle("-fx-text-fill: #843CE0; -fx-font-weight: bold; -fx-font-size: 22px;");
             isXTurn = false;
             
             if(recScreenController != null){
@@ -136,7 +138,7 @@ public class GameBoardController implements Initializable {
             int row = bestMove[0];
             int col = bestMove[1];
             board[row][col].setText("O");
-            board[row][col].setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            board[row][col].setStyle("-fx-text-fill: #005761; -fx-font-weight: bold; -fx-font-size: 22px;");
             isXTurn = true;
 
             if(recScreenController != null){
@@ -328,7 +330,7 @@ public class GameBoardController implements Initializable {
             aboutAlert.setHeaderText(null);
             aboutAlert.setGraphic(null);
             aboutAlert.setContentText("Do you want to Play Another Match ?");
-            aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("/tictactoe/client/gameBoardWithFriend/alert-style.css").toExternalForm());
+            aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
             aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
             Optional<ButtonType> result = aboutAlert.showAndWait();
 
@@ -354,7 +356,7 @@ public class GameBoardController implements Initializable {
 
             System.out.println("Back To Main Screen");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/mainScreen/FXMLMainScreen.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);

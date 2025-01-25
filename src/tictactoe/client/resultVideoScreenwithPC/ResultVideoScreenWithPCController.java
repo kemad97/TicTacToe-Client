@@ -5,17 +5,14 @@
  */
 package tictactoe.client.resultVideoScreenwithPC;
 
-import tictactoe.client.resultVideoScreen.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,14 +20,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import tictactoe.client.gameBoardWithFriend.GameBoardWithFriendController;
+import tictactoe.client.animation.Animation;
 import tictactoe.client.main_screen.FXMLMainScreenController;
 import tictactoe.client.soundManager.SoundManager;
 
@@ -57,29 +53,22 @@ public class ResultVideoScreenWithPCController implements Initializable {
 
    private MediaPlayer mediaPlayer;
    
-   
+   private String defaultVideo;
    
  
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Animate logo
-        ScaleTransition transition = new ScaleTransition();
-        transition.setNode(logo);
-        transition.setDuration(Duration.millis(1000));
-        transition.setCycleCount(ScaleTransition.INDEFINITE);
-        transition.setInterpolator(Interpolator.LINEAR);
-        transition.setByX(0.5);
-        transition.setByY(0.5);
-        transition.setAutoReverse(true);
-        transition.play();
-        
+        Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
+                
         btnContinue.setVisible(false);
         btnBack.setVisible(false);
+        defaultVideo = "/media/video/winner-video.mp4";
         
         try {
             
-            URL videoUrl = getClass().getResource("/media/video/winner-video.mp4");
+            URL videoUrl = getClass().getResource(defaultVideo);
             if (videoUrl == null) {
                 System.err.println("Can't found  video");
             }
@@ -98,15 +87,7 @@ public class ResultVideoScreenWithPCController implements Initializable {
             mediaPlayer.setAutoPlay(true);
             
             // Animate Video
-            ScaleTransition transition2 = new ScaleTransition();
-            transition2.setNode(mediaView);
-            transition2.setDuration(Duration.millis(1000));
-            transition2.setCycleCount(2);
-            transition2.setInterpolator(Interpolator.LINEAR);
-            transition2.setByX(0.5);
-            transition2.setByY(0.5);
-            transition2.setAutoReverse(true);
-            transition2.play();
+            Animation.scaleAnimation(mediaView, 2, 0.5);
             
             
             mediaPlayer.setOnReady(() -> {

@@ -7,12 +7,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tictactoe.client.online_game_board.FXMLOnlineGameBoardController;
+import tictactoe.client.online_video_screen.OnlineVideoScreenController;
+import tictactoe.client.resultVideoScreen.ResultVideoScreenController;
 
 public class SceneNavigation {
 
     private static SceneNavigation instatnce;
 
-    private SceneNavigation() {}
+    private SceneNavigation() {
+    }
 
     public static SceneNavigation getInstance() {
         if (instatnce == null) {
@@ -30,11 +33,28 @@ public class SceneNavigation {
         stage.setScene(scene);
         stage.show();
     }
-    
-    public void gotoOnlineBoard(String fxmlPath, Node node, String opponentName, Boolean isMyTurn) throws IOException {
-        
+
+    public void gotoVideoScreen(Node node,
+            boolean isWinner,
+            String opponentName) throws IOException {
+
+        OnlineVideoScreenController.setIsWinner(isWinner);
+        OnlineVideoScreenController.setOpponentName(opponentName);
+
+        String fxmlPath = "/tictactoe/client/online_video_screen/OnlineVideoScreen.fxml";
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void gotoOnlineBoard(Node node, String opponentName, Boolean isMyTurn) throws IOException {
+
+        String fxmlPath = "/tictactoe/client/online_game_board/FXMLOnlineGameBoard.fxml";
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        
+
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
@@ -42,7 +62,7 @@ public class SceneNavigation {
         onlineController = loader.getController();
         onlineController.setOpponentName(opponentName);
         onlineController.setMyTurn(isMyTurn);
-        
+
         Stage stage = (Stage) node.getScene().getWindow();
 
         stage.setScene(scene);

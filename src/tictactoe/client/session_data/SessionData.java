@@ -1,10 +1,22 @@
 package tictactoe.client.session_data;
 
+import javafx.scene.image.Image;
+
 public class SessionData {
 
     private static boolean authenticated;
     private static String username;
     private static int score;
+    private static String opponentName;
+    private static Image userAvatar;
+    
+    public static String getOpponentName() {
+        return opponentName;
+    }
+
+    public static void setOpponentName(String opponentName) {
+        SessionData.opponentName = opponentName;
+    }
 
     static {
         authenticated = false;
@@ -39,5 +51,14 @@ public class SessionData {
         authenticated = false;
         username = "";
         score = 0;
+        opponentName = "";
+    }
+
+    public static Image getUserAvatar() {
+        return userAvatar;
+    }
+    
+    public static void setUserImage(Image selectedImage) {
+        userAvatar = selectedImage;
     }
 }

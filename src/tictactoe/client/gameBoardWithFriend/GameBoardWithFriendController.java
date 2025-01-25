@@ -41,14 +41,16 @@ public class GameBoardWithFriendController implements Initializable {
     private ImageView logo;
 
     @FXML
+    private Label player1Label, player2Label;
+
+    @FXML
     private Button Btn11, Btn12, Btn13, Btn21, Btn22, Btn23, Btn31, Btn32, Btn33;
-    
+
     @FXML
     private CheckBox checkBoxRecord;
-    
+
     @FXML
-    private Label XScore , OScore;
-    
+    private Label XScore, OScore;
 
     private boolean isXTurn;
     private boolean isGameOver;
@@ -58,16 +60,15 @@ public class GameBoardWithFriendController implements Initializable {
     private String winnerPlayer;
     public String logFileName;
 
-    private static int xScore = 0 , oScore = 0 ;
-    
-    
+    private static int xScore = 0, oScore = 0;
+
     private RecScreenController recScreenController = new RecScreenController();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Animate logo
         Animation.scaleAnimation(logo, ScaleTransition.INDEFINITE, 0.5);
-      
+
         // *********** Game With Friend Logic ***************
         board = new Button[][]{
             {Btn11, Btn12, Btn13},
@@ -77,23 +78,23 @@ public class GameBoardWithFriendController implements Initializable {
 
         isGameOver = false;
         isXTurn = true;  // اللي هيلعب الأول دائما  X
-      
+
         recScreenController = new RecScreenController();
         recScreenController.initializeLogFile();
-        
-      
+
+        player1Label.getStyleClass().add("bold-label");
+        player2Label.getStyleClass().add("bold-label");
 
         updateScoreLabels();
-        
+
         handleCheckBox();
-      
+
     }
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
-         
+
         SoundManager.playSoundEffect("click.wav");
- 
 
         if (isGameOver) {
 
@@ -113,7 +114,7 @@ public class GameBoardWithFriendController implements Initializable {
 
             clickedButton.setText("X");
 
-            clickedButton.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            clickedButton.setStyle("-fx-text-fill: #843CE0; -fx-font-weight: bold; ");
 
             System.out.println("Button " + clickedButton.getId() + " is Clicked With sympol X");
 
@@ -123,13 +124,13 @@ public class GameBoardWithFriendController implements Initializable {
 
             clickedButton.setText("O");
 
-            clickedButton.setStyle("-fx-text-fill: #242320; -fx-font-weight: bold;");
+            clickedButton.setStyle("-fx-text-fill: #005761; -fx-font-weight: bold;");
 
             System.out.println("Button " + clickedButton.getId() + " is Clicked With sympol O");
 
             isXTurn = true;
 
-        }      
+        }
         // Log button click only if recording is enabled
         if (recScreenController != null) {
             recScreenController.logButtonClick(clickedButton.getId(), clickedButton.getText());
@@ -137,7 +138,7 @@ public class GameBoardWithFriendController implements Initializable {
             System.out.println("Recording is disabled. Button click not logged.");
         }
         checkWhoIsTheWinner();
-      
+
         // disable checkbox
         checkBoxRecord.setDisable(true);
 
@@ -148,17 +149,17 @@ public class GameBoardWithFriendController implements Initializable {
         if (checkWin()) {
 
             winnerPlayer = isXTurn ? "O" : "X";
-            
+
             if (winnerPlayer.equals("X")) {
-                
+
                 xScore++;
-                
+
             } else {
-                
+
                 oScore++;
-                
+
             }
-   
+
             updateScoreLabels();
 
             highlightWinnerButtons();
@@ -292,15 +293,14 @@ public class GameBoardWithFriendController implements Initializable {
 
         aboutAlert.setContentText("Do you want to Play Another Mathch ?");
 
-        aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("alert-style.css").toExternalForm());
+        aboutAlert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
 
         aboutAlert.getDialogPane().getStyleClass().add("dialog-pane");
 
         Optional<ButtonType> result = aboutAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            
-             
+
             SoundManager.playSoundEffect("click.wav");
 
             System.out.println("Play another Match");
@@ -308,8 +308,7 @@ public class GameBoardWithFriendController implements Initializable {
             resetBoard();
 
         } else {
-            
-             
+
             SoundManager.playSoundEffect("click.wav");
 
             backToMainScreen();
@@ -321,14 +320,14 @@ public class GameBoardWithFriendController implements Initializable {
     private void backToMainScreen() {
 
         try {
-            
+
             GameBoardWithFriendController.setxScore(0);
             GameBoardWithFriendController.setoScore(0);
 
             System.out.println("Back To Main Screen");
 
             Parent root = FXMLLoader.load(getClass().getResource("/tictactoe/client/main_screen/FXMLMainScreen.fxml"));
-            
+
             Scene scene = new Scene(root);
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(scene);
@@ -340,8 +339,8 @@ public class GameBoardWithFriendController implements Initializable {
         }
 
     }
-  
-    private void goToResultVideoScreen() {
+
+    public void goToResultVideoScreen() {
 
         System.out.println("Waiting for 2 seconds To Know Who is the Winner before going to Result Video Screen ");
 
@@ -367,7 +366,7 @@ public class GameBoardWithFriendController implements Initializable {
                 Stage stage = (Stage) logo.getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
-                
+
                 SoundManager.pauseBackgroundMusic();
 
                 System.out.println("Winner " + winnerPlayer + " is passed to ResultVideoScreen: ");
@@ -379,7 +378,7 @@ public class GameBoardWithFriendController implements Initializable {
 
         pause.play();
     }
-    
+
     @FXML
     public void handleCheckBox() {
         if (checkBoxRecord.isSelected()) {
@@ -393,10 +392,9 @@ public class GameBoardWithFriendController implements Initializable {
             recScreenController = null;
         }
     }
-    
 
     private void updateScoreLabels() {
-        
+
         XScore.setText(String.valueOf(xScore));
         OScore.setText(String.valueOf(oScore));
 
@@ -417,7 +415,5 @@ public class GameBoardWithFriendController implements Initializable {
     public static void setoScore(int oScore) {
         GameBoardWithFriendController.oScore = oScore;
     }
-    
-    
 
 }

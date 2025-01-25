@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tictactoe.client.server_connection.Request;
 import tictactoe.client.server_ip.ServerIP;
+import tictactoe.client.session_data.SessionData;
 import tictactoe.client.soundManager.SoundManager;
 
 /**
@@ -32,15 +33,19 @@ public class TicTacToeClient extends Application {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
-        
+
         SoundManager.playBackgroundMusic();
-                 
+
     }
-    
+
     @Override
     public void stop() {
         try {
+            if (SessionData.getOpponentName() != null && !SessionData.getOpponentName().isEmpty()) {
+                Request.getInstance().exitMatch(SessionData.getOpponentName());
+            }
             Request.getInstance().disconnectToServer();
         } catch (IOException ex) {
             System.out.println("server is dowen");

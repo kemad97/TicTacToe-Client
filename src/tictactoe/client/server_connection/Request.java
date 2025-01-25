@@ -17,7 +17,7 @@ public class Request {
 
     private Socket socket;
     private DataOutputStream dos;
-    public DataInputStream dis;
+    private DataInputStream dis;
 
     private Request() throws IOException {
         socket = new Socket(ServerIP.getIP(), ServerIP.getPort());
@@ -106,27 +106,49 @@ public class Request {
         dos.writeUTF(jsonObject.toString());
     }
 
+    public void askServerToMakeMeNotAvailable() throws IOException{
+        JSONObject json = new JSONObject();
+        json.put("header", "ask_to_be_not_available");
+        dos.writeUTF(json.toString());
+    }
+    
+    public void askServerToMakeMeAvailable() throws IOException{
+        JSONObject json = new JSONObject();
+        json.put("header", "ask_to_be_available");
+        dos.writeUTF(json.toString());
+    }
 
-    public void sendMove(String json){
+    public void sendMove(String msg){
         
         try {
-            dos.writeUTF(json);
+            dos.writeUTF(msg);
             dos.flush();
         } catch (IOException ex) {
             Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    /*
-      public void sendMove(String opponentUsername, String move) throws IOException {
+    public void endPlayerGame() throws IOException {
+        dos.writeUTF(new JSONObject().put("header", "end_player_game").toString());
+  }
+    
+    public void notifyServerOfWinner(String message){
+    
+        try {
+            dos.writeUTF(message);
+            dos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void exitMatch(String opponentName) throws IOException {
         Map<String, String> map = new HashMap<>();
-        map.put("header", "move");
-        map.put("opponent", opponentUsername);
-        map.put("move", move);
+        map.put("header", "exit_mathc");
+        map.put("opponent", opponentName);
 
         JSONObject jsonObject = new JSONObject(map);
         dos.writeUTF(jsonObject.toString());
-
+        System.out.println(jsonObject);
     }
-    */
 }
