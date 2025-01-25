@@ -23,25 +23,26 @@
       </ImageView>
       <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
          <children>
-            <Circle fill="DODGERBLUE" layoutX="97.0" layoutY="84.0" radius="59.0" stroke="BLACK" strokeType="INSIDE" styleClass="label-with-shadow" />
-            <ImageView fx:id="userProfileImg" fitHeight="100.0" fitWidth="100.0" layoutX="47.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" styleClass="img">
-               <image>
-                  <Image url="@../../../media/images/X.png" />
-               </image>
-            </ImageView>
+            <Button layoutX="38.0" layoutY="157.0" mnemonicParsing="false" onAction="#uploadAvatar" style="-fx-background-color: #1e90ff;" styleClass="label-with-shadow" text="Choose Avatar">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+               </font>
+            </Button>
+            <Circle fill="DODGERBLUE" layoutX="97.0" layoutY="84.0" opacity="0.28" radius="59.0" stroke="BLACK" strokeType="INSIDE" styleClass="label-with-shadow" />
+            <ImageView fx:id="userProfileImg" fitHeight="100.0" fitWidth="100.0" layoutX="47.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" styleClass="img" />
 
-            <Label fx:id="name" alignment="CENTER" layoutX="262.0" layoutY="74.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="aya" textAlignment="CENTER">
+            <Label fx:id="name" alignment="CENTER" layoutX="253.0" layoutY="67.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="aya" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
                <padding>
                   <Insets left="10.0" />
                </padding></Label>
-            <Label layoutX="128.0" layoutY="185.0" prefHeight="30.0" prefWidth="67.0" text="Score :">
+            <Label layoutX="128.0" layoutY="190.0" prefHeight="30.0" prefWidth="67.0" text="Score :">
                <font>
                   <Font size="20.0" />
                </font></Label>
-            <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="304.0" layoutY="180.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
+            <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="304.0" layoutY="185.0" prefHeight="40.0" prefWidth="40.0" text="1" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="numbers" />
                   <String fx:value="label-with-shadow" />
@@ -69,7 +70,11 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="delBtn" layoutX="387.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleDelAccountBtn" text="Delete Account" />
+            <Button fx:id="delBtn" layoutX="379.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleDelAccountBtn" text="Delete Account">
+               <styleClass>
+                  <String fx:value="text-feild" />
+                  <String fx:value="label-with-shadow" />
+               </styleClass></Button>
             <ImageView fx:id="btnBack" fitHeight="30.0" fitWidth="33.0" layoutX="9.0" layoutY="13.0" onMouseClicked="#backToAvailablePlayers" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../media/images/back%20(1).png" />

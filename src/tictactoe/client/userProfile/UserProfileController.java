@@ -166,9 +166,9 @@ public class UserProfileController implements Initializable {
             Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     @FXML
-    private void handleDelAccountBtn(ActionEvent event) throws IOException 
-    {
+    private void handleDelAccountBtn(ActionEvent event) throws IOException {
         try {
             System.out.println("Starting delete account process...");
 
@@ -188,8 +188,7 @@ public class UserProfileController implements Initializable {
             JSONObject response = Request.getInstance().recieve();
             System.out.println("Received response: " + response.toString());
 
-            if (response.getString("header").equals("UserDeleted"))
-            {
+            if (response.getString("header").equals("UserDeleted")) {
                 System.out.println("User handle delete at client");
 
                 // Clean up session and disconnect AFTER successful deletion
@@ -206,8 +205,7 @@ public class UserProfileController implements Initializable {
                         Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
-            } 
-            else {
+            } else {
                 System.out.println("Failed to delete account. Response header: " + response.getString("header"));
                 System.out.println("Error message: " + response.getString("message"));
             }
@@ -219,7 +217,7 @@ public class UserProfileController implements Initializable {
             Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /*@FXML
     private void uploadAvatar() {
         
@@ -243,5 +241,31 @@ public class UserProfileController implements Initializable {
             }
         }
     }*/
+    
+    @FXML
+    private void uploadAvatar() {
+        try {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/client/userProfile/ImageSelection.fxml"));
+            Parent root = loader.load();
+
+            
+            Stage stage = new Stage();
+            stage.setTitle("Choose Profile Image");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+            
+            ImageSelectionController controller = loader.getController();
+            Image selectedImage = controller.getSelectedImage();
+
+            if (selectedImage != null) {
+                
+                userProfileImg.setImage(selectedImage);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }
