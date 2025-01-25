@@ -23,7 +23,7 @@
       <AnchorPane layoutX="93.0" layoutY="82.0" prefHeight="371.0" prefWidth="515.0" styleClass="anchor-pane">
          <children>
             <Circle fill="DODGERBLUE" layoutX="97.0" layoutY="84.0" radius="59.0" stroke="BLACK" strokeType="INSIDE" styleClass="label-with-shadow" />
-            <ImageView fx:id="userProfileImg" fitHeight="83.0" fitWidth="118.0" layoutX="38.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="userProfileImg" fitHeight="100.0" fitWidth="100.0" layoutX="47.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" styleClass="img">
                <image>
                   <Image url="@../../../media/images/X.png" />
                </image>

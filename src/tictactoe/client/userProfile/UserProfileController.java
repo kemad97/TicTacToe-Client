@@ -5,6 +5,7 @@
  */
 package tictactoe.client.userProfile;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -20,8 +21,10 @@ import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import tictactoe.client.animation.Animation;
 import tictactoe.client.available_players.FXMLAvailablePlayersController;
 import tictactoe.client.scene_navigation.SceneNavigation;
@@ -44,7 +47,7 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private Label matches_no;
-    
+
     @FXML
     private ImageView userProfileImg;
 
@@ -144,7 +147,7 @@ public class UserProfileController implements Initializable {
         try {
             SoundManager.playSoundEffect("click.wav");
             Request.getInstance().askServerToMakeMeAvailable();
-            
+
             String availableScreenPath = "/tictactoe/client/available_players/FXMLAvailablePlayers.fxml";
             SceneNavigation.getInstance().nextScene(availableScreenPath, logo);
         } catch (IOException ex) {
@@ -152,4 +155,27 @@ public class UserProfileController implements Initializable {
         }
     }
 
+    /*@FXML
+    private void uploadAvatar() {
+        
+        FileChooser fileChooser = new FileChooser();
+        
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            try {
+                
+                Image image = new Image(selectedFile.toURI().toString());
+                userProfileImg.setImage(image);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }*/
 }
