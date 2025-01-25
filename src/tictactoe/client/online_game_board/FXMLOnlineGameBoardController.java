@@ -120,6 +120,9 @@ public class FXMLOnlineGameBoardController implements Initializable {
         winnerPlayer = "";
         isGameOver = false;
         symbol = "";
+        
+        currentPlayerUsername.getStyleClass().add("bold-label");
+        opponnetUsername.getStyleClass().add("bold-label");
 
         new Thread(() -> {
             recieveRosponse();
