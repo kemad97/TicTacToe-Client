@@ -137,10 +137,10 @@ public class UserProfileController implements Initializable {
     }
 
     private void terminateUserProfileScreen() {
-        //show aleart the server is dowen
+        //show aleart the server is down
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
-        alert.setHeaderText("Server now is dowen!");
+        alert.setHeaderText("Server now is down!");
         alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.show();
         //close conniction with server
@@ -213,7 +213,7 @@ public class UserProfileController implements Initializable {
                 Request.getInstance().sendRequest(request.toString());
 
             } catch (IOException ex) {
-                System.out.println("server is dowen!");
+                System.out.println("server is down!");
             }
         }
     }
