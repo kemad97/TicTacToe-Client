@@ -98,7 +98,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                 //cloase connection with server
                 Request.getInstance().disconnectToServer();
             } catch (IOException ex) {
-                System.out.println("server is dowen!");
+                System.out.println("server is down!");
             }
 
             //update session data
@@ -163,7 +163,7 @@ public class FXMLAvailablePlayersController implements Initializable {
                         break;
                 }
             } catch (IOException ex) {
-                System.out.println("Server dowen!");
+                System.out.println("Server down!");
                 break;
             }
         }
@@ -278,10 +278,10 @@ public class FXMLAvailablePlayersController implements Initializable {
     }
 
     private void terminateAvailablePlayersScreen() {
-        //show aleart the server is dowen
+        //show aleart the server is down
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Server Message");
-        alert.setHeaderText("Server now is dowen!");
+        alert.setHeaderText("Server now is down!");
         alert.getDialogPane().getStylesheets().add(getClass().getResource("/commonStyle/alert-style.css").toExternalForm());
         alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.show();
